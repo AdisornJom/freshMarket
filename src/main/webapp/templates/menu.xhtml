@@ -19,36 +19,7 @@
                             <p:menuitem id="menuW104" value="#{msgs['menu.website.w104']}" action ="#{naviController.gotoMenu('/ui/website/w104/index?faces-redirect=true', 'W104Controller', 'menu.website.w104')}"/>
                             <p:menuitem id="menuW105" value="#{msgs['menu.website.w105']}" url="/web-email" rendered="false"/>
                         </p:submenu>
-
-                        <p:submenu id="menuM" label="#{msgs['menu.member']}" icon="fa fa-user" rendered="#{p:ifAnyGranted('ROLE_PG,ROLE_ADMIN,ROLE_SUPER,ROLE_STAFF,ROLE_AUDIT')}">
-                            <p:menuitem id="menuM101" value="#{msgs['menu.member.m101']}" action ="#{naviController.gotoMenu('/ui/member/m101/index?faces-redirect=true', 'M101Controller', 'menu.member.m101')}"/>
-                            <p:menuitem id="menuM102" value="#{msgs['menu.member.m102']}" action ="#{naviController.gotoMenu('/ui/member/m102/index?faces-redirect=true', 'M102Controller', 'menu.member.m102')}"/>
-                            <p:menuitem id="menuM103" value="#{msgs['menu.member.m103']}" action ="#{naviController.gotoMenu('/ui/member/m103/index?faces-redirect=true', 'M103Controller', 'menu.member.m103')}"/>
-                        </p:submenu>
-
-                        <p:submenu id="menuA" label="#{msgs['menu.affiliate']}" icon="fa fa-filter" rendered="#{p:ifAnyGranted('ROLE_PG,ROLE_ADMIN,ROLE_SUPER,ROLE_STAFF,ROLE_AUDIT')}">
-                            <p:menuitem id="menuA101" value="#{msgs['menu.affiliate.a101']}" action ="#{naviController.gotoMenu('/ui/affiliate/a101/index?faces-redirect=true', 'A101Controller', 'menu.affiliate.a101')}"/>
-                            <p:menuitem id="menuA102" value="#{msgs['menu.affiliate.a102']}" action ="#{naviController.gotoMenu('/ui/affiliate/a102/index?faces-redirect=true', 'A102Controller', 'menu.affiliate.a102')}"/>
-                            <p:menuitem id="menuA103" value="#{msgs['menu.affiliate.a103']}" action ="#{naviController.gotoMenu('/ui/affiliate/a103/index?faces-redirect=true', 'A103Controller', 'menu.affiliate.a103')}"/>
-                            <p:menuitem id="menuA104" value="#{msgs['menu.affiliate.a104']}" action ="#{naviController.gotoMenu('/ui/affiliate/a104/index?faces-redirect=true', 'A104Controller', 'menu.affiliate.a104')}"/>
-                            <p:menuitem id="menuA105" value="#{msgs['menu.affiliate.a105']}" action ="#{naviController.gotoMenu('/ui/affiliate/a105/index?faces-redirect=true', 'A105Controller', 'menu.affiliate.a105')}"/>
-                        </p:submenu>
-
-                        <p:submenu id="menuC" label="#{msgs['menu.cash']}" icon="fa fa-dollar" rendered="#{p:ifAnyGranted('ROLE_PG,ROLE_ADMIN,ROLE_SUPER,ROLE_STAFF,ROLE_AUDIT')}">
-                            <p:menuitem id="menuC101" value="#{msgs['menu.cash.c101']}" action ="#{naviController.gotoMenu('/ui/cash/c101/index?faces-redirect=true', 'C101Controller', 'menu.cash.c101')}"/>
-                            <p:menuitem id="menuC102" value="#{msgs['menu.cash.c102']}" rendered="#{p:ifAnyGranted('ROLE_PG,ROLE_ADMIN,ROLE_SUPER')}"
-                                        action ="#{naviController.gotoMenu('/ui/cash/c102/index?faces-redirect=true', 'C102Controller', 'menu.cash.c102')}"/>
-                            <p:menuitem id="menuC103" value="#{msgs['menu.cash.c103']}" action ="#{naviController.gotoMenu('/ui/cash/c103/index?faces-redirect=true', 'C103Controller', 'menu.cash.c103')}"/>
-                            <p:menuitem id="menuC104" value="#{msgs['menu.cash.c104']}" action ="#{naviController.gotoMenu('/ui/cash/c104/index?faces-redirect=true', 'C104Controller', 'menu.cash.c104')}"/>
-                            <p:menuitem id="menuC105" value="#{msgs['menu.cash.c105']}" action ="#{naviController.gotoMenu('/ui/cash/c105/index?faces-redirect=true', 'C105Controller', 'menu.cash.c105')}"/>
-                        </p:submenu>
-
-                        <p:submenu id ="menuP" label="#{msgs['menu.commission']}" icon="fa fa-gavel" rendered="#{p:ifAnyGranted('ROLE_PG,ROLE_ADMIN,ROLE_SUPER,ROLE_STAFF,ROLE_AUDIT')}">
-                            <p:menuitem id ="menuP101" value="#{msgs['menu.commission.p101']}" action ="#{naviController.gotoMenu('/ui/commission/p101/index?faces-redirect=true', 'P101Controller', 'menu.commission.p101')}"/>
-                            <p:menuitem id ="menuP102" value="#{msgs['menu.commission.p102']}" action ="#{naviController.gotoMenu('/ui/commission/p102/index?faces-redirect=true', 'P102Controller', 'menu.commission.p102')}"/>
-                            <p:menuitem id ="menuP103" value="#{msgs['menu.commission.p103']}" action ="#{naviController.gotoMenu('/ui/commission/p103/index?faces-redirect=true', 'P103Controller', 'menu.commission.p103')}"/>                
-                        </p:submenu>
-
+                        
                         <p:submenu id ="menuR" label="#{msgs['menu.report']}" icon="fa fa-bar-chart" rendered="#{p:ifAnyGranted('ROLE_PG,ROLE_ADMIN,ROLE_SUPER,ROLE_STAFF')}">
                             <p:menuitem id ="menuR101" value="#{msgs['menu.report.r101']}" action ="#{naviController.gotoMenu('/ui/report/r101/index?faces-redirect=true', 'R101Controller', 'menu.report.r101')}"/>
                             <p:menuitem id ="menuR102" value="#{msgs['menu.report.r102']}" action ="#{naviController.gotoMenu('/ui/report/r102/index?faces-redirect=true', 'R102Controller', 'menu.report.r102')}"/>

@@ -9,7 +9,7 @@
         </div>
 
         <div class="topbar-right">
-
+            <!--
             <h:form id="frmPoll">
                 <p:poll interval="#{gController.intervalPoll}" listener="#{loginController.putData2Global()}" global="false"/>
                 <p:poll interval="#{userInfoController.adminUser.refresh}" listener="#{notiController.chkNotify()}" global="false" update=":frmPoll :topbarForm:notify :topbarForm:dNotify :topbarForm:wNotify"/>
@@ -17,7 +17,7 @@
                     <audio autoplay='true' src="#{commonController.mp3}"></audio>
                 </p:panel>
             </h:form>
-
+-->
             <h:form id="topbarForm">
 
                 <a id="menu-button" href="#">
@@ -53,6 +53,10 @@
                     </li>
 
                     <li>
+                        <h:outputText class="ui-icon ui-icon-grip-dotted-vertical" />
+                        <p:clock pattern="dd-MM-yyyy HH:mm:ss" mode="server"/>
+                        <h:outputText class="ui-icon ui-icon-grip-dotted-vertical" />
+                      <!--
                         <a href="#">
                             <i class="topbar-icon material-icons fa fa-fw fa-bell-o">
                                 <span class="topbar-badge animated rubberBand">
@@ -71,6 +75,7 @@
                                                action="/ui/cash/c103/index?faces-redirect=true"/>                                               
                             </li>
                         </ul>
+                      -->
                     </li>
                 </ul>
             </h:form>

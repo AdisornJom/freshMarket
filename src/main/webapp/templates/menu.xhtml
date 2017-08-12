@@ -36,9 +36,7 @@
                             <p:menuitem id ="menuS101" value="#{msgs['menu.setting.s101']}" action ="#{naviController.gotoMenu('/ui/setting/s101/index?faces-redirect=true', 'S101Controller', 'menu.setting.s101')}"/>
                             <p:menuitem id ="menuS102" value="#{msgs['menu.setting.s102']}" action ="#{naviController.gotoMenu('/ui/setting/s102/index?faces-redirect=true', 'S102Controller', 'menu.setting.s102')}"/>
                             <p:menuitem id ="menuS103" value="#{msgs['menu.setting.s103']}" action ="#{naviController.gotoMenu('/ui/setting/s103/index?faces-redirect=true', 'S103Controller', 'menu.setting.s103')}"/>
-                            <p:menuitem id ="menuS104" value="#{msgs['menu.setting.s104']}" rendered="false" action ="#{naviController.gotoMenu('/ui/setting/s104/index?faces-redirect=true', 'S104Controller', 'menu.setting.s104')}"/>                
-                            <p:menuitem id ="menuS105" value="#{msgs['menu.setting.s105']}" rendered="false" action ="#{naviController.gotoMenu('/ui/setting/s105/index?faces-redirect=true', 'S105Controller', 'menu.setting.s105')}"/>
-
+                          
                             <p:menuitem id ="menuS106" value="#{msgs['menu.setting.s106']}" rendered="#{p:ifAnyGranted('ROLE_PG')}"
                                         action ="#{naviController.gotoMenu('/ui/setting/s106/index?faces-redirect=true', 'S106Controller', 'menu.setting.s106')}"/>
                             <p:menuitem id ="menuS107" value="#{msgs['menu.setting.s107']}" action="#{s107Controller.openView()}"/>

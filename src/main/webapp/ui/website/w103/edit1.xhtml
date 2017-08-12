@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/default-template.xhtml">
+    
+    <ui:define name="viewname">#{msgs['menu.website.w103']}</ui:define>
+
+    <ui:define name="content">
+        <h:form id="edit1Form">
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                    <p:messages id="edit_msg" autoUpdate="false" showIcon="false"/>
+                </div>
+                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                    <p:fieldset legend="#{msgs['w103.mainads']}" style="border: 0px;">
+                        <p:panel style="max-width: 960px;margin-bottom: 10px;border-right: 0px;border-radius: 0px;">
+                            <div class="ui-fluid">
+                                <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-3,ui-grid-col-8" styleClass="ui-panelgrid-blank form-group">
+                                    <h:panelGroup>
+                                        <p:outputLabel value="#{msgs['w103.lang']} :"/>
+                                        <font class="require" style="color: red">*</font>
+                                    </h:panelGroup>
+
+                                    <p:selectOneMenu var="t" value="#{w103Controller.lang}" panelStyle="border: 0px;" converter="langConverter">
+                                        <f:selectItems var="lang" value="#{localeController.langs}" itemLabel="#{lang.country}" itemValue="#{lang}"/>
+                                        <p:column>
+                                            <h:graphicImage value="./resources/images/flag/#{t.flag}" style="border: 0px;"/>
+                                            <h:outputText value=" #{t.country}" />
+                                        </p:column>
+                                    </p:selectOneMenu>
+
+                                    <h:panelGroup>
+                                        <p:outputLabel value="#{msgs['w103.linkname']} :"/>
+                                        <font class="require" style="color: red">*</font>
+                                    </h:panelGroup>
+
+                                    <p:inputText value="#{w103Controller.advertisement.name}" readonly="true" styleClass="readonly"/>
+
+                                    <h:panelGroup>
+                                        <p:outputLabel value="#{msgs['w103.detail']} :"/>
+                                        <font class="require" style="color: red">*</font>
+                                    </h:panelGroup>
+
+                                    <p:inputTextarea rows="2" value="#{w103Controller.advertisement.detail}"/>
+
+                                    <p:outputLabel value="#{msgs['w103.image.ori']} :"/>
+                                    <h:panelGroup>
+                                          <h:graphicImage value="#{commonController.IMAGES_URL}/adv/#{w103Controller.advertisement.img}" style="max-width: 100%;"/>
+                                    </h:panelGroup>
+
+                                    <p:outputLabel value="#{msgs['w103.newimage']}  :"/>
+                                    <h:panelGroup id="newimg">
+                                        <h:graphicImage value="#{commonController.IMAGES_URL}/adv/#{w103Controller.newFile_adv}" style="max-width: 100%;"/><br/>
+                                    </h:panelGroup>
+
+                                    <p:outputLabel value="#{msgs['w103.upload']} :"/>
+                                    <h:panelGroup>
+                                        <p:fileUpload fileUploadListener="#{w103Controller.handleFileUpload1}"
+                                                      auto="true"
+                                                      mode="advanced"
+                                                      skinSimple="true"
+                                                      sizeLimit="250000"
+                                                      cancelLabel="#{msgs['btn.cancel']}"
+                                                      uploadLabel="#{msgs['btn.upload']}"
+                                                      label="#{msgs['btn.choose']}"
+                                                      allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                                                      style="margin-bottom: 4px;" update="newimg"/>
+                                         <h:outputLabel value="#{msgs['w103.image.remark']}" style="font-weight: bolder;" styleClass="sub-label"/>
+                                    </h:panelGroup>
+
+                                     <h:panelGroup >
+                                         <p:outputLabel value="#{msgs['w103.link.url']} ："/>
+                                     </h:panelGroup> 
+                                     <p:inputTextarea value="#{w103Controller.advertisement.linkUrl}"  rows="4" maxlength="480" />   
+
+                                    <h:panelGroup >
+                                        <p:outputLabel value="#{msgs['w103.target.url']} ："/>
+                                    </h:panelGroup> 
+                                    <p:selectOneMenu id="status" value="#{w103Controller.advertisement.linkTarget}"  style="width: 180px;">
+                                        <f:selectItem itemLabel="-" itemValue="" />
+                                        <f:selectItem itemLabel="#{PFConstants.LINK_TARGET_BLANK}" itemValue="#{PFConstants.LINK_TARGET_BLANK}"/>
+                                        <f:selectItem itemLabel="#{PFConstants.LINK_TARGET_SELF}" itemValue="#{PFConstants.LINK_TARGET_SELF}"/>
+                                    </p:selectOneMenu>
+
+                                    <h:panelGroup>
+                                        <p:outputLabel value="#{msgs['w106.seq']} :"/>
+                                        <font class="require" style="color: red">*</font>
+                                    </h:panelGroup>
+                                    <p:spinner value="#{w103Controller.advertisement.seq}" min="1" max="10"/>
+
+                                    <h:panelGroup>
+                                        <p:outputLabel value="#{msgs['common.status']} :"/>
+                                        <font class="require" style="color: red">*</font>
+                                    </h:panelGroup>
+                                    <p:selectOneRadio value="#{w103Controller.advertisement.status}" >
+                                        <f:selectItem itemLabel="#{msgs['common.on']}" itemValue="#{PFConstants.COMMON_STATUS_OPEN}"/>
+                                        <f:selectItem itemLabel="#{msgs['common.off']}" itemValue="#{PFConstants.COMMON_STATUS_CLOSE}"/>
+                                    </p:selectOneRadio>
+                                </p:panelGrid>
+                            </div>
+                        </p:panel>
+                    </p:fieldset>
+                </div>
+                <h:panelGrid columns="2" cellpadding="0" cellspacing="1" style="margin-left: 15px;margin-bottom: 10px;">
+                     <p:commandButton binding="#{bindingController.btnSave}" value="#{msgs['btn.save']}" action="#{w103Controller.edit1()}"
+                                 styleClass="edit-btn" update="edit1Form:edit_msg"/>
+
+                    <p:commandButton binding="#{bindingController.btnCancel}" value="#{msgs['btn.cancel']}" styleClass="clear-btn" 
+                                     action="#{w103Controller.cancel1()}"/>
+                </h:panelGrid>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

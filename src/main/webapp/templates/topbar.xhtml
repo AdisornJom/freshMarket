@@ -1,0 +1,80 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+    <div class="topbar clearfix">
+        <div class="topbar-left">
+            <div class="logo"></div>
+        </div>
+
+        <div class="topbar-right">
+
+            <h:form id="frmPoll">
+                <p:poll interval="#{gController.intervalPoll}" listener="#{loginController.putData2Global()}" global="false"/>
+                <p:poll interval="#{userInfoController.adminUser.refresh}" listener="#{notiController.chkNotify()}" global="false" update=":frmPoll :topbarForm:notify :topbarForm:dNotify :topbarForm:wNotify"/>
+                <p:panel id="audioNoti" rendered="#{notiController.toggleSound}" visible="false">
+                    <audio autoplay='true' src="#{commonController.mp3}"></audio>
+                </p:panel>
+            </h:form>
+
+            <h:form id="topbarForm">
+
+                <a id="menu-button" href="#">
+                    <i class="fa fa-angle-left"></i>
+                </a>
+                <a id="topbar-menu-button" href="#">
+                    <i class="fa fa-bars"></i>
+                </a>
+                <ul class="topbar-items fadeInDown animated">
+                    <li class="profile-item">
+                        <a href="#">                            
+                            <div class="topbar-icon material-icons fa fa-fw fa-user"></div>
+                            <span class="topbar-item-name">#{userInfoController.adminUser.username}</span>
+                        </a>
+                        <ul class="poseidon-menu animated">
+                            <li role="menuitem">
+                                <span>
+                                    <p:commandLink value="#{msgs['menu.profile']}" action="/ui/user-info/profile?faces-redirect=true"/>
+                                </span>
+                            </li>
+                            <li role="menuitem">
+                                <span>
+                                    <p:commandLink value="#{msgs['menu.log']}" action ="#{naviController.gotoMenu('/ui/user-info/user-logs?faces-redirect=true', 'userLogController', 'menu.log')}"/>
+                                </span>
+                            </li>
+                            <li role="menuitem">
+                                <span>
+                                    <p:commandLink value="#{msgs['menu.logout']}" actionListener="#{loginController.logout()}"/>
+                                </span>
+                            </li>
+
+                        </ul>
+                    </li>
+
+                    <li>
+                        <a href="#">
+                            <i class="topbar-icon material-icons fa fa-fw fa-bell-o">
+                                <span class="topbar-badge animated rubberBand">
+                                    <p:outputLabel id="notify" class="topbar-badge animated rubberBand" value="#{notiController.deposit + notiController.withdraw}" />
+                                </span>
+
+                            </i>
+                        </a>
+                        <ul class="poseidon-menu animated">
+                            <li role="menuitem">
+                                <p:commandLink id="dNotify" class="animated rubberBand" style="color: blue"   value="#{msgs['notify.deposit']} #{notiController.deposit}"
+                                               action="/ui/cash/c101/index?faces-redirect=true"/>
+                            </li>
+                            <li role="menuitem">
+                                <p:commandLink id="wNotify" class="animated rubberBand" style="color: red"   value="#{msgs['notify.withdraw']} #{notiController.withdraw}"
+                                               action="/ui/cash/c103/index?faces-redirect=true"/>                                               
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </h:form>
+        </div>
+    </div>
+
+</ui:composition>

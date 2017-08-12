@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="/templates/default-template.xhtml">
+
+    <ui:define name="viewname">#{msgs['menu.report.r103']} #{msgs['api.allbet']} / #{msgs['detail']}</ui:define>
+
+    <ui:define name="content">
+        <h:form id="casinoAllbetForm">
+            <p:dataTable  var="casinoAllbet" rowIndexVar="rowNumber" value="#{r103Controller.casinoAllbets}" 
+                          binding="#{bindingController.defaultDataTableModel}" >
+                <f:facet name="header">
+                    <div class="ui-g ui-fluid">
+                        <div class="ui-g-12 ui-md-6 ui-lg-1">
+                            <p:commandButton binding="#{bindingController.btnBack}" value="#{msgs['btn.back']}" 
+                                             action="#{r103Controller.cancel()}" styleClass="clear-btn"/>
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-2">
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-2">
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-2">
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-2">
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-2">
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-1">
+                        </div>
+                    </div>
+                </f:facet>
+
+                <p:column headerText="#{msgs['order']}" style="text-align: center;width: 32px;">
+                    <h:outputText value="#{(rowNumber+1)}" />
+                </p:column>
+                <p:column headerText="#{msgs['r104.bettingdetail']}" style="text-align: center;width: 150px;">
+                    <h:outputText value="#{casinoAllbet.betNum}" styleClass="lb_bold" style="color: blue;"/>
+                </p:column>
+                <p:column headerText="#{msgs['datetime']}" sortBy="#{casinoAllbet.betTime}" style="text-align: center;width: 120px;">
+                    <h:outputText value="#{casinoAllbet.betTime}">
+                        <f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="#{msgs['gametype']}" sortBy="#{casinoAllbet.gameType}" style="text-align: center;">
+                    <h:outputText value="#{casinoAllbet.gameType == 101 ? 'Baccarat' : casinoAllbet.gameType == 102 ? 'VIP Baccarat' : 
+                                           casinoAllbet.gameType == 103 ? 'Quick Baccarat' : casinoAllbet.gameType == 104 ? 'BidMe' :
+                                           casinoAllbet.gameType == 201 ? 'Sicbo' : casinoAllbet.gameType == 301 ? 'DragonTiger' :
+                                           casinoAllbet.gameType == 401 ? 'Roulette' : casinoAllbet.gameType}"/>
+                </p:column>
+                <p:column headerText="#{msgs['r103.result']}" sortBy="#{casinoAllbet.gameResult}" style="text-align: center;">
+                    <h:outputText value="#{casinoAllbet.gameResult}"/>
+                </p:column>
+                <p:column headerText="#{msgs['tableName']}" sortBy="#{casinoAllbet.tableName}" style="width: 100px;text-align: center;">
+                    <h:outputText value="#{casinoAllbet.tableName}" styleClass="lb_bold"/>
+                </p:column>
+                <p:column headerText="#{msgs['betamt']}" style="width: 140px;text-align: right;">
+                    <h:outputText value="#{casinoAllbet.betAmount}" styleClass="lb_bold">
+                        <f:convertNumber pattern="#,##0.00"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="#{msgs['winloss']}" sortBy="#{casinoAllbet.winOrLoss}" style="width: 100px;">
+                    <h:outputText value="#{casinoAllbet.winOrLoss}" styleClass="lb_bold" style="float: right;color:#{casinoAllbet.winOrLoss >= 0 ? 'blue' : 'red'}">
+                        <f:convertNumber pattern="#,##0.00"/>
+                    </h:outputText>
+                </p:column>
+                <p:columnGroup type="footer">
+                    <p:row>
+                        <p:column colspan="6" footerText="#{msgs['total']}" style="font-weight: bold;text-align:right;">
+                        </p:column>
+                        <p:column footerText="#{r103Controller.casinoAllbetTurnover}" style="font-weight: bold;text-align:right;color:blue;">
+                        </p:column>
+                        <p:column footerText="#{r103Controller.casinoAllbetWinlose}" style="font-weight: bold;text-align:right;color:#{r103Controller.casinoAllbetWinloseFlag ? 'red' : 'blue'};">
+                        </p:column>
+                    </p:row>
+                </p:columnGroup>
+                <f:facet name="footer">
+                    <h:outputText value="#{msgs['data']} "/>
+                    <h:outputText value="#{r103Controller.casinoAllbets.size()}">
+                        <f:convertNumber pattern="#,###"/>
+                    </h:outputText>
+                    <h:outputText value=" #{msgs['items']}"/>
+                </f:facet>
+            </p:dataTable>
+        </h:form>
+    </ui:define>
+</ui:composition>

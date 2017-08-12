@@ -1,0 +1,141 @@
+body {
+    /*background-color: #ffffff;*/
+    font-size: 12px;
+    font-family: Verdana, "Verdana CE",  Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
+    /*color: #000000;*/  
+    margin: 10px;
+}
+
+h1 {
+    font-family: Arial, "Arial CE", "Lucida Grande CE", lucida, "Helvetica CE", sans-serif;
+    border-bottom: 1px solid #AFAFAF; 
+    font-size:  16px;
+    font-weight: bold;
+    margin: 0px;
+    padding: 0px;
+    color: #D20005;
+}
+
+a:link, a:visited {
+    color: #045491;
+    font-weight : bold;
+    text-decoration: none;
+}
+
+a:link:hover, a:visited:hover  {
+    color: #045491;
+    font-weight : bold;
+    text-decoration : underline;
+}
+
+.lb_bold{
+    font-weight: bold;
+}
+
+.ui-fieldset .ui-fieldset-legend {
+    font-weight: bold;
+    box-shadow:2px 2px 0px #666666;
+}
+
+.ui-selectonemenu {
+    color: #999;
+}
+
+.ui-bank {
+    background-position: 0 0;
+    width: 31px;
+    height: 31px;
+}
+.ui-bank-BBL {
+    background: url(../../resources/images/bank/bbl.png) no-repeat top left;
+    display: block;
+}
+.ui-bank-KTB {
+    background: url(../../resources/images/bank/ktb.png) no-repeat top left;
+    display: block;
+}
+.ui-bank-BAY {
+    background: url(../../resources/images/bank/bay.png) no-repeat top left;
+    display: block;
+}
+.ui-bank-KBANK {
+    background: url(../../resources/images/bank/kbank.png) no-repeat top left;
+    display: block;
+}
+.ui-bank-KK {
+    background: url(../../resources/images/bank/kk.png) no-repeat top left;
+    display: block;
+}
+.ui-bank-CIMB {
+    background: url(../../resources/images/bank/cimb.png) no-repeat top left;
+    display: block;
+}
+.ui-bank-TMB {
+    background: url(../../resources/images/bank/tmb.png) no-repeat top left;
+    display: block;
+}
+.ui-bank-TISCO {
+    background: url(../../resources/images/bank/tisco.png) no-repeat top left;
+    display: block;
+}
+.ui-bank-SCB {
+    background: url(../../resources/images/bank/scb.png) no-repeat top left;
+    display: block;
+}
+.ui-bank-TBANK {
+    background: url(../../resources/images/bank/tbank.png) no-repeat top left;
+    display: block;
+}
+.ui-bank-UOB {
+    background: url(../../resources/images/bank/uob.png) no-repeat top left;
+    display: block;
+}
+.ui-bank-LHBANK {
+    background: url(../../resources/images/bank/lhbank.png) no-repeat top left;
+    display: block;
+}
+.ui-bank-SCBT {
+    background: url(../../resources/images/bank/scbt.png) no-repeat top left;
+    display: block;
+}
+.ui-bank-ICBC {
+    background: url(../../resources/images/bank/icbc.png) no-repeat top left;
+    display: block;
+}
+
+.mandatory .ui-datepicker {
+    background-color: #ccff99;
+}
+
+.mandatory .ui-inputfield {
+    background-color: #ccff99;
+}
+
+.mandatory .ui-inputtext{
+    background-color: #ccff99;
+}
+
+.mandatory {
+    background-color: #ccff99 !important;
+}
+
+.readonly .ui-datepicker {
+    background-color: #C0C0C0;
+}
+
+
+.readonly .ui-inputfield {
+    background-color: #C0C0C0;
+}
+
+.readonly .ui-inputtext{
+    background-color: #C0C0C0;
+}
+
+.readonly {
+    background-color: #C0C0C0 !important;
+}
+
+.ui-editor iframe {
+    max-width:100% !important;
+}

@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <h:form id="listForm">
+        <p:outputPanel deferred="true" deferredMode="visible">
+            <p:dataTable id="r102dtb" binding="#{bindingController.lazyDataTableModel}" value="#{r102Controller.lazyModel}" var="item">
+                <f:facet name="header">
+                    <div class="ui-g ui-fluid">
+                        <div class="ui-g-12 ui-md-6 ui-lg-1">
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-2">
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-2">
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-2">
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            <p:calendar binding="#{bindingController.calendar}" value="#{r102Controller.startDate}" placeholder="#{msgs['common.startDate']}"/>
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            <p:calendar binding="#{bindingController.calendar}" value="#{r102Controller.toDate}" placeholder="#{msgs['common.toDate']}"/>
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-1">
+                            <p:commandButton binding="#{bindingController.btnSearch}" value="#{msgs['btn.search']}" styleClass="search-btn" 
+                                             actionListener="#{r102Controller.search()}" update="listForm"/>
+                        </div>
+                    </div>
+                </f:facet>
+
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="#{msgs['common.seq']}" />
+                    </f:facet>
+                    <h:outputText value="#{(rowNumber+1)}" />
+                </p:column>
+
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="#{msgs['common.username']}" />
+                    </f:facet>
+                    <h:outputText value="#{item.username}"/>
+                    <f:facet name="footer">
+                        <h:outputText value="#{msgs['common.total']}" style="float: right;font-weight: bold" />
+                    </f:facet>
+                </p:column>
+
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="#{msgs['r102.totaldeposit']}" />
+                    </f:facet>
+                    <h:outputText value="#{item.sumDeposit}" style="float: right;">
+                        <f:convertNumber  pattern="#,##0.00"/>
+                    </h:outputText>
+                    <f:facet name="footer">
+                        <h:outputText id="txt1" value="#{r102Controller.sumDeposit}" style="float: right;font-weight: bold">
+                            <f:convertNumber  pattern="#,##0.00"/>
+                        </h:outputText>
+                    </f:facet>
+                </p:column>
+
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="#{msgs['r102.totalwithdraw']}" />
+                    </f:facet>
+                    <h:outputText value="#{item.sumWithdraw}" style="float: right;">
+                        <f:convertNumber  pattern="#,##0.00"/>
+                    </h:outputText>
+                    <f:facet name="footer">
+                        <h:outputText value="#{r102Controller.sumWithdraw}" style="float: right;font-weight: bold">
+                            <f:convertNumber  pattern="#,##0.00"/>
+                        </h:outputText>
+                    </f:facet>
+                </p:column>
+
+                <p:column >
+                    <f:facet name="header">
+                        <h:outputText value="#{msgs['r102.totalbonus']}" />
+                    </f:facet>
+                    <h:outputText value="#{item.sumPoint}" style="float: right;">
+                        <f:convertNumber  pattern="#,##0.00"/>
+                    </h:outputText>
+                    <f:facet name="footer">
+                        <h:outputText value="#{r102Controller.sumBonus}" style="float: right;font-weight: bold">
+                            <f:convertNumber  pattern="#,##0.00"/>
+                        </h:outputText>
+                    </f:facet>
+                </p:column>
+
+                <f:facet name="footer">
+                    <h:outputText value="#{msgs['messages.code.2022']} "/>
+                    <h:outputText value="#{r102Controller.lazyModel.rowCount}">
+                        <f:convertNumber pattern="#,##0"/>
+                    </h:outputText>
+                    <h:outputText value=" #{msgs['messages.code.2023']}"/>
+                </f:facet>
+            </p:dataTable>
+        </p:outputPanel>
+    </h:form>
+
+</ui:composition>

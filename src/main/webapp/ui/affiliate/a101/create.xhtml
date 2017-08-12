@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="/templates/default-template.xhtml">
+
+    <ui:define name="viewname">#{msgs['menu.affiliate.a101']} / #{msgs['btn.add']}</ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="listForm">
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                    <p:messages id="edit_msg" autoUpdate="false" showIcon="false"/>
+                </div>
+                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                    <p:fieldset legend="#{msgs['title.agentgroup.add']}" style="border: 0px;">
+                        <p:panel style="margin-bottom: 10px;border-right: 0px;border-radius: 0px;">
+                            <div class="ui-fluid">
+                                <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-3,ui-grid-col-9" styleClass="ui-panelgrid-blank">
+                                    <h:panelGroup>
+                                        <p:outputLabel value="#{msgs['a101.groupname']}"/>
+                                        <font class="require" style="color: red">*</font>
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <p:inputText value="#{a101Controller.selected.groupName}"/>
+                                        <p:outputLabel value="#{msgs['a101.tip1']}" styleClass="sub-label"/>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup>
+                                        <p:outputLabel value="#{msgs['a101.member']}"/>
+                                        <font class="require" style="color: red">*</font>
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <p:spinner value="#{a101Controller.selected.member}" min="0" >
+                                            <f:convertNumber pattern="##0"/>
+                                        </p:spinner>
+                                        <p:outputLabel value="#{msgs['a101.tip2']}" styleClass="sub-label"/>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup>
+                                        <p:outputLabel value="#{msgs['turnover']}"/>
+                                        <font class="require" style="color: red">*</font>
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <p:spinner value="#{a101Controller.selected.turnover}" min="0" >
+                                            <f:convertNumber pattern="##0"/>
+                                        </p:spinner>
+                                        <p:outputLabel value="#{msgs['a101.tip3']}" styleClass="sub-label"/>
+                                    </h:panelGroup>
+                                </p:panelGrid>
+                                <ui:repeat var="item" value="#{a101Controller.details}">
+                                    <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-3,ui-grid-col-9" styleClass="ui-panelgrid-blank">
+                                        <h:panelGroup>
+                                            <p:outputLabel value="#{msgs[item.apiName.langCode]}"/>
+                                            <font class="require" style="color: red">*</font>
+                                        </h:panelGroup>
+                                        <h:panelGroup>
+                                            <p:spinner value="#{item.agentGroupApi.apiValue}" stepFactor="0.25">
+                                                <f:convertNumber pattern="##0.00"/>
+                                            </p:spinner>
+                                            <br/>
+                                            <p:outputLabel value="#{msgs['a101.tip3']}" styleClass="sub-label"/>
+                                        </h:panelGroup>
+                                    </p:panelGrid>
+                                </ui:repeat>
+                            </div>
+                        </p:panel>
+                    </p:fieldset>
+                </div>
+                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                    <h:panelGrid columns="2">
+                        <p:commandButton binding="#{bindingController.btnSave}" value="#{msgs['btn.save']}" 
+                                         action="#{a101Controller.create()}" styleClass="edit-btn" update="edit_msg"/>
+                        <p:commandButton binding="#{bindingController.btnCancel}" value="#{msgs['btn.cancel']}" 
+                                         action="#{a101Controller.cancel()}" styleClass="clear-btn" update="edit_msg"/>
+                    </h:panelGrid>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

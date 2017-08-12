@@ -1,0 +1,74 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/default-template.xhtml">
+
+    <ui:define name="viewname">#{msgs['menu.website.w101']}</ui:define>
+
+    <ui:define name="content">
+        <h:form id="listForm">
+            <p:messages id="edit_msg" autoUpdate="false" showIcon="false" style="margin-left: auto;margin-right: auto;"/>
+            
+            <p:fieldset legend="#{msgs['w101.cfg.general']}" style="border: 0px;">
+                <p:panel style="max-width: 960px;margin-bottom: 10px;border-right: 0px;border-radius: 0px;">
+                    <div class="ui-fluid">
+                        <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-3,ui-grid-col-8" styleClass="ui-panelgrid-blank form-group">
+                            <h:panelGroup>
+                                <h:outputText value="#{msgs['w101.title']} ：" styleClass="lb_bold"/>
+                                <font class="require" style="color: red">*</font>
+                            </h:panelGroup>
+                            <p:inputText  value="#{w101Controller.title}" />
+                            <h:panelGroup>
+                                <h:outputText value="#{msgs['c101.user.email']} ：" styleClass="lb_bold"/>
+                                <font class="require" style="color: red">*</font>
+                            </h:panelGroup>
+                            <p:inputText  value="#{w101Controller.email}" />
+
+                            <h:panelGroup>
+                                <h:outputText value="#{msgs['a201.profile.mobile']} 1 ：" styleClass="lb_bold"/>
+                                <font class="require" style="color: red">*</font>
+                            </h:panelGroup>
+                            <p:inputText  value="#{w101Controller.telno}"/>
+
+                            <h:panelGroup>
+                                <h:outputText value="#{msgs['a201.profile.mobile']} 2 ：" styleClass="lb_bold"/>
+                            </h:panelGroup>
+                            <p:inputText  value="#{w101Controller.telno1}"/>
+                            
+                             <h:panelGroup>
+                                <h:outputText value="#{msgs['a201.profile.mobile']} 3 ：" styleClass="lb_bold"/>
+                            </h:panelGroup>
+                            <p:inputText  value="#{w101Controller.telno2}"/>
+                            
+                             <h:panelGroup>
+                                <h:outputText value="#{msgs['a201.profile.mobile']} 4 ：" styleClass="lb_bold"/>
+                            </h:panelGroup>
+                            <p:inputText  value="#{w101Controller.telno3}"/>
+                            
+                            <h:panelGroup>
+                                <h:outputText value="#{msgs['a201.profile.mobile']} 5 ：" styleClass="lb_bold"/>
+                            </h:panelGroup>
+                            <p:inputText  value="#{w101Controller.telno4}"/>
+
+                            <h:panelGroup>
+                                <h:outputText value="#{msgs['w101.lineid']} ：" styleClass="lb_bold"/>
+                                <font class="require" style="color: red">*</font>
+                            </h:panelGroup>
+                            <p:inputText  value="#{w101Controller.lineid}" />
+
+                        </p:panelGrid>
+                    </div>
+                </p:panel>
+            </p:fieldset>
+            <h:panelGrid columns="2" cellpadding="0" cellspacing="1" style="margin-top: 10px;">
+                <p:commandButton binding="#{bindingController.btnSave}" value="#{msgs['btn.save']}" styleClass="edit-btn"
+                                 actionListener="#{w101Controller.editMainSetting()}" update="listForm"/>
+                <p:commandButton rendered="false" binding="#{bindingController.btnCancel}" value="#{msgs['btn.cancel']}" styleClass="clear-btn"/>
+            </h:panelGrid>
+            
+        </h:form>
+    </ui:define>
+
+</ui:composition>

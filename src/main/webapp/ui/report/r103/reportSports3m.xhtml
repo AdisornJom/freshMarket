@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="/templates/default-template.xhtml">
+
+    <ui:define name="viewname">#{msgs['menu.report.r103']} #{msgs['api.topsport']} / #{msgs['detail']}</ui:define>
+
+    <ui:define name="content">
+
+        <h:form id="sports3mForm">
+            <div class="ui-g">
+                <p:dataTable id="sports3m_id" var="sports3m" value="#{r103Controller.sports3mDetails}" 
+                             binding="#{bindingController.defaultDataTableModel}">
+                    <f:facet name="header">
+                        <div class="ui-g ui-fluid">
+                            <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                <p:commandButton binding="#{bindingController.btnBack}" value="#{msgs['btn.back']}" 
+                                                 action="#{r103Controller.cancel()}" styleClass="clear-btn"/>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                <p:selectOneMenu value="#{r103Controller.game3m}" placeholder="#{msgs['game']}">
+                                    <f:selectItem itemValue="" itemLabel="#{msgs['common.all']}"/>
+                                    <f:selectItem itemValue="HDP" itemLabel="HDP"/>
+                                    <f:selectItem itemValue="PAR" itemLabel="PAR"/>
+                                    <f:selectItem itemValue="CSR" itemLabel="CSR"/>
+                                    <f:selectItem itemValue="OU" itemLabel="OU"/>
+                                    <f:selectItem itemValue="TG" itemLabel="TG"/>
+                                    <f:selectItem itemValue="1X2" itemLabel="1X2"/>
+                                </p:selectOneMenu>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                <p:commandButton icon="fa fa-search" value="#{msgs['btn.search']}" styleClass="btn-search"
+                                                 action="#{r103Controller.findSports3m(false)}" update="sports3mForm"/>
+                            </div>
+                        </div>
+                    </f:facet>
+
+                    <p:column headerText="#{msgs['order']}" style="text-align: center;width: 32px;">
+                        <h:outputText value="#{(rowNumber+1)}" />
+                    </p:column>
+                    <p:column headerText="#{msgs['detail']}" style="text-align: center;width: 100px;">
+                        <h:outputText value="#{sports3m.id}" styleClass="lb_bold" style="color: blue;"/>
+                        <br/>
+                        <h:outputText value="#{sports3m.tranDate}">
+                            <f:convertDateTime pattern="dd-MM-yyyy"/>
+                        </h:outputText>
+                        <br/>
+                        <h:outputText value="#{sports3m.matchDate}"/>
+                    </p:column>
+                    <p:column headerText="#{msgs['event']}" sortBy="#{sports3m.game}">
+                        <h:outputText value="#{sports3m.leagueName}" style="font-size: 12px;color: #666666;"/><br/>
+                        <h:outputText value="#{sports3m.homeName} vs #{sports3m.awayName}" style="font-size: 12px;color: #666666;"/>
+                        <h:outputText value=" (#{sports3m.runScore})" style="font-size: 12px;color: #666666;" rendered="#{sports3m.runScore != ''}"/>
+                        <br/>
+                        <h:outputText value="#{sports3m.matchDate}" style="font-size: 12px;font-weight: bold;color: black;"/>
+                    </p:column>
+                    <p:column headerText="#{msgs['desc']}" style="width: 140px;">
+                        <h:panelGroup rendered="#{sports3m.game == 'PAR'}">
+                            <p:rowToggler />
+                            <h:outputText value="#{sports3m.game}" style="font-size: 10px;color: blue;"/>
+                            <h:outputText value=" @ (x #{sports3m.dataList.size()})"/>
+                            <br/>
+                        </h:panelGroup>
+                        <h:panelGroup rendered="#{sports3m.game != 'PAR'}">
+                            <h:outputText value="#{sports3m.homeName}" style="color: #{(sports3m.side eq '1' and sports3m.handicapS gt 0 )?'blue':'red'};" rendered="#{sports3m.side == '1' and sports3m.game != 'OU'}"/>
+                            <h:outputText value="#{sports3m.awayName}" style="color: #{(sports3m.side eq '2' and sports3m.handicapS gt 0 )?'blue':'red'};" rendered="#{sports3m.side == '2' and sports3m.game != 'OU'}"/>
+                            <h:outputText value="Over" style="color: blue;" rendered="#{sports3m.side == '1' and sports3m.game == 'OU'}"/>
+                            <h:outputText value="Under" style="color: red;" rendered="#{sports3m.side == '2' and sports3m.game == 'OU'}"/>
+                            <h:outputText value="#{sports3m.homeName}" rendered="#{sports3m.side == 'X'}"/>
+                            <br/>
+                            <h:outputText value="#{sports3m.game}" style="font-size: 10px;color: blue;"/>
+                            <h:outputText value="(#{msgs['win']})" style="color: blue;" rendered="#{sports3m.side != 'X' and sports3m.game == '1X2'}"/>
+                            <h:outputText value="(#{msgs['always']})" rendered="#{sports3m.side == 'X' and sports3m.game == '1X2'}"/>
+                            <br/>
+                        </h:panelGroup>
+                        <h:outputText value="#{sports3m.handicapS}" style="color: #{(sports3m.side eq '1' and sports3m.handicapS gt 0 )?'blue':'red'};font-size: 12px;" rendered="#{sports3m.side == '1' and sports3m.game != 'OU'}"/>
+                        <h:outputText value="#{sports3m.handicapS}" style="color: #{(sports3m.side eq '2' and sports3m.handicapS gt 0 )?'blue':'red'};font-size: 12px;" rendered="#{sports3m.side == '2' and sports3m.game != 'OU'}"/>
+                        <h:outputText value="#{sports3m.info}" style="color: blue;font-size: 12px;" rendered="#{sports3m.game == 'OU'}"/>
+                        <h:outputText value="@"  style="font-size: 12px;color: #666666;"/>
+                        <h:outputText value="#{sports3m.odds}" style="font-size: 12px;font-weight: bold;color: black;"/>
+                    </p:column>
+                    <p:column headerText="#{msgs['bet']}" sortBy="#{sports3m.betAmt}" style="width: 100px;">
+                        <h:outputText value="#{sports3m.betAmt}" style="font-weight: bold;float: right;">
+                            <f:convertNumber pattern="#,##0.00"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="#{msgs['winloss']}" sortBy="#{sports3m.winAmt}" style="width: 100px;">
+                        <h:outputText value="#{sports3m.winAmt}" style="font-weight: bold;float: right;color: #{sports3m.winAmt >= 0 ? 'blue' : 'red'};">
+                            <f:convertNumber pattern="#,##0.00"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="#{msgs['score']}" style="width: 100px;text-align: center;">
+                        <h:outputText value="#{sports3m.score}" />
+                    </p:column>
+                    <p:rowExpansion>
+                        <p:dataTable var="sports3mParlay" value="#{sports3m.dataList}" style="width: 790px;margin-left: -5px;" 
+                                     binding="#{bindingController.defaultDataTableModel}" paginator="false">
+                            <p:column headerText="#{msgs['order']}" style="text-align: center;width: 32px;">
+                                <h:outputText value="#{(rowNumber+1)}" />
+                            </p:column>
+                            <p:column headerText="#{msgs['event']}" sortBy="#{sports3mParlay.game}">
+                                <h:outputText value="#{sports3mParlay.leagueName}" style="font-size: 12px;color: #666666;"/><br/>
+                                <h:outputText value="#{sports3mParlay.homeName} vs #{sports3mParlay.awayName}" style="font-size: 12px;color: #666666;"/>
+                                <h:outputText value=" (#{sports3mParlay.runScore})" style="font-size: 12px;color: #666666;" rendered="#{sports3mParlay.runScore != ''}"/>
+                                <br/>
+                                <h:outputText value="#{sports3mParlay.matchDate}" style="font-size: 12px;font-weight: bold;color: black;"/>
+                            </p:column>
+                            <p:column headerText="#{msgs['desc']}" style="width: 140px;">
+                                <h:outputText value="#{sports3mParlay.homeName}" style="color: #{(sports3mParlay.side eq '1' and sports3mParlay.handicapS gt 0 )?'blue':'red'};" rendered="#{sports3mParlay.side == '1' and sports3mParlay.game != 'OU'}"/>
+                                <h:outputText value="#{sports3mParlay.awayName}" style="color: #{(sports3mParlay.side eq '2' and sports3mParlay.handicapS gt 0 )?'blue':'red'};" rendered="#{sports3mParlay.side == '2' and sports3mParlay.game != 'OU'}"/>
+                                <h:outputText value="Over" style="color: blue;" rendered="#{sports3mParlay.side == '1' and sports3mParlay.game == 'OU'}"/>
+                                <h:outputText value="Under" style="color: red;" rendered="#{sports3mParlay.side == '2' and sports3mParlay.game == 'OU'}"/>
+                                <h:outputText value="#{sports3mParlay.homeName}" rendered="#{sports3m.side == 'X'}"/>
+                                <br/>
+                                <h:outputText value="#{sports3mParlay.game}" style="font-size: 10px;color: blue;"/>
+                                <h:outputText value="(#{msgs['win']})" style="color: blue;" rendered="#{sports3mParlay.side != 'X' and sports3mParlay.game == '1X2'}"/>
+                                <h:outputText value="(#{msgs['always']})" rendered="#{sports3mParlay.side == 'X' and sports3mParlay.game == '1X2'}"/>
+                                <br/>
+                                <h:outputText value="#{sports3mParlay.handicapS}" style="color: #{(sports3mParlay.side eq '1' and sports3mParlay.handicapS gt 0 )?'blue':'red'};font-size: 12px;" rendered="#{sports3mParlay.side == '1' and sports3mParlay.game != 'OU'}"/>
+                                <h:outputText value="#{sports3mParlay.handicapS}" style="color: #{(sports3mParlay.side eq '2' and sports3mParlay.handicapS gt 0 )?'blue':'red'};font-size: 12px;" rendered="#{sports3mParlay.side == '2' and sports3mParlay.game != 'OU'}"/>
+                                <h:outputText value="#{sports3mParlay.info}" style="color: blue;font-size: 12px;" rendered="#{sports3mParlay.game == 'OU'}"/>
+                                <h:outputText value="@"  style="font-size: 12px;color: #666666;"/>
+                                
+                                <h:outputText value="#{sports3mParlay.odds}" style="font-size: 12px;font-weight: bold;color: black;"/>
+                            </p:column>
+                            <p:column headerText="#{msgs['score']}" style="width: 100px;text-align: center;">
+                                <h:outputText value="#{sports3mParlay.score}" />
+                            </p:column>
+                            <f:facet name="footer">
+                                <h:outputText value="#{msgs['data']} "/>
+                                <h:outputText value="#{sports3m.dataList.size()}">
+                                    <f:convertNumber pattern="#,###"/>
+                                </h:outputText>
+                                <h:outputText value=" #{msgs['items']}"/>
+                            </f:facet>
+                        </p:dataTable>
+                    </p:rowExpansion>
+                    <p:columnGroup type="footer">
+                        <p:row>
+                            <p:column colspan="4" footerText="#{msgs['r103.total']}" style="font-weight: bold;text-align:right;"></p:column>
+                            <p:column footerText="#{r103Controller.sports3mTurnover}" style="font-weight: bold;text-align:right;"></p:column>
+                            <p:column footerText="#{r103Controller.sports3mWinlose}" style="font-weight: bold;text-align:right;color:#{r103Controller.sports3mWinloseFlag ? 'red' : 'blue'};"></p:column>
+                            <p:column />
+                        </p:row>
+                    </p:columnGroup>
+                    <f:facet name="footer">
+                        <h:outputText value="#{msgs['data']} "/>
+                        <h:outputText value="#{r103Controller.sports3mDetails.size()}">
+                            <f:convertNumber pattern="#,###"/>
+                        </h:outputText>
+                        <h:outputText value=" #{msgs['items']}"/>
+                    </f:facet>
+                </p:dataTable>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

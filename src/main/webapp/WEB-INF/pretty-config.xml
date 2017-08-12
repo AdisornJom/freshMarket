@@ -1,0 +1,424 @@
+<pretty-config xmlns="http://ocpsoft.org/schema/rewrite-config-prettyfaces" 
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+               xsi:schemaLocation="http://ocpsoft.org/schema/rewrite-config-prettyfaces
+                      http://ocpsoft.org/xml/ns/prettyfaces/rewrite-config-prettyfaces.xsd">
+    
+    <url-mapping id="index">
+        <pattern value="/"/>
+        <view-id value="/index.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="default">
+        <pattern value="/Default"/>
+        <view-id value="/default.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="home">
+        <pattern value="/home"/>
+        <view-id value="/ui/dashboard/index.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="m101">
+        <pattern value="/members"/>
+        <view-id value="/ui/member/m101/index.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="m101-edit">
+        <pattern value="/member-edit"/>
+        <view-id value="/ui/member/m101/edit.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="m101-edit-regist">
+        <pattern value="/member-edit-regist"/>
+        <view-id value="/ui/member/m101/edit_regist.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="m102">
+        <pattern value="/member-groups"/>
+        <view-id value="/ui/member/m102/index.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="m102-create">
+        <pattern value="/member-groups-create"/>
+        <view-id value="/ui/member/m102/create.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="m102-edit">
+        <pattern value="/member-groups-edit"/>
+        <view-id value="/ui/member/m102/edit.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="m103">
+        <pattern value="/member-logs"/>
+        <view-id value="/ui/member/m103/index.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="w101">
+        <pattern value="/web-setting"/>
+        <view-id value="/ui/website/w101/index.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="w102">
+        <pattern value="/web-ma"/>
+        <view-id value="/ui/website/w102/index.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="w103">
+        <pattern value="/web-ads"/>
+        <view-id value="/ui/website/w103/index.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="w103-create1">
+        <pattern value="/w103-create1"/>
+        <view-id value="/ui/website/w103/create1.xhtml"/>
+    </url-mapping>
+    <url-mapping id="w103-edit1">
+        <pattern value="/w103-edit1"/>
+        <view-id value="/ui/website/w103/edit1.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="w103-create2">
+        <pattern value="/w103-create2"/>
+        <view-id value="/ui/website/w103/create2.xhtml"/>
+    </url-mapping>
+    <url-mapping id="w103-edit2">
+        <pattern value="/w103-edit2"/>
+        <view-id value="/ui/website/w103/edit2.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="w103-create3">
+        <pattern value="/w103-create3"/>
+        <view-id value="/ui/website/w103/create3.xhtml"/>
+    </url-mapping>
+    <url-mapping id="w103-edit3">
+        <pattern value="/w103-edit3"/>
+        <view-id value="/ui/website/w103/edit3.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="w104">
+        <pattern value="/web-message"/>
+        <view-id value="/ui/website/w104/index.xhtml"/>
+    </url-mapping>
+    <url-mapping id="w104-create">
+        <pattern value="/w104-create"/>
+        <view-id value="/ui/website/w104/create.xhtml"/>
+    </url-mapping>
+    <url-mapping id="w104-edit">
+        <pattern value="/w104-edit"/>
+        <view-id value="/ui/website/w104/edit.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="w105">
+        <pattern value="/web-email"/>
+        <view-id value="/ui/website/w105/index.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="a101">
+        <pattern value="/affiliate-groups"/>
+        <view-id value="/ui/affiliate/a101/index.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="a101-create">
+        <pattern value="/affiliate-groups-create"/>
+        <view-id value="/ui/affiliate/a101/create.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="a101-edit">
+        <pattern value="/affiliate-groups-edit"/>
+        <view-id value="/ui/affiliate/a101/edit.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="a102">
+        <pattern value="/affiliate-request"/>
+        <view-id value="/ui/affiliate/a102/index.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="a102-edit">
+        <pattern value="/affiliate-request-edit"/>
+        <view-id value="/ui/affiliate/a102/edit.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="a103">
+        <pattern value="/affiliate-financial"/>
+        <view-id value="/ui/affiliate/a103/index.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="a104">
+        <pattern value="/affiliate-report"/>
+        <view-id value="/ui/affiliate/a104/index.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="a104-member">
+        <pattern value="/affiliate-report-member"/>
+        <view-id value="/ui/affiliate/a104/member.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="a105">
+        <pattern value="/affiliate-financial-report"/>
+        <view-id value="/ui/affiliate/a105/index.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="c101">
+        <pattern value="/cash"/>
+        <view-id value="/ui/cash/c101/index.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="c101-edit">
+        <pattern value="/cash-edit"/>
+        <view-id value="/ui/cash/c101/edit.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="c101-view">
+        <pattern value="/cash-view"/>
+        <view-id value="/ui/cash/c101/view.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="c102">
+        <pattern value="/bank-group"/>
+        <view-id value="/ui/cash/c102/index.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="c102-create-bank-group">
+        <pattern value="/bank-group-create"/>
+        <view-id value="/ui/cash/c102/create_bankgroup.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="c102-view-bank-group">
+        <pattern value="/bank-group-view"/>
+        <view-id value="/ui/cash/c102/view_bankgroup.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="c102-edit-bank-group">
+        <pattern value="/bank-group-edit"/>
+        <view-id value="/ui/cash/c102/edit_bankgroup.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="c102-create-bank-payment">
+        <pattern value="/bank-payment-create"/>
+        <view-id value="/ui/cash/c102/create_bankpayment.xhtml"/>
+    </url-mapping>   
+     
+    <url-mapping id="c102-edit-bank-payment">
+        <pattern value="/bank-payment-edit"/>
+        <view-id value="/ui/cash/c102/edit_bankpayment.xhtml"/>
+    </url-mapping>    
+    
+    <url-mapping id="c103-view">
+        <pattern value="/withdraw-view"/>
+        <view-id value="/ui/cash/c103/view.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="c103-edit">
+        <pattern value="/withdraw-edit"/>
+        <view-id value="/ui/cash/c103/edit.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="c103">
+        <pattern value="/withdraw"/>
+        <view-id value="/ui/cash/c103/index.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="c104">
+        <pattern value="/adjust"/>
+        <view-id value="/ui/cash/c104/index.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="c105">
+        <pattern value="/cash-txn"/>
+        <view-id value="/ui/cash/c105/index.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="r101">
+        <pattern value="/sumary-report"/>
+        <view-id value="/ui/report/r101/index.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="r102">
+        <pattern value="/cash-report"/>
+        <view-id value="/ui/report/r102/index.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="r103">
+        <pattern value="/product-report"/>
+        <view-id value="/ui/report/r103/index.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="r103-product-report-sport3m">
+        <pattern value="/product-report-sport3m"/>
+        <view-id value="/ui/report/r103/reportSports3m.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="r103-product-report-sportbet168">
+        <pattern value="/product-report-sportbet168"/>
+        <view-id value="/ui/report/r103/reportSportBet168.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="r103-product-report-sportbet125win">
+        <pattern value="/product-report-sportbet125win"/>
+        <view-id value="/ui/report/r103/reportSportBet125win.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="r103-product-report-casinogd">
+        <pattern value="/product-report-casinogd"/>
+        <view-id value="/ui/report/r103/reportCasinoGd.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="r103-product-report-casinoallbet">
+        <pattern value="/product-report-casinoallbet"/>
+        <view-id value="/ui/report/r103/reportCasinoAllbet.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="r103-product-report-cock">
+        <pattern value="/product-report-cock"/>
+        <view-id value="/ui/report/r103/reportCock.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="r103-product-report-gamegr">
+        <pattern value="/product-report-gamegr"/>
+        <view-id value="/ui/report/r103/reportGameGr.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="r103-product-report-fishworld">
+        <pattern value="/product-report-fishworld"/>
+        <view-id value="/ui/report/r103/reportFishWorld.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="r103-product-report-spadegaming">
+        <pattern value="/product-report-spadegaming"/>
+        <view-id value="/ui/report/r103/reportSpadeGaming.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="r103-product-report-idnpoker">
+        <pattern value="/product-report-idnpoker"/>
+        <view-id value="/ui/report/r103/reportGameIdnpoker.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="r103-product-report-lotto">
+        <pattern value="/product-report-lotto"/>
+        <view-id value="/ui/report/r103/reportLotto.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="r104">
+        <pattern value="/person-report_"/>
+        <view-id value="/ui/report/r104/index.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="r105">
+        <pattern value="/person-report"/>
+        <view-id value="/ui/report/r105/index.xhtml"/>
+    </url-mapping>
+    <url-mapping id="r105">
+        <pattern value="/r105-turnover"/>
+        <view-id value="/ui/report/r105/turnover.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="a201">
+        <pattern value="/admins"/>
+        <view-id value="/ui/admin/a201/index.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="a201-admins-create">
+        <pattern value="/admins-create"/>
+        <view-id value="/ui/admin/a201/create.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="a201-admins-edit">
+        <pattern value="/admins-edit"/>
+        <view-id value="/ui/admin/a201/edit.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="a202">
+        <pattern value="/admin-logs"/>
+        <view-id value="/ui/admin/a202/index.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="s101">
+        <pattern value="/banks"/>
+        <view-id value="/ui/setting/s101/index.xhtml"/>
+    </url-mapping>
+    <url-mapping id="s101-banks-edit">
+        <pattern value="/banks-edit"/>
+        <view-id value="/ui/setting/s101/edit.xhtml"/>
+    </url-mapping>
+
+    <url-mapping id="s102">
+        <pattern value="/languages"/>
+        <view-id value="/ui/setting/s102/index.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="s103">
+        <pattern value="/email-templat"/>
+        <view-id value="/ui/setting/s103/index.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="s103-email-templat-edit">
+        <pattern value="/email-templat-edit"/>
+        <view-id value="/ui/setting/s103/edit.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="s104">
+        <pattern value="/schedules"/>
+        <view-id value="/ui/setting/s104/index.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="s105">
+        <pattern value="/contact-foot"/>
+        <view-id value="/ui/setting/s105/index.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="s106">
+        <pattern value="/api-logs"/>
+        <view-id value="/ui/setting/s106/index.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="s106-apilog-view">
+        <pattern value="/apilog-view"/>
+        <view-id value="/ui/setting/s106/view.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="s107">
+        <pattern value="/report-status"/>
+        <view-id value="/ui/setting/s107/index.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="p101">
+        <pattern value="/points"/>
+        <view-id value="/ui/commission/p101/index.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="p102">
+        <pattern value="/adjust-points"/>
+        <view-id value="/ui/commission/p102/index.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="p102-edit">
+        <pattern value="/adjust-points-edit"/>
+        <view-id value="/ui/commission/p102/edit.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="p103">
+        <pattern value="/promotions"/>
+        <view-id value="/ui/commission/p103/index.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="p103-create">
+        <pattern value="/promotions-create"/>
+        <view-id value="/ui/commission/p103/create.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="p103-edit">
+        <pattern value="/promotions-edit"/>
+        <view-id value="/ui/commission/p103/edit.xhtml"/>
+    </url-mapping>
+        
+    <url-mapping id="profile">
+        <pattern value="/profile"/>
+        <view-id value="/ui/user-info/profile.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="profile">
+        <pattern value="/user-logs"/>
+        <view-id value="/ui/user-info/user-logs.xhtml"/>
+    </url-mapping>
+    
+</pretty-config>

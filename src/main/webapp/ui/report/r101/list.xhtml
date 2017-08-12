@@ -1,0 +1,346 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <style>
+        .fulltext {
+            font-size: 26px;
+        }
+        @media all and (max-width: 1746px)and (min-width: 1646px) {.fulltext{font-size: 23px;}}
+        @media all and (max-width: 1645px)and (min-width: 1545px) {.fulltext{ font-size: 22px;}}
+        @media all and (max-width: 1544px)and (min-width: 1444px) {.fulltext{font-size: 19px;}}
+        @media all and (max-width: 1443px) and (min-width: 1343px) {.fulltext{font-size: 18px;}}
+        @media all and (max-width: 1342px) and (min-width: 1282px) {.fulltext{font-size: 17px;}}
+        @media all and (max-width: 413px) and (min-width: 330px) {.fulltext{font-size: 18px;}}
+    </style>
+    <ui:define name="head">
+        
+    </ui:define>
+    <h:form id="listForm">
+        <p:outputPanel deferred="true" deferredMode="visible">
+            <p:panel style="background-color: #2d353c">
+                <div class="ui-g ui-fluid">
+                    <div class="ui-g-12 ui-md-6 ui-lg-1"/>
+                    <div class="ui-g-12 ui-md-6 ui-lg-2"/>
+                    <div class="ui-g-12 ui-md-6 ui-lg-2"/>
+                    <div class="ui-g-12 ui-md-6 ui-lg-2"/>
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                        <p:calendar id="dateFrom" value="#{r101Controller.startDate}" binding="#{bindingController.calendar}" 
+                                    pattern="dd-MM-yyyy HH:mm"  requiredMessage="#{msgs['messages.code.1022']}" timeControlType="select"
+                                    placeholder="#{msgs['common.startDate']}"/>
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                        <p:calendar id="dateTo" value="#{r101Controller.endDate}" binding="#{bindingController.calendar}" 
+                                    pattern="dd-MM-yyyy HH:mm"  requiredMessage="#{msgs['messages.code.1022']}" timeControlType="select"
+                                    placeholder="#{msgs['common.toDate']}"/>
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-1">
+                        <p:commandButton binding="#{bindingController.btnSearch}" value="#{msgs['btn.search']}" 
+                                         action="#{r101Controller.r101_search()}" styleClass="search-btn" update="listForm:tabview"/>
+                    </div>
+                </div>
+            </p:panel>
+
+
+            <p:tabView id="tabview">
+                <p:tab title="Total Summary">
+                    <div class="ui-g dashboard">
+                        <div class="ui-g-12 ui-md-6 ui-lg-3">
+                            <div class="ui-g card overview-box overview-box-1">
+                                <div class="ui-g-4">
+                                    <i class="fa fa-user-circle-o"></i>
+                                </div>
+                                <div class="ui-g-8">
+                                    <span class="overview-box-count">
+                                        <h:outputText value="#{r101Controller.countNewRegister}" styleClass="fulltext"/>
+                                    </span>
+                                    <span class="overview-box-name">#{msgs['r101.newapply']}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-3">
+                            <div class="ui-g card overview-box overview-box-2">
+                                <div class="ui-g-4">
+                                    <i class="fa fa-money"></i>
+                                </div>
+                                <div class="ui-g-8">
+                                    <span class="overview-box-count">
+                                        <h:outputText value="#{r101Controller.totalDeposit}" styleClass="fulltext">
+                                            <f:convertNumber  pattern="#,##0.00"/>
+                                        </h:outputText>
+                                    </span>
+                                    <span class="overview-box-name">#{msgs['r101.totaldeposit']}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-3">
+                            <div class="ui-g card overview-box overview-box-3">
+                                <div class="ui-g-4">
+                                    <i class="fa fa-money"></i>
+                                </div>
+                                <div class="ui-g-8">
+                                    <span class="overview-box-count">
+                                        <h:outputText value="#{r101Controller.totalWithdraw}" styleClass="fulltext">
+                                            <f:convertNumber  pattern="#,##0.00"/>
+                                        </h:outputText>
+                                    </span>
+                                    <span class="overview-box-name">#{msgs['r101.totalwithdraw']}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-3">
+                            <div class="ui-g card overview-box overview-box-4">
+                                <div class="ui-g-4">
+                                    <i class="fa fa-calculator"></i>
+                                </div>
+                                <div class="ui-g-8">
+                                    <span class="overview-box-count">
+                                        <h:outputText value="#{r101Controller.totalCommission}" styleClass="fulltext" >
+                                            <f:convertNumber  pattern="#,##0.00"/>
+                                        </h:outputText>
+                                    </span>
+                                    <span class="overview-box-name">#{msgs['r101.totalcommission']}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-3">
+                            <div class="ui-g card overview-box overview-box-5">
+                                <div class="ui-g-4">
+                                    <i class="fa fa-diamond"></i>
+                                </div>
+                                <div class="ui-g-8">
+                                    <span class="overview-box-count">
+                                        <h:outputText value="#{r101Controller.totalBonus}" styleClass="fulltext">
+                                            <f:convertNumber  pattern="#,##0.00"/>
+                                        </h:outputText>
+                                    </span>
+                                    <span class="overview-box-name">#{msgs['r101.totalbonus']}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-3">
+                            <div class="ui-g card overview-box overview-box-6">
+                                <div class="ui-g-4">
+                                    <i class="fa fa-gamepad"></i>
+                                </div>
+                                <div class="ui-g-8">
+                                    <span class="overview-box-count">
+                                        <h:outputText value="#{r101Controller.sumWinloss}" styleClass="fulltext">
+                                            <f:convertNumber  pattern="#,##0.00"/>
+                                        </h:outputText>
+                                    </span>
+                                    <span class="overview-box-name">#{msgs['r101.winlose']}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-3">
+                            <div class="ui-g card overview-box overview-box-7">
+                                <div class="ui-g-4">
+                                    <i class="fa fa-spotify"></i>
+                                </div>
+                                <div class="ui-g-8">
+                                    <span class="overview-box-count">
+                                        <h:outputText value="#{r101Controller.totalFee}" styleClass="fulltext">
+                                            <f:convertNumber  pattern="#,##0.00"/>
+                                        </h:outputText>
+                                    </span>
+                                    <span class="overview-box-name">#{msgs['r101.fee']}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-3">
+                            <div class="ui-g card overview-box overview-box-8">
+                                <div class="ui-g-4">
+                                    <i class="fa fa-external-link"></i>
+                                </div>
+                                <div class="ui-g-8">
+                                    <span class="overview-box-count">
+                                        <h:outputText value="#{r101Controller.totalOthers}" styleClass="fulltext">
+                                            <f:convertNumber  pattern="#,##0.00"/>
+                                        </h:outputText>
+                                    </span>
+                                    <span class="overview-box-name">#{msgs['r101.others']}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-3">
+                            <div class="ui-g card overview-box overview-box-9">
+                                <div class="ui-g-4">
+                                    <i class="fa fa-gavel"></i>
+                                </div>
+                                <div class="ui-g-8">
+                                    <span class="overview-box-count">
+                                        <h:outputText value="#{r101Controller.sumTurnover}"  styleClass="fulltext">
+                                            <f:convertNumber  pattern="#,##0.00"/>
+                                        </h:outputText>
+                                    </span>
+                                    <span class="overview-box-name">#{msgs['r101.normalbetting']}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <br/>
+                </p:tab>
+
+                <p:tab title="API Summary">
+                    <div class="ui-fluid">
+                        <p:panelGrid  styleClass="nba-grid">
+                            <f:facet name="header">
+                                <p:row>
+                                    <p:column colspan="1"></p:column>
+                                    <p:column colspan="1"><h:outputText value="#{msgs['api.topsport']}" styleClass="lb_bold"/></p:column>
+                                    <p:column colspan="1"><h:outputText value="#{msgs['api.168sport']}" styleClass="lb_bold"/></p:column>
+                                    <p:column colspan="1"><h:outputText value="#{msgs['api.bet125']}" styleClass="lb_bold"/></p:column>
+                                    <p:column colspan="1"><h:outputText value="#{msgs['api.venetian']}" styleClass="lb_bold"/></p:column>
+                                    <p:column colspan="1"><h:outputText value="#{msgs['api.allbet']}" styleClass="lb_bold"/></p:column>
+                                    <p:column colspan="1"><h:outputText value="#{msgs['api.cockfight']}" styleClass="lb_bold"/></p:column>
+                                    <p:column colspan="1"><h:outputText value="#{msgs['api.racing_games']}" styleClass="lb_bold"/></p:column>
+                                    <p:column colspan="1"><h:outputText value="#{msgs['api.idnpoker']}" styleClass="lb_bold"/></p:column>
+                                    <p:column colspan="1"><h:outputText value="#{msgs['api.fishworld']}" styleClass="lb_bold"/></p:column>
+                                    <p:column colspan="1"><h:outputText value="#{msgs['api.lotto']}" styleClass="lb_bold"/></p:column>
+                                    <p:column colspan="1"><h:outputText value="#{msgs['api.sg_gaming']}" styleClass="lb_bold"/></p:column>
+                                </p:row>
+                            </f:facet>
+
+                            <p:row>
+                                <p:column style="color: #009900"><h:outputText value="Turn Over" styleClass="lb_bold"/></p:column>
+                                <p:column style="text-align: right;color: #009900">
+                                    <h:outputText value="#{r101Controller.sport3mTurnover}">
+                                        <f:convertNumber  pattern="#,##0.00"/>
+                                    </h:outputText>
+                                </p:column>
+                                <p:column style="text-align: right;color: #009900">
+                                    <h:outputText value="#{r101Controller.bets168Turnover}">
+                                        <f:convertNumber  pattern="#,##0.00"/>
+                                    </h:outputText>
+                                </p:column>
+                                <p:column style="text-align: right;color: #009900">
+                                    <h:outputText value="#{r101Controller.bets125Turnover}">
+                                        <f:convertNumber  pattern="#,##0.00"/>
+                                    </h:outputText>
+                                </p:column>
+                                <p:column style="text-align: right;color: #009900">
+                                    <h:outputText value="#{r101Controller.casinoGdTurnover}">
+                                        <f:convertNumber  pattern="#,##0.00"/>
+                                    </h:outputText>
+                                </p:column>
+                                <p:column style="text-align: right;color: #009900">
+                                    <h:outputText value="#{r101Controller.casinoAllbetTurnover}">
+                                        <f:convertNumber  pattern="#,##0.00"/>
+                                    </h:outputText>
+                                </p:column>
+                                <p:column style="text-align: right;color: #009900">
+                                    <h:outputText value="#{r101Controller.cockTurnover}">
+                                        <f:convertNumber  pattern="#,##0.00"/>
+                                    </h:outputText>
+                                </p:column>
+                                <p:column style="text-align: right;color: #009900">
+                                    <h:outputText value="#{r101Controller.gameGrTurnover}">
+                                        <f:convertNumber  pattern="#,##0.00"/>
+                                    </h:outputText>
+                                </p:column>
+                                <p:column style="text-align: right;color: #009900">
+                                    <h:outputText value="#{r101Controller.idnTurnover}">
+                                        <f:convertNumber  pattern="#,##0.00"/>
+                                    </h:outputText>
+                                </p:column>
+                                <p:column style="text-align: right;color: #009900">
+                                    <h:outputText value="#{r101Controller.fishWorldTurnover}">
+                                        <f:convertNumber  pattern="#,##0.00"/>
+                                    </h:outputText>
+                                </p:column>
+                                <p:column style="text-align: right;color: #009900">
+                                    <h:outputText value="#{r101Controller.lottoTurnover}">
+                                        <f:convertNumber  pattern="#,##0.00"/>
+                                    </h:outputText>
+                                </p:column>
+                                <p:column style="text-align: right;color: #009900">
+                                    <h:outputText value="#{r101Controller.sgTurnover}">
+                                        <f:convertNumber  pattern="#,##0.00"/>
+                                    </h:outputText>
+                                </p:column>
+                            </p:row>
+
+                            <p:row>
+                                <p:column style="color: #ff3300"><h:outputText value="Win/Loss" styleClass="lb_bold"/></p:column>
+                                <p:column style="text-align: right;color: #ff3300">
+                                    <h:outputText value="#{r101Controller.sport3mWinloss}">
+                                        <f:convertNumber  pattern="#,##0.00"/>
+                                    </h:outputText>
+                                </p:column>
+                                <p:column style="text-align: right;color: #ff3300">
+                                    <h:outputText value="#{r101Controller.bets168Winloss}">
+                                        <f:convertNumber  pattern="#,##0.00"/>
+                                    </h:outputText>
+                                </p:column>
+                                <p:column style="text-align: right;color: #ff3300">
+                                    <h:outputText value="#{r101Controller.bets125Winloss}">
+                                        <f:convertNumber  pattern="#,##0.00"/>
+                                    </h:outputText>
+                                </p:column>
+                                <p:column style="text-align: right;color: #ff3300">
+                                    <h:outputText value="#{r101Controller.casinoGdWinloss}">
+                                        <f:convertNumber  pattern="#,##0.00"/>
+                                    </h:outputText>
+                                </p:column>
+                                <p:column style="text-align: right;color: #ff3300">
+                                    <h:outputText value="#{r101Controller.casinoAllbetWinloss}">
+                                        <f:convertNumber  pattern="#,##0.00"/>
+                                    </h:outputText>
+                                </p:column>
+                                <p:column style="text-align: right;color: #ff3300">
+                                    <h:outputText value="#{r101Controller.cockWinloss}">
+                                        <f:convertNumber  pattern="#,##0.00"/>
+                                    </h:outputText>
+                                </p:column>
+                                <p:column style="text-align: right;color: #ff3300">
+                                    <h:outputText value="#{r101Controller.gameGrWinloss}">
+                                        <f:convertNumber  pattern="#,##0.00"/>
+                                    </h:outputText>
+                                </p:column>
+                                <p:column style="text-align: right;color: #ff3300">
+                                    <h:outputText value="#{r101Controller.idnWinloss}">
+                                        <f:convertNumber  pattern="#,##0.00"/>
+                                    </h:outputText>
+                                </p:column>
+                                <p:column style="text-align: right;color: #ff3300">
+                                    <h:outputText value="#{r101Controller.fishWorldWinloss}">
+                                        <f:convertNumber  pattern="#,##0.00"/>
+                                    </h:outputText>
+                                </p:column>
+                                <p:column style="text-align: right;color: #ff3300">
+                                    <h:outputText value="#{r101Controller.lottoWinloss}">
+                                        <f:convertNumber  pattern="#,##0.00"/>
+                                    </h:outputText>
+                                </p:column>
+                                <p:column style="text-align: right;color: #ff3300">
+                                    <h:outputText value="#{r101Controller.sgWinloss}">
+                                        <f:convertNumber  pattern="#,##0.00"/>
+                                    </h:outputText>
+                                </p:column>
+                            </p:row>
+                        </p:panelGrid>
+                    </div>  
+
+                    <br/>
+                    <p:commandButton type="button" icon="fa fa-paint-brush"
+                                     onclick="PF('chart').resetZoom()" style="margin-top: 4px;"/>
+                    <br/>
+                    <br/>
+                    <p:chart type="bar" widgetVar="chart" model="#{r101Controller.barModel}" style="height:600px" responsive="true"/>
+
+                    <br/>
+                </p:tab>
+
+            </p:tabView>
+        </p:outputPanel>
+    </h:form>
+
+</ui:composition>

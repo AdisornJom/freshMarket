@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <h:form>
+        <p:dataTable binding="#{bindingController.dataTableModel}">
+
+            <p:column headerText="ลำดับ">
+                <h:outputText/>
+            </p:column>
+
+            <p:column headerText="หัวข้อ">
+                <h:outputText/>
+            </p:column>
+
+            <p:column headerText="เนื้อหา">
+                <h:outputText/>
+            </p:column>
+
+            <p:column headerText="เริ่มจาก">
+                <h:outputText/>
+            </p:column>
+
+            <p:column headerText="เวลาที่สร้าง">
+                <h:outputText/>
+            </p:column>
+
+            <p:column headerText="จัดการ" style="width: 170px;text-align: center">
+                <p:tooltip for="delete" value="ลบ" trackMouse="true"/>
+                <p:commandButton id="delete" icon="fa fa-fw fa-trash-o"/>
+            </p:column>
+
+            <f:facet name="footer">
+                <h:outputText value="#{msgs['messages.code.2022']} "/>
+                <h:outputText value="0">
+                    <f:convertNumber pattern="#,##0"/>
+                </h:outputText>
+                <h:outputText value=" #{msgs['messages.code.2023']}"/>
+            </f:facet>
+        </p:dataTable>
+
+    </h:form>
+
+</ui:composition>

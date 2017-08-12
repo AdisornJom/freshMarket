@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <h:form id="listForm">
+        <p:dataTable var="item" value="#{a201Controller.items}" binding="#{bindingController.dataTableModel}">
+            <f:facet name="header">
+                <div class="ui-g ui-fluid">
+                    <div class="ui-g-12 ui-md-6 ui-lg-1">
+                        <p:commandButton styleClass="search-btn"  binding="#{bindingController.btnAdd}" value="#{msgs['btn.add']}"
+                                         update="listForm" action="#{a201Controller.prepareCreate()}"/>
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                        <p:selectOneMenu value="#{a201Controller.status}">
+                            <f:selectItem itemLabel="#{msgs['a201.profile.selected']}" itemValue="#{null}" />
+                            <f:selectItem itemLabel="#{msgs['a201.profile.status.normal']}" itemValue="#{PFConstants.USER_STATUS_NORMAL}" />
+                            <f:selectItem itemLabel="#{msgs['a201.profile.status.cancel']}" itemValue="#{PFConstants.USER_STATUS_DELETE}" />
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                        <p:selectOneMenu value="#{a201Controller.choice}" >
+                            <f:selectItem itemLabel="#{msgs['common.username']}" itemValue="username"/>
+                            <f:selectItem itemLabel="#{msgs['a201.profile.firstname']}" itemValue="firstName"/>
+                            <p:ajax event="change" update="findTxt" global="false"/>
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                        <p:inputText id="findTxt" placeholder="#{a201Controller.choice eq 'username' ? msgs['common.username'] : msgs['a201.profile.firstname'] }" value="#{a201Controller.choiceValue}" />
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-1">
+                        <p:commandButton binding="#{bindingController.btnSearch}" value="#{msgs['btn.search']}" 
+                                         actionListener="#{a201Controller.search()}" styleClass="search-btn" update="listForm"/>
+                    </div>
+                </div>
+            </f:facet>
+
+            <p:column headerText="#{msgs['common.seq']}" >
+                <h:outputText value="#{(rowNumber+1)}" />
+            </p:column>
+
+            <p:column headerText="#{msgs['a201.profile.firstname']}-#{msgs['a201.profile.lastname']}" sortBy="#{item.firstName}">
+                <h:outputText value="#{item.firstName} #{item.lastName}"/>
+            </p:column>
+
+            <p:column headerText="#{msgs['a201.profile.username']}" sortBy="#{item.username}" >
+                <h:outputText value="#{item.username}"/>
+            </p:column>
+
+            <p:column headerText="#{msgs['a201.profile.ip']}">
+                <ui:repeat var="item1" value="#{item.adminWhitelistList}" varStatus="loop">
+                    <h:outputText value="#{item1.adminWhitelistPK.ip}#{not loop.last ? ', ' : ''}"/>
+                </ui:repeat>
+            </p:column>
+
+
+            <p:column headerText="#{msgs['a201.profile.position']}" sortBy="#{item.position}" >
+                <h:outputText value="#{item.position}"/>
+            </p:column>
+
+            <p:column headerText="#{msgs['a201.profile.email']}" sortBy="#{item.email}" >
+                <h:outputText value="#{item.email}"/>
+            </p:column>
+
+            <p:column headerText="#{msgs['a201.profile.mobile']}" sortBy="#{item.mobile}">
+                <h:outputText value="#{item.mobile}"/>
+            </p:column>
+
+            <p:column headerText="#{msgs['a201.profile.status']}" sortBy="#{item.status}" >
+                <h:outputText value="#{item.status eq '0' ? msgs['a201.profile.status.cancel'] : msgs['a201.profile.status.normal']}" style="color: #{item.status eq '0' ? 'red' : 'blue'}"/>
+            </p:column>
+
+            <p:column >
+                <p:commandButton rendered="fasle" id="view" title="#{msgs['btn.view']}" icon="fa fa-fw fa-file-text-o">
+                    <f:setPropertyActionListener value="#{item}" target="#{a201Controller.selected}" />
+                </p:commandButton>
+
+                <p:commandButton id="edit" title="#{msgs['btn.edit']}" icon="fa fa-edit" disabled="#{item.id eq userInfoController.adminUser.id}" action="#{a201Controller.prepareEdit()}">
+                    <f:setPropertyActionListener value="#{item}" target="#{a201Controller.selected}" />
+                </p:commandButton>
+
+                <p:commandButton id="del" title="#{msgs['btn.delete']}" icon="fa fa-trash" disabled="#{item.id eq userInfoController.adminUser.id}"
+                                 action="#{a201Controller.delete()}" update="listForm" 
+                                 rendered="#{p:ifAnyGranted('ROLE_PG,ROLE_ADMIN')}">
+                    <p:confirm header="#{msgs['dialog.confirm']}" message="#{msgs['dialog.message']}" />
+                    <f:setPropertyActionListener value="#{item}" target="#{a201Controller.selected}" />
+                </p:commandButton>
+
+            </p:column>
+
+            <f:facet name="footer">
+                <h:outputText value="#{msgs['messages.code.2022']} "/>
+                <h:outputText value="#{a201Controller.items.size()}">
+                    <f:convertNumber pattern="#,##0"/>
+                </h:outputText>
+                <h:outputText value=" #{msgs['messages.code.2023']}"/>
+            </f:facet>
+        </p:dataTable>
+    </h:form>
+</ui:composition>

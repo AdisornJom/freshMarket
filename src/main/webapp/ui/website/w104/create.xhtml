@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="/templates/default-template.xhtml">
+
+    <ui:define name="viewname">#{msgs['w101.create.message']}</ui:define>
+
+    <ui:define name="content">
+        <h:form id="createForm" >
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                    <p:messages id="create_msg" autoUpdate="false" showIcon="false"/>
+                </div>
+                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                    <p:fieldset legend="#{msgs['w104.message']}"  style="border: 0px;">
+                        <p:panel  style="max-width: 900px;margin-bottom: 10px;border-right: 0px;border-radius: 0px;">
+                            <div class="ui-fluid">
+                                <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-3,ui-grid-col-8" styleClass="ui-panelgrid-blank form-group">
+                                    <h:panelGroup>
+                                        <p:outputLabel value="#{msgs['m201.detail.title']} ："/>
+                                        <font class="require" style="color: red">*</font>
+                                    </h:panelGroup>
+                                    <p:inputText id="title" value="#{w104Controller.selected.title}" />
+
+                                    <h:panelGroup>
+                                        <p:outputLabel value="#{msgs['m201.detail']} ："/>
+                                        <font class="require" style="color: red">*</font>
+                                    </h:panelGroup>
+                                    <p:inputTextarea id="content" value="#{w104Controller.selected.content}"  rows="4" maxlength="250" />
+
+                                    <h:panelGroup>
+                                        <p:outputLabel value="#{msgs['m201.detail.startDate']} ："/>
+                                        <font class="require" style="color: red">*</font>
+                                    </h:panelGroup>
+                                    <p:calendar id="startTime" binding="#{bindingController.calendar}" value="#{w104Controller.selected.startTime}"  />
+
+                                    <h:panelGroup>
+                                        <p:outputLabel value="#{msgs['p106.detail.status']} ："/>
+                                        <font class="require" style="color: red">*</font>
+                                    </h:panelGroup>
+                                    <p:selectOneRadio value="#{w104Controller.typeMessage}"   >
+                                        <f:selectItem itemLabel="#{msgs['m201.choice.total']}" itemValue="1" />
+                                        <f:selectItem itemLabel="#{msgs['m201.choice.group']}" itemValue="3" />
+                                        <f:selectItem itemLabel="#{msgs['m201.choice.person']}" itemValue="2" />
+                                        <p:ajax listener="#{w104Controller.handleKeyEvent}" update="createForm:member_list createForm:group_list" global="false"/>
+                                    </p:selectOneRadio>
+                                </p:panelGrid>
+                            </div>
+                        </p:panel>
+                    </p:fieldset>
+
+
+                    <p:panel  id="member_list" style="border: 0px">
+                        <p:fieldset legend="#{msgs['btn.view']}" rendered="#{w104Controller.typeMessage eq 2 }" style="border: 0px;">
+                            <p:panel  rendered="#{w104Controller.typeMessage eq 2}"  style="max-width: 900px;margin-bottom: 10px;border-right: 0px;border-radius: 0px;">
+                                <p:commandButton styleClass="search-btn" style="margin: 5px" binding="#{bindingController.btnAdd}" value="#{msgs['btn.add']}" oncomplete="PF('selectUserMsg_dialog').show()" update="listFormUser:itemUser_dialog"/>
+
+                                <p:dataTable id="dt_itemUser" binding="#{bindingController.dataTableModel}" value="#{w104Controller.user_list}" var="user">
+                                    <p:column headerText="#{msgs['common.seq']}" style="text-align: center;width: 32px;">
+                                        <h:outputText value="#{(rowNumber+1)}" />
+                                    </p:column>
+                                    <p:column headerText="#{msgs['p101.detail.username']}">
+                                        <h:outputText value="#{user.username}" />
+                                    </p:column>
+
+                                    <p:column headerText="#{msgs['common.manage']}" style="width: 100px;text-align: center">
+                                        <p:commandButton styleClass="clear-btn" title="#{msgs['btn.delete']}" icon="fa fa-trash" action="#{w104Controller.deleteMember()}" update="createForm:dt_itemUser" global="false">
+                                            <f:setPropertyActionListener value="#{user}" target="#{w104Controller.user_selected}" />
+                                        </p:commandButton>
+                                    </p:column>
+                                </p:dataTable>
+                            </p:panel>
+                        </p:fieldset>
+                    </p:panel>
+
+                    <p:panel  id="group_list" style="border: 0px">
+                        <p:fieldset legend="#{msgs['btn.view']}" rendered="#{w104Controller.typeMessage eq 3 }" style="border: 0px;">
+                            <p:panel rendered="#{w104Controller.typeMessage eq 3}" style="max-width: 900px;margin-bottom: 10px;border-right: 0px;border-radius: 0px;">
+                                <p:dataTable var="usergroup" value="#{w104Controller.group_items}" selection="#{w104Controller.selectd_group_items}" rowKey="#{usergroup.id}"
+                                             binding="#{bindingController.dataTableModel}"  scrollable="true"  paginator="false" >
+
+                                    <p:column selectionMode="multiple" style="text-align: center;width: 30px;" />
+                                    <p:column headerText="#{msgs['p102.groupname']}">
+                                        <h:outputText value="#{usergroup.groupName}"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </p:panel> 
+                        </p:fieldset>
+                    </p:panel>
+
+                </div>  
+            </div>
+            <h:panelGroup style="margin: 5px;">
+                <p:commandButton binding="#{bindingController.btnSave}" value="#{msgs['btn.save']}" 
+                                 actionListener="#{w104Controller.create()}" styleClass="edit-btn" update="createForm"/>
+                <p:commandButton binding="#{bindingController.btnCancel}" value="#{msgs['btn.cancel']}" 
+                                 action="index?faces-redirect=true" styleClass="clear-btn" />
+            </h:panelGroup>
+        </h:form>
+
+        <ui:include src="dialog_user.xhtml" />
+    </ui:define>
+</ui:composition>

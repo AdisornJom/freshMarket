@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core">
+    
+    <h:form id="create4Form">
+            <p:fieldset legend="#{msgs['w103.msgwelcome']}" style="border: 0px;">
+                <p:panel style="max-width: 900px;margin-bottom: 10px;border-right: 0px;border-radius: 0px;">
+                    <div class="ui-fluid">
+                        <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-3,ui-grid-col-8" styleClass="ui-panelgrid-blank form-group">
+                            <h:panelGroup>
+                                <p:outputLabel value="#{msgs['w103.lang']} :"/>
+                                <font class="require" style="color: red">*</font>
+                            </h:panelGroup>
+                            <p:selectOneMenu rendered="false" value="1" >
+                                <f:selectItems var="lang" value="#{comboController.langs}" itemLabel="#{lang.country}" itemValue="#{lang.lang}"/>
+                            </p:selectOneMenu>
+
+                            <p:selectOneMenu var="t" value="#{w103Controller.lang}"  panelStyle="border: 0px;" converter="langConverter">
+                                <f:selectItems var="lang" value="#{localeController.langs}" itemLabel="#{lang.country}" itemValue="#{lang}"/>
+                                <p:column>
+                                    <h:graphicImage value="./resources/images/flag/#{t.flag}" style="border: 0px;"/>
+                                    <h:outputText value=" #{t.country}" />
+                                </p:column>
+                            </p:selectOneMenu>
+
+                            <h:panelGroup>
+                                <p:outputLabel value="#{msgs['m202.title']} :"/>
+                                <font class="require" style="color: red">*</font>
+                            </h:panelGroup>
+                            <p:editor  value="#{w103Controller.msgWelcome.title}" height="200"/>
+
+                            <h:panelGroup rendered="false">
+                                <p:outputLabel value="#{msgs['w102.content']} :"/>
+                                <font class="require" style="color: red">*</font>
+                            </h:panelGroup>
+                            <p:inputTextarea rows="2" cols="62" value="#{w103Controller.msgWelcome.content}" rendered="false"/>
+
+                            <h:panelGroup >
+                                <p:outputLabel value="#{msgs['w103.image']} :"/>
+                                <font class="require" style="color: red">*</font>
+                            </h:panelGroup>
+                            <h:panelGroup id="newimg" >
+                                <h:graphicImage value="#{commonController.IMAGES_URL}/info/#{w103Controller.newFile_info}" style="max-width: 100%;"/>
+                            </h:panelGroup>
+
+                            <p:outputLabel value="#{msgs['w103.upload']} :"/>
+                            <h:panelGroup>
+                                <p:fileUpload fileUploadListener="#{w103Controller.handleFileUpload3}"
+                                              auto="true"
+                                              mode="advanced"
+                                              skinSimple="true"
+                                              sizeLimit="250000"
+                                              cancelLabel="#{msgs['btn.cancel']}"
+                                              uploadLabel="#{msgs['btn.upload']}"
+                                              label="#{msgs['btn.choose']}"
+                                              allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                                              style="margin-bottom: 4px;" update="newimg"/>
+                                <h:outputLabel value="#{msgs['w103.image.welcome.remark']}" style="font-weight: bolder;" styleClass="sub-label"/>
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <p:outputLabel value="#{msgs['common.status']} :"/>
+                                <font class="require" style="color: red">*</font>
+                            </h:panelGroup>
+                            <p:selectOneRadio value="#{w103Controller.msgWelcome.status}" >
+                                <f:selectItem itemLabel="#{msgs['common.on']}" itemValue="#{PFConstants.COMMON_STATUS_OPEN}"/>
+                                <f:selectItem itemLabel="#{msgs['common.off']}" itemValue="#{PFConstants.COMMON_STATUS_CLOSE}"/>
+                            </p:selectOneRadio>
+                        </p:panelGrid>
+                    </div>
+                </p:panel>
+            </p:fieldset>
+
+            <h:panelGrid columns="2" cellpadding="0" cellspacing="1" style="margin-top: 10px;">
+                <p:commandButton binding="#{bindingController.btnSave}" value="#{msgs['btn.save']}" actionListener="#{w103Controller.create4()}"
+                                 styleClass="edit-btn" update="delete_msg"/>
+            </h:panelGrid>
+
+        </h:form>
+</ui:composition>

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <h:form id="apiLastBettimeForm">
+
+        <p:dialog widgetVar="apiLastBettime" header="#{msgs['common.apilastbettime']}" binding="#{bindingController.defaultDialogModel}"
+                  width="700" height="400" closeOnEscape="true" onShow="loadApiLastBettime();" >
+
+            <p:remoteCommand name="loadApiLastBettime" async="true" action="#{s107Controller.search()}" global="false" update="apiLastBettimeForm:apiLastBettimeForm_pnl" />
+            <h:panelGroup id="apiLastBettimeForm_pnl" style="width: 100%;">
+                <p:dataTable  var="item" value="#{s107Controller.dataList}" rowIndexVar="rowNumber">
+
+                    <p:column headerText="#{msgs['common.seq']}" style="text-align: center;width:27px;#{item.flag ? 'background-color: #ff1a1a;' : ''}">
+                        <h:outputText value="#{(rowNumber+1)}" />
+                    </p:column>
+
+                    <p:column headerText="#{msgs['detail']}" style="#{item.flag ? 'background-color: #ff1a1a;' : ''}">
+                        <h:outputText value="#{msgs[item.apiName.langCode]}"/>
+                    </p:column>
+
+                    <p:column headerText="#{msgs['lastbettime']}" sortBy="#{item.apiLastBettimeTO.betTime}" style="text-align: center;#{item.flag ? 'background-color: #ff1a1a;' : ''}">
+                        <h:outputText value="#{item.apiLastBettimeTO.betTime}">
+                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="#{msgs['a202.datetime']}" sortBy="#{item.apiLastBettimeTO.dateTime}" style="text-align: center;#{item.flag ? 'background-color: #ff1a1a;' : ''}">
+                        <h:outputText value="#{item.apiLastBettimeTO.dateTime}">
+                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+                        </h:outputText>
+                    </p:column>
+                </p:dataTable>
+            </h:panelGroup>
+        </p:dialog>
+    </h:form>
+
+</ui:composition>

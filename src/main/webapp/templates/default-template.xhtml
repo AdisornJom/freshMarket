@@ -1,0 +1,71 @@
+<!DOCTYPE html [
+    <!ENTITY nbsp "&#160;">
+    <!ENTITY bull "&#8226;">
+    <!ENTITY copy "&#169;">
+    ]>
+    <html xmlns="http://www.w3.org/1999/xhtml"
+          xmlns:h="http://java.sun.com/jsf/html"
+          xmlns:f="http://java.sun.com/jsf/core"
+          xmlns:ui="http://java.sun.com/jsf/facelets"
+          xmlns:p="http://primefaces.org/ui">
+
+        <f:view locale="#{localeController.locale}" encoding="utf-8">
+            <h:head>
+                <f:facet name="first">
+                    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+                    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"/>
+                    <meta http-equiv="Pragma" content="no-cache"/>
+                    <meta http-equiv="Expires" content="0"/>
+                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+                    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+                    <meta name="apple-mobile-web-app-capable" content="yes" />
+                    <meta name="theme-color" content="#{guestPreferences.themeColors[guestPreferences.theme]}" />
+                    <ui:insert name="metatag" />
+                    <link rel="shortcut icon" type="image/png" href="#{request.contextPath}/resources/images/favicon.ico" />
+                </f:facet>
+                <h:outputScript name="js/nanoscroller.js" library="poseidon-layout" />
+                <h:outputScript name="js/layout.js" library="poseidon-layout" />
+                <h:outputScript name="js/swipe.js" library="poseidon-layout" />
+                <h:outputStylesheet name="css/default.css" />
+                <h:outputStylesheet name="css/cssLayout.css" />
+                <link rel="stylesheet" href="#{request.contextPath}/resources/css/thbanklogos.min.css" id="stylesheet"/>
+                <title><ui:insert name="title">#{apps['app.name']} - #{commonController.PLATFORM_ID} </ui:insert></title>
+                <ui:insert name="head" />
+            </h:head>
+
+            <h:body  styleClass="main-body">
+                <div class="layout-wrapper #{guestPreferences.menuLayout}">
+                    <ui:include src="./header.xhtml"/>
+                    <ui:include src="./topbar.xhtml" />
+                    <ui:include src="./menu.xhtml" />
+
+                    <div class="layout-main">
+                        <div class="route-bar">
+                            <i class="fa fa-home"></i> <span>/ </span>
+                            <ui:insert name="viewname" />
+                        </div>
+                        <div class="layout-main-content">
+                            <p:importConstants type="com.fresh.market.core.util.Constants" var="PFConstants" />
+                            
+                            <h:form>
+                                <p:idleMonitor timeout="18000000" rendered="true">
+                                    <p:ajax event="idle" listener="#{notiController.onIdle()}" />
+                                </p:idleMonitor>
+                            </h:form>
+                            
+                            <ui:insert name="content"/>
+                        </div>
+
+                        <ui:include src="./footer.xhtml" />
+                        <ui:include src="/ui/setting/s107/index.xhtml"/>
+                    </div>
+                   
+                </div>
+
+                <h:outputStylesheet name="css/nanoscroller.css" library="poseidon-layout" />
+                <h:outputStylesheet name="css/animate.css" library="poseidon-layout" />
+                <h:outputStylesheet name="css/layout-#{guestPreferences.theme}.css" library="poseidon-layout" />
+
+            </h:body>
+        </f:view>
+    </html>

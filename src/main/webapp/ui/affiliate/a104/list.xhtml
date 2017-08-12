@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <h:form id="listForm">
+        <p:outputPanel deferred="true" deferredMode="visible">
+            <p:dataTable id="agentTable" var="item" binding="#{bindingController.lazyDataTableModel}" value="#{a104Controller.lazyModel}">
+                <f:facet name="header">
+                    <div class="ui-g ui-fluid">
+                        <div class="ui-g-12 ui-md-6 ui-lg-1"/>
+                        <div class="ui-g-12 ui-md-6 ui-lg-2"/>
+                        <div class="ui-g-12 ui-md-6 ui-lg-2"/>
+                        <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            <p:calendar id="dateFrom" value="#{a104Controller.fromDate}" binding="#{bindingController.calendar}" 
+                                        pattern="dd-MM-yyyy HH:mm"  requiredMessage="#{msgs['messages.code.1022']}" timeControlType="select"
+                                        placeholder="#{msgs['common.startDate']}"/>
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            <p:calendar id="dateTo" value="#{a104Controller.toDate}" binding="#{bindingController.calendar}" 
+                                        pattern="dd-MM-yyyy HH:mm"  requiredMessage="#{msgs['messages.code.1022']}" timeControlType="select"
+                                        placeholder="#{msgs['common.toDate']}"/>
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            <p:inputText value="#{a104Controller.agent}" placeholder="#{msgs['common.username']}"/>
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-1">
+                            <p:commandButton binding="#{bindingController.btnSearch}" value="#{msgs['btn.search']}"
+                                             styleClass="search-btn"
+                                             action="#{a104Controller.search()}" update="listForm"/>
+                        </div>
+                    </div>
+                </f:facet>
+
+                <p:column headerText="#{msgs['common.seq']}" style="text-align: center;">
+                    <h:outputText value="#{(rowNumber+1)}" />
+                </p:column>
+
+                <p:column headerText="#{msgs['common.username']}" sortBy="#{item.username}" style="text-align: center;">
+                    <p:commandLink value="#{item.username}" action="#{a104Controller.prepareMember()}" update="listForm">
+                        <f:setPropertyActionListener value="#{item.id}" target="#{a104Controller.agenId}" />
+                    </p:commandLink>
+                </p:column>
+
+                <p:column headerText="#{msgs['common.member']}" sortBy="#{item.member}" style="text-align: center;">
+                    <h:outputText value="#{item.member}"/>
+                </p:column>
+
+                <p:column headerText="#{msgs['a104.total']}" style="text-align: right;">
+                    <h:outputText value="#{item.topsport+item.bet168+item.bet125win+item.venetian+item.allbet+item.cock+item.racingGame+item.fishing+item.spadegaming+item.idnpoker+item.lotto}">
+                        <f:convertNumber pattern="#,##0.00"/>
+                    </h:outputText>
+                </p:column>
+
+                <p:column headerText="#{msgs['api.topsport']}" sortBy="#{item.topsport}" style="text-align: right;">
+                    <h:outputText value="#{item.topsport}" >
+                        <f:convertNumber pattern="#,##0.00"/>
+                    </h:outputText>
+                </p:column>
+
+                <p:column headerText="#{msgs['api.bet168']}" sortBy="#{item.bet168}" style="text-align: right;">
+                    <h:outputText value="#{item.bet168}" >
+                        <f:convertNumber pattern="#,##0.00"/>
+                    </h:outputText>
+                </p:column>
+
+                <p:column headerText="#{msgs['api.bet125']}" sortBy="#{item.bet125win}" style="text-align: right;">
+                    <h:outputText value="#{item.bet125win}" >
+                        <f:convertNumber pattern="#,##0.00"/>
+                    </h:outputText>
+                </p:column>
+
+                <p:column headerText="#{msgs['api.venetian']}" sortBy="#{item.venetian}" style="text-align: right;">
+                    <h:outputText value="#{item.venetian}" >
+                        <f:convertNumber pattern="#,##0.00"/>
+                    </h:outputText>
+                </p:column>
+
+                <p:column headerText="#{msgs['api.allbet']}" sortBy="#{item.allbet}" style="text-align: right;">
+                    <h:outputText value="#{item.allbet}" >
+                        <f:convertNumber pattern="#,##0.00"/>
+                    </h:outputText>
+                </p:column>
+
+                <p:column headerText="#{msgs['api.cockfight']}" sortBy="#{item.cock}" style="text-align: right;">
+                    <h:outputText value="#{item.cock}" >
+                        <f:convertNumber pattern="#,##0.00"/>
+                    </h:outputText>
+                </p:column>
+
+                <p:column headerText="#{msgs['api.racing_games']}" sortBy="#{item.racingGame}" style="text-align: right;">
+                    <h:outputText value="#{item.racingGame}" >
+                        <f:convertNumber pattern="#,##0.00"/>
+                    </h:outputText>
+                </p:column>
+
+                <p:column headerText="#{msgs['api.fishworld']}" sortBy="#{item.fishing}" style="text-align: right;">
+                    <h:outputText value="#{item.fishing}" >
+                        <f:convertNumber pattern="#,##0.00"/>
+                    </h:outputText>
+                </p:column>
+                
+                <p:column headerText="#{msgs['api.spadeslot']}" sortBy="#{item.spadegaming}" style="text-align: right;">
+                    <h:outputText value="#{item.spadegaming}" >
+                        <f:convertNumber pattern="#,##0.00"/>
+                    </h:outputText>
+                </p:column>
+
+                <p:column headerText="#{msgs['api.idnpoker']}" sortBy="#{item.idnpoker}" style="text-align: right;">
+                    <h:outputText value="#{item.idnpoker}" >
+                        <f:convertNumber pattern="#,##0.00"/>
+                    </h:outputText>
+                </p:column>
+
+                <p:column headerText="#{msgs['api.lotto']}" sortBy="#{item.lotto}" style="text-align: right;">
+                    <h:outputText value="#{item.lotto}" >
+                        <f:convertNumber pattern="#,##0.00"/>
+                    </h:outputText>
+                </p:column>
+
+                <p:column headerText="#{msgs['c103.totaldeposit']}" style="text-align: right;">
+                    <h:outputText value="#{item.deposit}" >
+                        <f:convertNumber pattern="#,##0.00"/>
+                    </h:outputText>
+                </p:column>
+                
+                <p:column headerText="#{msgs['r105.totalwithdraw']}" style="text-align: right;">
+                    <h:outputText value="#{item.withdraw}" >
+                        <f:convertNumber pattern="#,##0.00"/>
+                    </h:outputText>
+                </p:column>
+
+                <f:facet name="footer">
+                    <h:outputText value="#{msgs['messages.code.2022']} "/>
+                    <h:outputText value="#{a104Controller.lazyModel.rowCount}">
+                        <f:convertNumber pattern="#,##0"/>
+                    </h:outputText>
+                    <h:outputText value=" #{msgs['messages.code.2023']}"/>
+                </f:facet>
+            </p:dataTable>
+        </p:outputPanel>
+    </h:form>
+
+</ui:composition>

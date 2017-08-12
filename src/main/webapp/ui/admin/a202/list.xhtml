@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+
+    <h:form id="listForm">
+        <p:dataTable var="item" value="#{a202Controller.items}" binding="#{bindingController.dataTableModel}">
+            <f:facet name="header">
+                <div class="ui-g ui-fluid">
+                    <div class="ui-g-12 ui-md-6 ui-lg-1">
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                        <p:inputText value="#{a202Controller.username}" placeholder="#{msgs['a201.profile.username']}"/>
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                        <p:inputText value="#{a202Controller.firstname}" placeholder="#{msgs['a201.profile.firstname']}"/>
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-1">
+                        <p:commandButton binding="#{bindingController.btnSearch}" value="#{msgs['btn.search']}" 
+                                         actionListener="#{a202Controller.search()}" styleClass="search-btn" update="listForm"/>
+                    </div>
+                </div>
+            </f:facet>
+
+            <p:column headerText="#{msgs['common.seq']}" >
+                <h:outputText value="#{(rowNumber+1)}" />
+            </p:column>
+
+            <p:column headerText="ชื่อ-นามสกุล" sortBy="#{item.userId.firstName}" >
+                <h:outputText value="#{item.userId.firstName} #{item.userId.lastName}"/>
+            </p:column>
+
+            <p:column headerText="บัญชีผู้ใช้งาน" sortBy="#{item.userId.username}">
+                <h:outputText value="#{item.userId.username}"/>
+            </p:column>
+
+            <p:column headerText="ประเภท" sortBy="#{item.type}" >
+                <h:outputText value="#{item.type}"/>
+            </p:column>
+
+            <p:column headerText="รายละเอียด" sortBy="#{item.detail}">
+                <h:outputText value="#{item.type eq 'Login' ? '-' : msgs[item.detail]}"/>
+            </p:column>
+
+            <p:column headerText="บราวเซอร์" sortBy="#{item.browser}" >
+                <h:outputText value="#{item.browser}"/>
+            </p:column>
+
+            <p:column headerText="อุปกรณ์" sortBy="#{item.device}" >
+                <h:outputText value="#{item.device}"/>
+            </p:column>
+
+            <p:column headerText="ไอพี" sortBy="#{item.ip}" >
+                <h:outputText value="#{item.ip}"/>
+            </p:column>
+
+            <p:column headerText="วัน-เวลา" sortBy="#{item.createdDt}" >
+                <h:outputText value="#{item.createdDt}">
+                    <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
+                </h:outputText>
+            </p:column>
+
+            <f:facet name="footer">
+                <h:outputText value="#{msgs['messages.code.2022']} "/>
+                <h:outputText value="#{a202Controller.items.size()}">
+                    <f:convertNumber pattern="#,##0"/>
+                </h:outputText>
+                <h:outputText value=" #{msgs['messages.code.2023']}"/>
+            </f:facet>
+        </p:dataTable>
+
+    </h:form>
+
+</ui:composition>

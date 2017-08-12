@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="/templates/default-template.xhtml">   
+
+    <ui:define name="viewname">#{msgs['menu.cash.c102']} / #{msgs['c102.label.bankpayment.add']}</ui:define>
+
+    <ui:define name="content">
+        <h:form id="listForm">
+
+            <p:messages id="notify_msg" autoUpdate="false" showIcon="false" style="width: 98%;margin-left: auto;margin-right: auto;"/>
+
+            <p:fieldset legend="#{msgs['c102.label.bankpayment.add']}" style="border: 0px;">
+                <p:panel style="max-width: 800px;margin-bottom: 10px;border-right: 0px;border-radius: 0px;">
+                    <div class="ui-fluid">
+                        <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-3,ui-grid-col-7" styleClass="ui-panelgrid-blank">
+                            <p:outputLabel value="#{msgs['c102.label.bankgroup']}："/>
+                            <p:outputLabel value="#{c102Controller.bankGroup.bankGroup}" />
+
+                            <p:outputLabel value="#{msgs['c102.label.bank']}："/>
+                            <h:panelGroup>
+                                <p:selectOneMenu value="#{c102Controller.bank}" converter="bankConverter"  effect="fade" var="b" >
+                                    <f:selectItems value="#{comboController.banks}" var="item" itemLabel="#{item.bankNameTh}" itemValue="#{item}" />
+
+                                    <p:column style="width:10%">
+                                        <h:outputText styleClass="ui-bank ui-bank-#{b.shortName}" />
+                                    </p:column>
+
+                                    <p:column>
+                                        <h:outputText value="#{b.bankNameTh}" />
+                                    </p:column>
+                                </p:selectOneMenu>
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <p:outputLabel value="#{msgs['c102.label.accountNameTh']}"/>
+                                <font class="require" style="color: red">*</font>
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <p:inputText  value="#{c102Controller.bankPayment.accountNameTh}" />
+                            </h:panelGroup>
+
+                            <h:panelGroup>
+                                <p:outputLabel value="#{msgs['c102.label.accountNameEn']}"/>
+                                <font class="require" style="color: red">*</font>
+                            </h:panelGroup>
+                            <p:inputText  value="#{c102Controller.bankPayment.accountNameEn}" />
+
+                            <h:panelGroup>
+                                <p:outputLabel value="#{msgs['c102.label.accountNumber']}："/>
+                                <font class="require" style="color: red">*</font>
+                            </h:panelGroup>
+                            <p:inputText  value="#{c102Controller.bankPayment.accountNumber}" />
+
+                            <p:outputLabel value="#{msgs['c102.label.branch']}："/>
+                            <p:inputText  value="#{c102Controller.bankPayment.branch}" />
+
+                            <h:panelGroup>
+                                <p:outputLabel value="#{msgs['common.status']}："/>
+                            </h:panelGroup>
+                            <h:panelGroup>
+                                <p:selectOneRadio  value="#{c102Controller.bankPayment.status}">
+                                    <f:selectItem itemLabel="#{msgs['c102.label.bankgroup.on']}" itemValue="1" />
+                                    <f:selectItem itemLabel="#{msgs['c102.label.bankgroup.off']}" itemValue="0" />
+                                </p:selectOneRadio>
+                            </h:panelGroup>                            
+
+                        </p:panelGrid>
+                    </div>
+                </p:panel>
+
+                <h:panelGroup style="margin-left: 0px;">
+                    <p:commandButton styleClass="edit-btn" binding="#{bindingController.btnSave}" value="#{msgs['btn.save']}" action="#{c102Controller.createBankPayment()}" update="notify_msg"/>
+                    <p:commandButton styleClass="clear-btn" binding="#{bindingController.btnCancel}" value="#{msgs['btn.cancel']}" action="edit_bankgroup?faces-redirect=true"/>
+                </h:panelGroup>
+
+            </p:fieldset>
+        </h:form>
+    </ui:define>
+</ui:composition>

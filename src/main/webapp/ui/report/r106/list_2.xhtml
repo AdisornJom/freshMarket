@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <h:form>
+
+        <p:dataTable binding="#{bindingController.dataTableModel}">
+
+            <p:column headerText="Top S bet">
+                <h:outputText/>
+            </p:column>
+
+            <p:column headerText="Star S bet">
+                <h:outputText/>
+            </p:column>
+
+            <p:column headerText="E-game bet">
+                <h:outputText/>
+            </p:column>
+
+            <p:column headerText="Racing G bet">
+                <h:outputText/>
+            </p:column>
+
+            <p:column headerText="Galaxy C bet">
+                <h:outputText/>
+            </p:column>
+
+            <p:column headerText="Venetian C bet">
+                <h:outputText/>
+            </p:column>
+
+            <p:column headerText="Wynn C bet">
+                <h:outputText/>
+            </p:column>
+            
+            <p:column headerText="Lotto bet">
+                <h:outputText/>
+            </p:column>
+            
+            <p:column headerText="Cock Fight bet">
+                <h:outputText/>
+            </p:column>
+            
+            <f:facet name="footer">
+                <h:outputText value="#{msgs['messages.code.2022']} "/>
+                <h:outputText value="0">
+                    <f:convertNumber pattern="#,##0"/>
+                </h:outputText>
+                <h:outputText value=" #{msgs['messages.code.2023']}"/>
+            </f:facet>
+        </p:dataTable>
+    </h:form>
+
+</ui:composition>

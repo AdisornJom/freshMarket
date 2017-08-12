@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <h:form id="listForm">
+          <p:dataTable  id="messageSystem" var="item" binding="#{bindingController.lazyDataTableModel}" value="#{w104Controller.lazyModel}">
+              <f:facet name="header">
+                <div class="ui-g ui-fluid">
+                    <div class="ui-g-12 ui-md-6 ui-lg-1">
+                         <p:commandButton styleClass="search-btn" binding="#{bindingController.btnAdd}" value="#{msgs['btn.add']}" update="listForm" 
+                                         action="#{w104Controller.prepareCreate1()}"/>
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-4"/>
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                        <p:inputText value="#{w104Controller.main_username}" placeholder="#{msgs['p101.detail.username']}"/>
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                        <p:calendar placeholder="#{msgs['common.startDate']}" binding="#{bindingController.calendar}" value="#{w104Controller.startDate}"/>
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                        <p:calendar placeholder="#{msgs['common.toDate']}" binding="#{bindingController.calendar}" value="#{w104Controller.toDate}"/>
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-1">
+                        <p:commandButton binding="#{bindingController.btnSearch}" value="#{msgs['btn.search']}" 
+                                        actionListener="${w104Controller.search()}" styleClass="search-btn" update="listForm"/>
+                    </div>
+                </div>
+            </f:facet>
+
+            <p:column headerText="#" >
+                <h:outputText value="#{(rowNumber+1)}" />
+            </p:column>
+
+            <p:column headerText="#{msgs['p101.detail.username']}" sortBy="#{item.userId.username}" >
+                <h:outputText value="#{item.userId.username}"/>
+            </p:column>
+            
+            <p:column headerText="#{msgs['m201.detail.title']}" sortBy="#{item.title}">
+                <h:outputText value="#{item.title}"/>
+            </p:column>
+
+            <p:column headerText="#{msgs['m202.detail']}"  >
+                <h:outputText value="#{item.content}"/>
+            </p:column>
+
+            <p:column  headerText="#{msgs['m201.detail.startDate']} " sortBy="#{item.startTime}">
+                <h:outputText value="#{item.startTime}">
+                    <f:convertDateTime pattern="#{PFConstants.DATE_PATTERN}"/>
+                </h:outputText>
+            </p:column>
+            
+            <p:column >
+                <p:tooltip for="edit" value="#{msgs['btn.edit']}" trackMouse="true"/>
+                <p:commandButton id="edit" icon="fa fa-edit"  action="edit?faces-redirect=true" update="listForm">
+                    <f:setPropertyActionListener value="#{item}" target="#{w104Controller.selected}" />
+                </p:commandButton>
+
+                <p:tooltip for="del" value="#{msgs['btn.delete']}" trackMouse="true"/>
+                <p:commandButton id="del" icon="fa fa-trash"  action="#{w104Controller.delete()}" update="listForm delete_msg">
+                    <p:confirm header="#{msgs['dialog.confirm']}" message="#{msgs['dialog.message']}" />
+                    <f:setPropertyActionListener value="#{item}" target="#{w104Controller.selected}" />
+                </p:commandButton>
+            </p:column>
+
+            <f:facet name="footer">
+                <h:outputText value="#{msgs['messages.code.2022']} "/>
+                <h:outputText value="#{w104Controller.lazyModel.rowCount}">    
+                    <f:convertNumber pattern="#,##0"/>
+                </h:outputText>
+                <h:outputText value=" #{msgs['messages.code.2023']}"/>
+            </f:facet>
+        </p:dataTable>
+
+    </h:form>
+
+</ui:composition>

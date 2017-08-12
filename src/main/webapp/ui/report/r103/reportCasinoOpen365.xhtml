@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <p:panel id="content_panel" header="#{msgs['menu.report.r103']}">
+
+
+        <p:toolbar style="margin-top: 3px;margin-bottom: 3px;">
+            <f:facet name="left" >
+                <h:form id="lToolbarForm">
+                    <p:commandButton binding="#{bindingController.btnBack}" value="#{msgs['btn.back']}" actionListener="#{r103Controller.next('report/r103/index')}" styleClass="clear-btn" update=":content"/>
+                </h:form>
+            </f:facet>
+        </p:toolbar>
+        <h:form id="wynnForm">
+            <p:dataTable id="casinoOpen365_id" var="casinoOpen365" value="#{r103Controller.casinoOpen365s}"
+                         binding="#{bindingController.defaultDataTableModel}">
+                <p:column headerText="#{msgs['order']}" style="text-align: center;width: 32px;">
+                    <h:outputText value="#{(rowNumber+1)}" />
+                </p:column>
+                <p:column headerText="#{msgs['common.username']}" style="text-align: center;width: 150px;">
+                    <h:outputText value="#{r103Controller.username}" styleClass="lb_bold" style="color: blue;"/>
+                </p:column>
+                <p:column headerText="#{msgs['detail']}" style="text-align: center;width: 100px;">
+                    <h:outputText value="#{casinoOpen365.trId}" styleClass="lb_bold" style="color: blue;"/>
+                    <br/>
+                    <h:outputText value="#{casinoOpen365.resultDate}">
+                        <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="#{msgs['gameNo']}" sortBy="#{casinoOpen365.gameNo}" style="text-align: center;">
+                    <h:outputText value="#{casinoOpen365.gameNo}"/>
+                </p:column>
+                <p:column headerText="#{msgs['betDetail']}" sortBy="#{casinoOpen365.betDetail}" style="text-align: center;">
+                    <h:outputText value="#{casinoOpen365.betDetail}"/>
+                </p:column>
+                <p:column headerText="#{msgs['common.status']}" sortBy="#{casinoOpen365.gameStatus}" style="width: 100px;text-align: center;">
+                    <h:outputText value="#{casinoOpen365.gameStatus}" styleClass="lb_bold"/>
+                </p:column>
+                <p:column headerText="#{msgs['betamt']}" style="width: 140px;text-align: right;">
+                    <h:outputText value="#{casinoOpen365.betAmt}">
+                        <f:convertNumber pattern="#,##0.00"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="#{msgs['winloss']}" sortBy="#{casinoOpen365.wlAmt}" style="width: 100px;">
+                    <h:outputText value="#{casinoOpen365.wlAmt}" styleClass="lb_bold" style="float: right;color:#{casinoOpen365.wlAmt >= 0 ? 'blue' : 'red'}">
+                        <f:convertNumber pattern="#,##0.00"/>
+                    </h:outputText>
+                </p:column>
+                <p:columnGroup type="footer">
+                    <p:row>
+                        <p:column colspan="6" footerText="#{msgs['r103.total']}" style="font-weight: bold;text-align:right;"></p:column>
+                        <p:column footerText="#{r103Controller.casinoOpen365Turnover}" style="font-weight: bold;text-align:right;"></p:column>
+                        <p:column footerText="#{r103Controller.casinoOpen365Winlose}" style="font-weight: bold;text-align:right;color:#{r103Controller.casinoOpen365WinloseFlag ? 'red' : 'blue'};"></p:column>
+                    </p:row>
+                </p:columnGroup>
+                <f:facet name="footer">
+                    <h:outputText value="#{msgs['data']} "/>
+                    <h:outputText value="#{r103Controller.casinoOpen365s.size()}">
+                        <f:convertNumber pattern="#,###"/>
+                    </h:outputText>
+                    <h:outputText value=" #{msgs['items']}"/>
+                </f:facet>
+            </p:dataTable>
+        </h:form>
+    </p:panel>
+</ui:composition>

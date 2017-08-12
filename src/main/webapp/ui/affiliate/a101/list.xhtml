@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+
+    <h:form id="listForm">
+        <p:dataTable var="item" binding="#{bindingController.dataTableModel}" value="#{a101Controller.items}">
+            <f:facet name="header">
+                <div class="ui-g ui-fluid">
+                    <div class="ui-g-12 ui-md-6 ui-lg-1">
+                        <p:commandButton styleClass="search-btn"  binding="#{bindingController.btnAdd}" value="#{msgs['btn.add']}" update="listForm" 
+                                         action="#{a101Controller.prepareCreate()}"/>
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-1">
+                    </div>
+                </div>
+            </f:facet>
+
+            <p:column headerText="#{msgs['a101.groupname']}" style="text-align: center;">
+                <h:outputText value="#{item.agentGroup.groupName}"/>
+            </p:column>
+
+            <p:column headerText="#{msgs['a101.member']}" style="text-align: center;">
+                <h:outputText value="#{item.agentGroup.member}"/>
+            </p:column>
+
+            <p:column headerText="#{msgs['turnover']}" style="text-align: center;">
+                <h:outputText value="#{item.agentGroup.turnover}">
+                    <f:convertNumber pattern="#,##0"/>
+                </h:outputText>
+            </p:column>
+
+            <p:column headerText="#{msgs['api.topsport']}" style="text-align: center;">
+                <h:outputText value="#{item.topSport}">
+                    <f:convertNumber pattern="#,##0.00"/>
+                </h:outputText>
+                <h:outputText value=" %"/>
+            </p:column>
+
+            <p:column headerText="#{msgs['api.bet168']}" style="text-align: center;">
+                <h:outputText value="#{item.bet168}">
+                    <f:convertNumber pattern="#,##0.00"/>
+                </h:outputText>
+                <h:outputText value=" %"/>
+            </p:column>
+
+            <p:column headerText="#{msgs['api.bet125']}" style="text-align: center;">
+                <h:outputText value="#{item.bet125win}">
+                    <f:convertNumber pattern="#,##0.00"/>
+                </h:outputText>
+                <h:outputText value=" %"/>
+            </p:column>
+
+            <p:column headerText="#{msgs['api.venetian']}" style="text-align: center;">
+                <h:outputText value="#{item.venetian}">
+                    <f:convertNumber pattern="#,##0.00"/>
+                </h:outputText>
+                <h:outputText value=" %"/>
+            </p:column>
+
+            <p:column headerText="#{msgs['api.allbet']}" style="text-align: center;">
+                <h:outputText value="#{item.allbet}">
+                    <f:convertNumber pattern="#,##0.00"/>
+                </h:outputText>
+                <h:outputText value=" %"/>
+            </p:column>
+
+            <p:column headerText="#{msgs['api.cockfight']}" style="text-align: center;">
+                <h:outputText value="#{item.cockfight}">
+                    <f:convertNumber pattern="#,##0.00"/>
+                </h:outputText>
+                <h:outputText value=" %"/>
+            </p:column>
+
+            <p:column headerText="#{msgs['api.racing_games']}" style="text-align: center;">
+                <h:outputText value="#{item.racingGames}">
+                    <f:convertNumber pattern="#,##0.00"/>
+                </h:outputText>
+                <h:outputText value=" %"/>
+            </p:column>
+
+            <p:column headerText="#{msgs['api.fishworld']}" style="text-align: center;">
+                <h:outputText value="#{item.fishing}">
+                    <f:convertNumber pattern="#,##0.00"/>
+                </h:outputText>
+                <h:outputText value=" %"/>
+            </p:column>
+            
+            <p:column headerText="#{msgs['api.spadeslot']}" style="text-align: center;">
+                <h:outputText value="#{item.spadegaming}">
+                    <f:convertNumber pattern="#,##0.00"/>
+                </h:outputText>
+                <h:outputText value=" %"/>
+            </p:column>
+
+            <p:column headerText="#{msgs['api.idnpoker']}" style="text-align: center;">
+                <h:outputText value="#{item.idnpoker}">
+                    <f:convertNumber pattern="#,##0.00"/>
+                </h:outputText>
+                <h:outputText value=" %"/>
+            </p:column>
+
+            <p:column headerText="#{msgs['api.lotto']}" style="text-align: center;">
+                <h:outputText value="#{item.lotto}">
+                    <f:convertNumber pattern="#,##0.00"/>
+                </h:outputText>
+                <h:outputText value=" %"/>
+            </p:column>
+
+            <p:column style="width: 75px;text-align: center">
+
+                <p:tooltip for="edit" value="#{msgs['btn.edit']}" trackMouse="true"/>
+                <p:commandButton id="edit" icon="fa fa-fw fa-edit" action="#{a101Controller.prepareEdit()}" update="listForm">
+                    <f:setPropertyActionListener value="#{item.agentGroup}" target="#{a101Controller.selected}" />
+                </p:commandButton>
+
+                <p:tooltip for="delete" value="#{msgs['btn.delete']}" trackMouse="true"/>
+                <p:commandButton id="delete" icon="fa fa-fw fa-trash-o" action="#{a101Controller.delete()}" update="listForm">
+                    <p:confirm header="#{msgs['dialog.confirm']}" message="#{msgs['dialog.message']}" />
+                    <f:setPropertyActionListener value="#{item.agentGroup}" target="#{a101Controller.selected}"/>
+                </p:commandButton>
+            </p:column>
+
+            <f:facet name="footer">
+                <h:outputText value="#{msgs['messages.code.2022']} "/>
+                <h:outputText value="#{a101Controller.items.size()}">
+                    <f:convertNumber pattern="#,##0.00"/>
+                </h:outputText>
+                <h:outputText value=" #{msgs['messages.code.2023']}"/>
+            </f:facet>
+        </p:dataTable>
+
+    </h:form>
+
+</ui:composition>

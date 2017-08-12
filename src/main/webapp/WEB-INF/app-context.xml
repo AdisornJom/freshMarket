@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns="http://www.springframework.org/schema/security"
+             xmlns:beans="http://www.springframework.org/schema/beans"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+http://www.springframework.org/schema/security
+http://www.springframework.org/schema/security/spring-security-3.2.xsd">
+    	 
+    <beans:bean id="dataSource" class="org.springframework.jndi.JndiObjectFactoryBean">
+        <beans:property name="jndiName" value="jdbc/market"/>
+    </beans:bean>
+
+    <http auto-config="false" entry-point-ref="authenticationEntryPoint" use-expressions="true" access-denied-page="/access_denied.xhtml">
+        <intercept-url pattern="/" access="isAuthenticated()"/>
+        <intercept-url pattern="/templates/**" access="isAuthenticated()"/>
+        <intercept-url pattern="/ui/**" access="isAuthenticated()"/>
+        <intercept-url pattern="/default.xhtml" access="isAuthenticated()"/>
+        <intercept-url pattern="/index.xhtml" access="isAuthenticated()"/>
+        <intercept-url pattern="/home" access="isAuthenticated()"/>
+        <intercept-url pattern="/members" access="isAuthenticated()"/>
+        <intercept-url pattern="/member-edit" access="isAuthenticated()"/>
+        <intercept-url pattern="/member-edit-regist" access="isAuthenticated()"/>
+        <intercept-url pattern="/member-groups" access="isAuthenticated()"/>
+        <intercept-url pattern="/member-groups-create" access="isAuthenticated()"/>
+        <intercept-url pattern="/member-groups-edit" access="isAuthenticated()"/>
+        <intercept-url pattern="/member-logs" access="isAuthenticated()"/>
+        <intercept-url pattern="/web-setting" access="isAuthenticated()"/>
+        <intercept-url pattern="/web-ma" access="isAuthenticated()"/>
+        <intercept-url pattern="/web-ads" access="isAuthenticated()"/>
+        <intercept-url pattern="/w103-create1" access="isAuthenticated()"/>
+        <intercept-url pattern="/w103-edit1" access="isAuthenticated()"/>
+        <intercept-url pattern="/w103-create2" access="isAuthenticated()"/>
+        <intercept-url pattern="/w103-edit2" access="isAuthenticated()"/>
+        <intercept-url pattern="/w103-create3" access="isAuthenticated()"/>
+        <intercept-url pattern="/w103-edit3" access="isAuthenticated()"/>
+        <intercept-url pattern="/web-message" access="isAuthenticated()"/>
+        <intercept-url pattern="/w104-create" access="isAuthenticated()"/>
+        <intercept-url pattern="/w104-edit" access="isAuthenticated()"/>
+        <intercept-url pattern="/web-email" access="isAuthenticated()"/>
+        <intercept-url pattern="/affiliate-groups" access="isAuthenticated()"/>
+        <intercept-url pattern="/affiliate-groups-create" access="isAuthenticated()"/>
+        <intercept-url pattern="/affiliate-groups-edit" access="isAuthenticated()"/>
+        <intercept-url pattern="/affiliate-request" access="isAuthenticated()"/>
+        <intercept-url pattern="/affiliate-request-edit" access="isAuthenticated()"/>
+        <intercept-url pattern="/affiliate-financial" access="isAuthenticated()"/>
+        <intercept-url pattern="/affiliate-report" access="isAuthenticated()"/>
+        <intercept-url pattern="/affiliate-financial-report" access="isAuthenticated()"/>
+        <intercept-url pattern="/cash" access="isAuthenticated()"/>
+        <intercept-url pattern="/cash-edit" access="isAuthenticated()"/>
+        <intercept-url pattern="/cash-view" access="isAuthenticated()"/>
+        <intercept-url pattern="/bank-group" access="isAuthenticated()"/>
+        <intercept-url pattern="/bank-group-create" access="isAuthenticated()"/>
+        <intercept-url pattern="/bank-group-view" access="isAuthenticated()"/>
+        <intercept-url pattern="/bank-group-edit" access="isAuthenticated()"/>
+        <intercept-url pattern="/bank-payment-create" access="isAuthenticated()"/>
+        <intercept-url pattern="/bank-payment-edit" access="isAuthenticated()"/>
+        <intercept-url pattern="/withdraw-view" access="isAuthenticated()"/>
+        <intercept-url pattern="/withdraw-edit" access="isAuthenticated()"/>
+        <intercept-url pattern="/withdraw" access="isAuthenticated()"/>
+        <intercept-url pattern="/adjust" access="isAuthenticated()"/>
+        <intercept-url pattern="/cash-txn" access="isAuthenticated()"/>
+        <intercept-url pattern="/sumary-report" access="isAuthenticated()"/>
+        <intercept-url pattern="/cash-report" access="isAuthenticated()"/>
+        <intercept-url pattern="/product-report" access="isAuthenticated()"/>
+        <intercept-url pattern="/product-report-sport3m" access="isAuthenticated()"/>
+        <intercept-url pattern="/product-report-sportbet168" access="isAuthenticated()"/>
+        <intercept-url pattern="/product-report-casinogd" access="isAuthenticated()"/>
+        <intercept-url pattern="/product-report-casinoallbet" access="isAuthenticated()"/>
+        <intercept-url pattern="/product-report-cock" access="isAuthenticated()"/>
+        <intercept-url pattern="/product-report-gamegr" access="isAuthenticated()"/>
+        <intercept-url pattern="/product-report-fishworld" access="isAuthenticated()"/>
+        <intercept-url pattern="/product-report-spadegaming" access="isAuthenticated()"/>
+        <intercept-url pattern="/product-report-idnpoker" access="isAuthenticated()"/>
+        <intercept-url pattern="/product-report-lotto" access="isAuthenticated()"/>
+        <intercept-url pattern="/person-report_" access="isAuthenticated()"/>
+        <intercept-url pattern="/person-report" access="isAuthenticated()"/>
+        <intercept-url pattern="/r105-turnover" access="isAuthenticated()"/>
+        <intercept-url pattern="/admins" access="isAuthenticated()"/>
+        <intercept-url pattern="/admins-create" access="isAuthenticated()"/>
+        <intercept-url pattern="/admins-edit" access="isAuthenticated()"/>
+        <intercept-url pattern="/admin-logs" access="isAuthenticated()"/>
+        <intercept-url pattern="/banks" access="isAuthenticated()"/>
+        <intercept-url pattern="/languages" access="isAuthenticated()"/>
+        <intercept-url pattern="/email-templat" access="isAuthenticated()"/>
+        <intercept-url pattern="/email-templat-edit" access="isAuthenticated()"/>
+        <intercept-url pattern="/schedules" access="isAuthenticated()"/>
+        <intercept-url pattern="/contact-foot" access="isAuthenticated()"/>
+        <intercept-url pattern="/api-logs" access="isAuthenticated()"/>
+        <intercept-url pattern="/apilog-view" access="isAuthenticated()"/>
+        <intercept-url pattern="/report-status" access="isAuthenticated()"/>
+        <intercept-url pattern="/points" access="isAuthenticated()"/>
+        <intercept-url pattern="/adjust-points" access="isAuthenticated()"/>
+        <intercept-url pattern="/adjust-points-edit" access="isAuthenticated()"/>
+        <intercept-url pattern="/promotions" access="isAuthenticated()"/>
+        <intercept-url pattern="/promotions-create" access="isAuthenticated()"/>
+        <intercept-url pattern="/promotions-edit" access="isAuthenticated()"/>
+        <intercept-url pattern="/profile" access="isAuthenticated()"/>
+        <intercept-url pattern="/user-logs" access="isAuthenticated()"/>
+        
+        <logout invalidate-session="true" logout-success-url="/Default" />
+        <custom-filter ref="authenticationFilter" position="FORM_LOGIN_FILTER" />
+        <custom-filter ref="concurrencyFilter" position="CONCURRENT_SESSION_FILTER" />
+        <session-management session-authentication-strategy-ref="sas" />
+    </http>
+
+    <beans:bean id="authenticationFilter" class="org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter">
+        <beans:property name="sessionAuthenticationStrategy" ref="sas" />
+        <beans:property name="authenticationManager" ref="authenticationManager" />
+        <beans:property name="authenticationSuccessHandler" ref="authSuccessHandler" />
+    </beans:bean>
+
+
+    <beans:bean id="authSuccessHandler" class="org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler">
+        <beans:property name="defaultTargetUrl" value="/" />
+    </beans:bean>
+
+    <beans:bean id="authenticationEntryPoint" class="org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint">
+        <beans:property name="loginFormUrl" value="/Default" />
+    </beans:bean>
+        
+    <global-method-security
+        secured-annotations="enabled" jsr250-annotations="enabled">
+    </global-method-security>
+
+    <authentication-manager alias="authenticationManager">
+        <authentication-provider>
+            <password-encoder hash="md5"/>
+            <jdbc-user-service data-source-ref="dataSource"
+                               users-by-username-query="select username,password,status from core_admin_user where username = ? and status = 1 and used = 1"
+                               authorities-by-username-query="select u.username, upper('role_' || r.role_name) as role_name from core_admin_user u, core_admin_user_role r where u.role_id = r.id and username = ? group by u.username, r.role_name"/>
+        </authentication-provider>
+    </authentication-manager>
+
+    <beans:bean id="concurrencyFilter" class="org.springframework.security.web.session.ConcurrentSessionFilter">
+        <beans:property name="sessionRegistry" ref="sessionRegistry" />
+        <beans:property name="expiredUrl" value="/Default" />
+    </beans:bean>
+
+    <beans:bean id="sas" class="org.springframework.security.web.authentication.session.CompositeSessionAuthenticationStrategy">
+        <beans:constructor-arg>
+            <beans:list>
+                <beans:bean class="org.springframework.security.web.authentication.session.ConcurrentSessionControlAuthenticationStrategy">
+                    <beans:constructor-arg ref="sessionRegistry" />
+                    <beans:property name="maximumSessions" value="1" />
+                    <beans:property name="exceptionIfMaximumExceeded" value="true" />
+                </beans:bean>
+                <beans:bean class="org.springframework.security.web.authentication.session.SessionFixationProtectionStrategy"/>
+                <beans:bean class="org.springframework.security.web.authentication.session.RegisterSessionAuthenticationStrategy">
+                    <beans:constructor-arg ref="sessionRegistry" />
+                </beans:bean>
+            </beans:list>
+        </beans:constructor-arg>
+    </beans:bean>
+
+    <beans:bean id="sessionRegistry" class="org.springframework.security.core.session.SessionRegistryImpl" />
+
+</beans:beans>

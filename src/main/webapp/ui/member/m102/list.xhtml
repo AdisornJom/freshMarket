@@ -1,0 +1,98 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <h:form id="listForm">
+        <p:dataTable var="item" binding="#{bindingController.dataTableModel}" value="#{m102Controller.resultList}">
+
+            <f:facet name="header">
+                <div class="ui-g ui-fluid">
+                    <div class="ui-g-1">
+                        <p:commandButton styleClass="search-btn" binding="#{bindingController.btnAdd}" value="#{msgs['btn.add']}" action="#{m102Controller.prepareCreate()}"/>
+                    </div>
+                </div>
+            </f:facet>
+
+            <p:column headerText="#{msgs['common.seq']}" style="text-align: center;width: 32px;">
+                <h:outputText value="#{(rowNumber+1)}" />
+            </p:column>
+
+            <p:column headerText="#{msgs['m102.membergroupname']}" sortBy="#{item.groupName}" style="text-align: center;">
+                <h:outputText value="#{item.groupName}"/>
+            </p:column>
+
+            <p:column headerText="#{msgs['p102.point']}" style="text-align: center;width: 12%;">
+                <h:outputText value="#{item.pointProportion}"/>
+            </p:column>
+
+            <p:column headerText="#{msgs['common.deposit']}" style="text-align: center;width: 12%;">
+                <h:panelGroup layout="block">
+                    <h:outputText value="#{item.depositAmountLow}">
+                        <f:convertNumber pattern="#,###"/>
+                    </h:outputText>  
+                    <h:outputText value=" - "/>
+                    <h:outputText value="#{item.depositAmountHigh}">
+                        <f:convertNumber pattern="#,###"/>
+                    </h:outputText>
+                </h:panelGroup>
+            </p:column>
+
+            <p:column headerText="#{msgs['common.withdraw']}" style="text-align: center;width: 12%;">
+                <h:panelGroup layout="block">
+                    <h:outputText value="#{item.drawingAmountLow}">
+                        <f:convertNumber pattern="#,###"/>
+                    </h:outputText>  
+                    <h:outputText value=" - "/>
+                    <h:outputText value="#{item.drawingAmountHigh}">
+                        <f:convertNumber pattern="#,###"/>
+                    </h:outputText>
+                </h:panelGroup>
+            </p:column>
+
+            <p:column headerText="#{msgs['m102.betting']} (sports)" style="text-align: center;width: 10%;">
+                <h:panelGroup layout="block">
+                    <h:outputText value="#{item.physicalAmountLow}">
+                        <f:convertNumber pattern="#,###"/>
+                    </h:outputText>  
+                    <h:outputText value=" - "/>
+                    <h:outputText value="#{item.physicalAmountHigh}">
+                        <f:convertNumber pattern="#,###"/>
+                    </h:outputText>
+                </h:panelGroup>
+            </p:column>
+
+            <p:column headerText="#{msgs['m102.betting']} (games)" style="text-align: center;width: 10%;">
+                <h:panelGroup layout="block">
+                    <h:outputText value="#{item.electronicGamesAmountLow}">
+                        <f:convertNumber pattern="#,###"/>
+                    </h:outputText>  
+                    <h:outputText value=" - "/>
+                    <h:outputText value="#{item.electronicGamesAmountHigh}">
+                        <f:convertNumber pattern="#,###"/>
+                    </h:outputText>
+                </h:panelGroup>
+            </p:column>
+
+            <p:column headerText="#{msgs['common.status']}" style="width: 75px;text-align: center" sortBy="#{item.groupStatus}">
+                <h:outputText value="#{item.groupStatus eq 1 ? msgs['common.open'] : msgs['common.pending']}" style="color: #{item.groupStatus eq 1 ? 'green' : 'red'}"/>
+            </p:column>
+
+            <p:column style="text-align: center;width: 32px;">
+                <p:commandButton id="edit"  title="#{msgs['btn.edit']}" icon="fa fa-edit"  action="#{m102Controller.prepareEdit()}">
+                    <f:setPropertyActionListener value="#{item}" target="#{m102Controller.userGroup}" />
+                </p:commandButton>
+            </p:column>
+
+            <f:facet name="footer">
+                <h:outputText value="#{msgs['messages.code.2022']} "/>
+                <h:outputText value="#{m102Controller.resultList.size()}">
+                    <f:convertNumber pattern="#,##0"/>
+                </h:outputText>
+                <h:outputText value=" #{msgs['messages.code.2023']}"/>
+            </f:facet>
+        </p:dataTable>
+    </h:form>
+
+</ui:composition>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="/templates/default-template.xhtml">
+
+    <ui:define name="viewname">#{msgs['menu.report.r103']} #{msgs['api.cockfight']} / #{msgs['detail']}</ui:define>
+
+    <ui:define name="content">
+        <h:form id="casinoCockForm">
+            <div class="ui-g">
+                <p:dataTable  var="cock" rowIndexVar="rowNumber" value="#{r103Controller.cocks}" 
+                              binding="#{bindingController.defaultDataTableModel}" >
+                    <f:facet name="header">
+                        <div class="ui-g ui-fluid">
+                            <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                <p:commandButton binding="#{bindingController.btnBack}" value="#{msgs['btn.back']}" 
+                                                 action="#{r103Controller.cancel()}" styleClass="clear-btn"/>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-1">
+                            </div>
+                        </div>
+                    </f:facet>
+                    <p:column headerText="#{msgs['order']}" style="text-align: center;width: 32px;">
+                        <h:outputText value="#{(rowNumber+1)}" />
+                    </p:column>
+                    <p:column headerText="#{msgs['common.username']}"  style="text-align: center;width: 150px;">
+                        <h:outputText value="#{r103Controller.username}" styleClass="lb_bold" style="color: blue;"/>
+                    </p:column>
+                    <p:column headerText="#{msgs['r103.transactionInfoTime']}" sortBy="#{cock.cockProcessedTicketPK.ticketId}" style="text-align: center">
+                        <h:outputText value="#{cock.cockProcessedTicketPK.ticketId}"/><br/>
+                        <h:outputText value="#{cock.createdDatetime}">
+                            <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="#{msgs['r103.fightDetails']}" style="text-align: center">
+                        <h:outputText value="#{cock.meronCock}" style="color: red;"/> vs <h:outputText value="#{cock.walaCock}" style="color: blue;"/><br/>
+                        <h:outputText value="#{cock.arenaCode}"/><br/>
+                        <h:outputText value="#{msag['match']}"/> : <h:outputText value="#{cock.matchNo}"/><br/>
+                        <h:outputText value="#{msag['fight']}"/> : <h:outputText value="#{cock.fightNo}"/>
+                    </p:column>
+                    <p:column headerText="#{msgs['r103.betOn']}" style="text-align: center">
+                        <h:outputText value="#{cock.betOn}"/><br/>
+                        <h:outputText value="#{cock.oddsAsked}"/>
+                    </p:column>
+                    <p:column headerText="#{msgs['common.status']}" style="width: 100px;text-align: center">
+                        <h:outputText value="#{cock.status}"/>
+                        <h:outputText value="#{msag['r103.result']}"/> : <h:outputText value="#{cock.fightResult}"/>
+                    </p:column>
+                    <p:column headerText="#{msgs['account.amount']}" style="width: 100px;text-align: center">
+                        <h:outputText value="#{cock.stakeMoney}" style="font-weight: bold;float: right;">
+                            <f:convertNumber pattern="#,##0.00"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="#{msgs['r103.result']}" style="width: 100px;text-align: center;">
+                        <h:outputText value="#{cock.winloss}" style="font-weight: bold;float: right;color: #{cock.winloss >= 0 ? 'blue' : 'red'};">
+                            <f:convertNumber pattern="#,##0.00"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:columnGroup type="footer">
+                        <p:row>
+                            <p:column colspan="6" footerText="#{msgs['r103.total']}" style="font-weight: bold;text-align:right;"></p:column>
+                            <p:column footerText="#{r103Controller.cockTurnover}" style="font-weight: bold;text-align:right;"></p:column>
+                            <p:column footerText="#{r103Controller.cockWinlose}" style="font-weight: bold;text-align:right;color:#{r103Controller.cockWinloseFlag ? 'red' : 'blue'};"></p:column>
+                        </p:row>
+                    </p:columnGroup>
+                    <f:facet name="footer">
+                        <h:outputText value="#{msgs['data']} "/>
+                        <h:outputText value="#{r103Controller.cocks.size()}">
+                            <f:convertNumber pattern="#,###"/>
+                        </h:outputText>
+                        <h:outputText value=" #{msgs['items']}"/>
+                    </f:facet>
+                </p:dataTable>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,22 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+
+
+    <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()" />
+    <p:dialog widgetVar="statusDialog" modal="true" draggable="false" closable="false" resizable="false" showHeader="false">
+        <h:panelGrid columns="2">
+            <p:graphicImage value="./resources/images/loader.gif" />
+            <h:outputText value="Waiting.." style="font-size: larger;font-weight: bolder;color: gray;"/>
+        </h:panelGrid>
+    </p:dialog>
+
+    <p:confirmDialog global="true" closeOnEscape="true">
+        <div style="width: 100%;text-align: center">
+            <p:commandButton value="#{msgs['btn.ok']}" type="button" styleClass="ui-confirmdialog-yes" icon="fa fa-check"/>
+            <p:commandButton value="#{msgs['btn.cancel']}" type="button" styleClass="ui-confirmdialog-no" icon="fa fa-ban"/>
+        </div>
+    </p:confirmDialog>
+</ui:composition>

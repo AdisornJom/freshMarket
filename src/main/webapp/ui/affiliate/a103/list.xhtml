@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <h:form id="listForm">
+        <p:outputPanel deferred="true" deferredMode="visible">
+            <p:dataTable var="item" binding="#{bindingController.dataTableModel}" value="#{a103Controller.items}">
+                <f:facet name="header">
+                    <div class="ui-g ui-fluid">
+                        <div class="ui-g-12 ui-md-6 ui-lg-1">
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-2">
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-2">
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-2">
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-2">
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            <p:inputText value="#{a103Controller.agent}" placeholder="#{msgs['common.username']}"/>
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-1">
+                            <p:commandButton binding="#{bindingController.btnSearch}" value="#{msgs['btn.search']}"
+                                             action="#{a103Controller.search()}" update="listForm"
+                                             styleClass="search-btn"/>
+                        </div>
+                    </div>
+                </f:facet>
+                <p:columnGroup type="header">
+                    <p:row>
+                        <p:column headerText="#{msgs['common.seq']}" style="text-align: center;width: 25px;height: 27px;"/>
+                        <p:column headerText="#{msgs['common.username']}" sortBy="#{item.agentAmtWinTO.username}"/>
+                        <p:column headerText="#{msgs['a104.member']}" sortBy="#{item.agentAmtWinTO.member}"/>
+                        <p:column headerText="#{msgs['dateFrom']}" sortBy="#{item.dateDt}" style="width: 120px;"/>
+                        <p:column headerText="#{msgs['turnover']}" />
+                        <p:column headerText="#{msgs['a103.totaldeposit']}" />
+                        <p:column headerText="#{msgs['a103.totalwithdraw']}"/>
+                        <p:column headerText="#{msgs['a103.groupseller']}"/>
+                        <p:column headerText="#{msgs['a103.totalincomeseller']}"/>
+                        <p:column headerText="#{msgs['common.remark']}" style="width: 300px;"/>
+                        <p:column headerText="" style="width: 5%;"/>
+                    </p:row>
+                </p:columnGroup>
+                <p:column style="text-align: center;height: 27px;">
+                    <h:outputText value="#{(rowNumber+1)}" />
+                </p:column>
+                <p:column style="text-align: center;">
+                    <h:outputText value="#{item.agentAmtWinTO.username}"/>
+                </p:column>
+                <p:column style="text-align: center;">
+                    <h:outputText value="#{item.agentAmtWinTO.member}"/>
+                </p:column>
+                <p:column style="text-align: center;">
+                    <h:outputText value="#{item.agentAmtWinTO.dateDt}">
+                        <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
+                    </h:outputText>
+                </p:column>
+                <p:column style="text-align: right;">
+                    <h:outputText value="#{item.agentAmtWinTO.topsport+item.agentAmtWinTO.bet168+item.agentAmtWinTO.venetian+item.agentAmtWinTO.wynn+item.agentAmtWinTO.cock+item.agentAmtWinTO.racingGame+item.agentAmtWinTO.idnpoker}">
+                        <f:convertNumber pattern="#,##0.00"/>
+                    </h:outputText>
+                </p:column>
+                <p:column style="text-align: right;">
+                    <h:outputText value="#{item.agentAmtWinTO.deposit}">
+                        <f:convertNumber pattern="#,##0.00"/>
+                    </h:outputText>
+                </p:column>
+                <p:column style="text-align: right;">
+                    <h:outputText value="#{item.agentAmtWinTO.withdraw}">
+                        <f:convertNumber pattern="#,##0.00"/>
+                    </h:outputText>
+                </p:column>
+                <p:column style="text-align: center;">
+                    <h:outputText value="#{item.agentGroup.groupName}" style="color: blue;font-weight: bold;"/>
+                </p:column>
+                <p:column style="text-align: right;">
+                    <h:outputText value="#{item.amount}" style="color: blue;font-weight: bold;">
+                        <f:convertNumber pattern="#,##0.00"/>
+                    </h:outputText>
+                </p:column>
+                <p:column >
+                    <h:outputText value="#{item.remark}"/>
+                </p:column>
+                <p:column style="text-align: center;">
+                    <p:tooltip for="view" value="#{msgs['pay']}" trackMouse="true"/>
+                    <p:commandButton id="view" icon="fa fa-fw fa-edit" action="#{a103Controller.create()}" update="listForm" rendered="#{item.amount > 0}">
+                        <p:confirm header="#{msgs['dialog.confirm']}" message="#{msgs['dialog.payment']}" />
+                        <f:setPropertyActionListener value="#{item}" target="#{a103Controller.selected}" />
+                    </p:commandButton>
+                </p:column>
+                <f:facet name="footer">
+                    <h:outputText value="#{msgs['messages.code.2022']} "/>
+                    <h:outputText value="#{a103Controller.items.size()}">
+                        <f:convertNumber pattern="#,##0"/>
+                    </h:outputText>
+                    <h:outputText value=" #{msgs['messages.code.2023']}"/>
+                </f:facet>
+            </p:dataTable>
+        </p:outputPanel>
+    </h:form>
+
+</ui:composition>

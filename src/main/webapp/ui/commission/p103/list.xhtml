@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <h:form id="listForm">
+        <p:dataTable var="item" binding="#{bindingController.dataTableModel}" value="#{p103Controller.items}">
+            <f:facet name="header">
+                <div class="ui-g ui-fluid">
+                    <div class="ui-g-12 ui-md-6 ui-lg-1">
+                        <p:commandButton styleClass="search-btn"  binding="#{bindingController.btnAdd}" value="#{msgs['btn.add']}" update="listForm" 
+                                         action="#{p103Controller.prepareCreate()}"/>
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-1">
+                    </div>
+                </div>
+            </f:facet>
+
+            <p:column headerText="#{msgs['common.seq']}">
+                <h:outputText value="#{(rowNumber+1)}" />
+            </p:column>
+
+            <p:column headerText="#{msgs['p106.detail.promotionName']}">
+                <h:outputText value="#{item.promotionName}"/>
+            </p:column>
+
+            <p:column headerText="#{msgs['p103.promotiontype']}">
+                <h:outputText value="#{item.promotionType eq p103Controller.PRO_TYPE_PERSEN ? msgs['p103.addmoney.persen']:
+                                       item.promotionType eq p103Controller.PRO_TYPE_AMOUNT ? msgs['p103.addmoney']:
+                                       item.promotionType eq p103Controller.PRO_TYPE_REFUND ? msgs['p103.refund']:'' }"/>
+            </p:column>
+
+            <p:column headerText="#{msgs['p106.detail.ratesPromotion']}" >
+                <h:outputText value="#{item.proportionSet eq null ? '-' : item.proportionSet}" />
+            </p:column>
+
+            <p:column headerText="#{msgs['p106.detail.limitPromotion']}">
+                <h:outputText value="#{item.upperLimit}" style="float: right;">
+                    <f:convertNumber  pattern="#,##0.00"/>
+                </h:outputText>
+            </p:column>
+
+            <p:column headerText="#{msgs['p106.detail.startDate']}" >
+                <h:outputText value="#{item.startTime}">
+                    <f:convertDateTime pattern="dd-MM-yyyy"/>
+                </h:outputText>
+            </p:column>
+
+            <p:column headerText="#{msgs['p106.detail.endDate']}" >
+                <h:outputText value="#{item.endTime}">
+                    <f:convertDateTime pattern="dd-MM-yyyy"/>
+                </h:outputText>
+            </p:column>
+
+            <p:column headerText="#{msgs['p106.detail.status']}" >
+                <h:outputText value="#{item.status eq '1' ? msgs['common.show'] : msgs['common.hide']}" 
+                              style="color: #{item.status eq '1' ? 'blue' : 'red'}"/>
+            </p:column>
+
+            <p:column >
+                <p:tooltip   for="view" value="#{msgs['btn.detail']}" trackMouse="true"/>
+                <p:commandButton rendered="false" id="view" icon="fa fa-fw fa-file-text-o"/>
+
+                <p:tooltip for="edit" value="#{msgs['btn.edit']}" trackMouse="true"/>
+                <p:commandButton id="edit" icon="fa fa-edit"  action="#{p103Controller.prepareEdit()}" update="listForm">
+                    <f:setPropertyActionListener value="#{item}" target="#{p103Controller.selected}" />
+                </p:commandButton>
+
+                <p:tooltip for="del" value="#{msgs['btn.delete']}" trackMouse="true"/>
+                <p:commandButton id="del" icon="fa fa-trash"  action="#{p103Controller.delete()}" update="listForm">
+                    <p:confirm header="#{msgs['dialog.confirm']}" message="#{msgs['dialog.message']}" />
+                    <f:setPropertyActionListener value="#{item}" target="#{p103Controller.selected}" />
+                </p:commandButton>
+            </p:column>
+
+            <f:facet name="footer">
+                <h:outputText value="#{msgs['messages.code.2022']} "/>
+                <h:outputText value="#{p103Controller.items.size()}">
+                    <f:convertNumber pattern="#,##0"/>
+                </h:outputText>
+                <h:outputText value=" #{msgs['messages.code.2023']}"/>
+            </f:facet>
+        </p:dataTable>
+
+    </h:form>
+
+</ui:composition>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="/templates/default-template.xhtml">
+
+    <ui:define name="viewname">#{msgs['menu.report.r103']} #{msgs['api.fishworld']} / #{msgs['detail']}</ui:define>
+
+    <ui:define name="content">
+        <h:form id="fishWorldForm">
+            <div class="ui-g">
+                <p:dataTable  var="fishing" rowIndexVar="rowNumber" value="#{r103Controller.fishingWorlds}" 
+                              binding="#{bindingController.defaultDataTableModel}" >
+                    <f:facet name="header">
+                        <div class="ui-g ui-fluid">
+                            <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                <p:commandButton binding="#{bindingController.btnBack}" value="#{msgs['btn.back']}" 
+                                                 action="#{r103Controller.cancel()}" styleClass="clear-btn"/>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-1">
+                            </div>
+                        </div>
+                    </f:facet>
+
+                    <p:column headerText="#{msgs['order']}" style="text-align: center;width: 32px;">
+                        <h:outputText value="#{(rowNumber+1)}" />
+                    </p:column>
+
+                    <p:column headerText="#{msgs['link_id']}" sortBy="#{fishing.link_id}" style="text-align: center;">
+                        <h:outputText value="#{fishing.link_id}"/><br/>
+                    </p:column>
+
+                    <p:column headerText="#{msgs['betting']}" sortBy="#{fishing.bet}" style="width: 100px;text-align: center">
+                        <h:outputText value="#{fishing.bet}" style="color: blue;float: right;">
+                            <f:convertNumber pattern="#,##0.00"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="#{msgs['payout']}" sortBy="#{fishing.profit}" style="width: 100px;text-align: center">
+                        <h:outputText value="#{(fishing.bet + fishing.profit)}" style="float: right;">
+                            <f:convertNumber pattern="#,##0.00"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="#{msgs['winloss']}" sortBy="#{fishing.profit}" style="width: 100px;text-align: center">
+                        <h:outputText value="#{fishing.profit}" style="float: right;color: red">
+                            <f:convertNumber pattern="#,##0.00"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="#{msgs['currency']}" sortBy="#{fishing.currency}" style="width: 100px;text-align: center">
+                        <h:outputText value="#{fishing.currency}"/>
+                    </p:column>
+
+                    <p:column headerText="#{msgs['datetime']}" sortBy="#{fishing.bet_time}" style="width: 120px;text-align: center">
+                        <h:outputText value="#{fishing.bet_time}">
+                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:columnGroup type="footer">
+                        <p:row>
+                            <p:column colspan="2" footerText="#{msgs['r103.total']}" style="font-weight: bold;text-align:right;"></p:column>
+                            <p:column footerText="#{r103Controller.fishingWorldTurnover}" style="font-weight: bold;text-align:right;"></p:column>
+                            <p:column footerText="#{r103Controller.fishingWorldBlance}" style="font-weight: bold;text-align:right;"></p:column>
+                            <p:column footerText="#{r103Controller.fishingWorldWinlose}" style="font-weight: bold;text-align:right;color:#{r103Controller.fishingWorldWinloseFlag ? 'red' : 'blue'};"></p:column>
+                            <p:column />
+                            <p:column />
+                        </p:row>
+                    </p:columnGroup>
+
+                    <f:facet name="footer">
+                        <h:outputText value="#{msgs['data']} "/>
+                        <h:outputText value="#{r103Controller.fishingWorlds.size()}">
+                            <f:convertNumber pattern="#,###"/>
+                        </h:outputText>
+                        <h:outputText value=" #{msgs['items']}"/>
+                    </f:facet>
+                </p:dataTable>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

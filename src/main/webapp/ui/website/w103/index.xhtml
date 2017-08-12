@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/default-template.xhtml">
+
+
+    <ui:define name="viewname">#{msgs['menu.website.w103']}</ui:define>
+
+    <ui:define name="content">
+       
+        <p:messages id="delete_msg" autoUpdate="false" showIcon="false"/>
+               
+        <p:tabView id="tabview" activeIndex="#{w103Controller.tab}"  >
+                <p:ajax event="tabChange" listener="#{w103Controller.onTabChange}" update="tabview delete_msg"  global="false"/>
+                <p:tab id="ads" title="#{msgs['w103.mainads']}">
+                    <ui:include src="list1.xhtml" />
+                </p:tab>
+
+                <p:tab id="banner" title="#{msgs['w103.banner']}">
+                    <ui:include src="list2.xhtml"/>
+                </p:tab>
+
+                <p:tab id="suggestion" title="#{msgs['w103.advertise']}">
+                    <ui:include src="list3.xhtml" />
+                </p:tab>
+
+                <p:tab id="msgwelcome" title="#{msgs['w103.msgwelcome']}">
+                    <ui:include src="index4.xhtml" />
+                </p:tab>
+
+            </p:tabView>
+        
+    </ui:define>
+
+</ui:composition>

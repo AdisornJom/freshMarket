@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="/templates/default-template.xhtml">
+
+    <ui:define name="viewname">#{msgs['menu.cash.c103']} / #{msgs['btn.view']}</ui:define>
+
+    <ui:define name="head">
+        <style>
+            .ui-datatable .ui-datatable-data tr,.ui-datatable .ui-datatable-data-empty tr,.ui-datatable .ui-datatable-data td,.ui-datatable .ui-datatable-data-empty td{
+                border:0px solid !important;
+            }
+            .col1{
+                width: 32px;
+            }
+            .col2{
+            }
+            
+            .myBorder{
+                border-width: 1px;border-color: #CCCCCC;border-style: solid;
+            }
+            .alternateRow{
+                background-color: #f6f6f6;
+            }
+        </style>
+    </ui:define>
+
+    <ui:define name="content">
+        <h:form id="listForm">   
+            <p:tabView>
+                <p:tab title="#{msgs['c101.detail']}">
+                    <div class="ui-g">
+                        <div class="ui-g-12 ui-md-12 ui-lg-12">
+                            <p:fieldset legend="#{msgs['c103.detail.header']}" style="border: 0px;">
+                                <p:panel style="max-width: 850px;margin-bottom: 10px;border-right: 0px;border-radius: 0px;">
+                                    <div class="ui-fluid">
+                                        <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-3,ui-grid-col-7" styleClass="ui-panelgrid-blank">
+                                            <p:outputLabel value="#{msgs['c101.refcode']} :"/>
+                                            <h:outputText value="#{c103Controller.userTxn.id}" style="color:green;font-weight: bold;"/>
+
+                                            <p:outputLabel value="#{msgs['common.username']} ："/>
+                                            <h:outputText value="#{c103Controller.userTxn.userId.username}"/>                            
+
+                                            <p:outputLabel value="#{msgs['c103.bankName']} :"/>
+                                            <h:panelGrid columns="2">
+                                                <h:graphicImage value="./resources/images/bank/#{c103Controller.userTxn.bankId.logo}"/>
+                                                <h:outputText value="#{c103Controller.userTxn.bankId.bankNameTh}" styleClass="lb_bold"/>
+                                            </h:panelGrid>
+
+                                            <p:outputLabel value="#{msgs['c103.accountName']} :"/>
+                                            <h:outputText value="#{c103Controller.userTxn.bank_account_name}"/>   
+
+                                            <p:outputLabel value="#{msgs['c103.bankAccount']} :"/>
+                                            <h:outputText value="#{c103Controller.userTxn.bank_account_number}"/>                            
+
+                                            <p:outputLabel value="#{msgs['c103.detail.withdraw']} ："/>
+                                            <h:panelGroup>
+                                                <h:outputText value="#{c103Controller.userTxn.amount}" 
+                                                              rendered="#{c103Controller.userTxn.amount != null}" style="color:green;font-weight: bold;">
+                                                    <f:convertNumber  pattern="#,##0.00"/>
+                                                </h:outputText>
+                                                <h:outputText value="N/A" rendered="#{c103Controller.userTxn.amount eq null}" style="color: red;"/>    
+                                            </h:panelGroup>
+
+                                            <p:outputLabel value="#{msgs['c103.createddate']} :"/>
+                                            <h:outputText value="#{c103Controller.userTxn.createdDt}" style="color:green;font-weight: bold;">
+                                                <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
+                                            </h:outputText>
+
+                                            <p:outputLabel value="#{msgs['c103.status']} :"/>
+
+                                            <h:outputText value="#{c103Controller.userTxn.status eq PFConstants.USER_TXN_STATUS_ONPROCESS ? msgs['common.onProcess']:''}" 
+                                                          rendered="#{c103Controller.userTxn.status eq PFConstants.USER_TXN_STATUS_ONPROCESS}" />
+                                            <h:outputText value="#{c103Controller.userTxn.status eq PFConstants.USER_TXN_STATUS_ACCEPT ?msgs['common.accept']:''}" 
+                                                          rendered="#{c103Controller.userTxn.status eq PFConstants.USER_TXN_STATUS_ACCEPT }" style="color:green;font-weight: bold;"/>
+                                            <h:outputText value="#{c103Controller.userTxn.status eq PFConstants.USER_TXN_STATUS_REJECT ?msgs['common.decline']:''}" 
+                                                          rendered="#{c103Controller.userTxn.status eq PFConstants.USER_TXN_STATUS_REJECT }" style="color: red;font-weight: bold;"/> 
+                                            <h:outputText value="#{c103Controller.userTxn.status eq PFConstants.USER_TXN_STATUS_CANCEL ?msgs['common.cancel']:''}" 
+                                                          rendered="#{c103Controller.userTxn.status eq PFConstants.USER_TXN_STATUS_CANCEL }" style="color: gray;font-weight: bold;"/> 
+                                            <h:outputText value="#{c103Controller.userTxn.status eq PFConstants.USER_TXN_STATUS_TRANSOK ?msgs['common.transok']:''}" 
+                                                          rendered="#{c103Controller.userTxn.status eq PFConstants.USER_TXN_STATUS_TRANSOK }" style="color:cornflowerblue;font-weight: bold;"/> 
+
+                                            <p:outputLabel value="#{msgs['c103.approver']} :"/>
+                                            <h:outputText value="#{c103Controller.userTxn.approveBy eq null ? '-' : c103Controller.userTxn.status eq PFConstants.USER_TXN_STATUS_CANCEL ? '-' : c103Controller.userTxn.approveBy}"/>
+
+                                            <p:outputLabel value="#{msgs['c103.approverdate']} :"/>
+                                            <h:outputText value="#{c103Controller.userTxn.approveDt  eq null ? '-' :  c103Controller.userTxn.status eq PFConstants.USER_TXN_STATUS_CANCEL ? '-' : c103Controller.userTxn.approveDt}">
+                                                <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
+                                            </h:outputText>
+
+                                            <p:outputLabel value="#{msgs['common.remark']} ："/>
+                                            <h:outputText value="#{c103Controller.userTxn.approveRemark eq '' ? '-' : c103Controller.userTxn.approveRemark}"/>                            
+
+                                        </p:panelGrid>
+                                    </div>
+                                </p:panel>
+                            </p:fieldset>
+                        </div>
+                       
+                        <div class="ui-g-12 ui-md-12 ui-lg-12">
+                            <p:fieldset legend="#{msgs['c103.transfer']}" style="border: 0px;" rendered="#{c103Controller.userTxn.status eq 6}">
+                                <p:dataTable id="dt_itemTrans" rowIndexVar="rowNumber" emptyMessage="#{msgs['common.noData']}" value="#{c103Controller.userTxn.userTxnWdList}"
+                                             var="trans" style="max-width: 800px;margin-bottom: 10px;border-right: 0px;border-radius: 0px;" reflow="true">
+                                    <p:column headerText="#{msgs['common.seq']}" style="text-align: center;width: 32px;">
+                                        <h:outputText value="#{(rowNumber+1)}" />
+                                    </p:column>
+                                    <p:column headerText="#{msgs['c103.accountName']}">
+                                        <h:panelGrid columns="2" columnClasses="col1,col2" style="border: 0px;">
+                                            <h:graphicImage value="./resources/images/bank/#{trans.bankWd.bankId.logo}" style="border: 0px;"/>
+                                            <h:panelGroup>
+                                                <h:outputText value=" #{trans.bankWd.accountNameTh}" style="color: blue;"/>
+                                                <br/>
+                                                <h:outputText value=" #{trans.bankWd.accountNumber}" style="font-size: 12px;"/>
+                                            </h:panelGroup>
+                                        </h:panelGrid>
+                                    </p:column>
+                                    <p:column headerText="#{msgs['account.amount']}" style="text-align: center;width: 80px;" >
+                                        <h:outputText value="#{trans.amount}" rendered="#{trans.amount != null}" style="float: right;">
+                                            <f:convertNumber  pattern="#,##0.00"/>
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column headerText="#{msgs['a103.fee']}" style="text-align: center;width: 80px;" >
+                                        <h:outputText value="#{trans.fee}" rendered="#{trans.fee != null}" style="float: right;">
+                                            <f:convertNumber  pattern="#,##0.00"/>
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column headerText="#{msgs['c103.transferdate']}" style="text-align: center;width: 120px;">
+                                        <h:outputText value="#{trans.transferDt}">
+                                            <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column headerText="#{msgs['c103.transferby']}" style="text-align: center;width: 120px;">
+                                        <h:outputText value="#{trans.transferBy}"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </p:fieldset> 
+                        </div>
+                        <div class="ui-g-12 ui-md-12 ui-lg-12">
+                            <p:fieldset legend="#{msgs['a103.fee']}" style="border: 0px;" rendered="#{c103Controller.dgWeb}">
+                                <p:dataTable id="dt_itemFee" rowIndexVar="rowNumber" emptyMessage="#{msgs['common.noData']}" value="#{c103Controller.userTxn.coreFeeList}" var="item" style="max-width: 800px;margin-bottom: 10px;border-right: 0px;border-radius: 0px;">
+                                    <p:column headerText="#{msgs['common.seq']}" style="text-align: center;width: 32px;">
+                                        <h:outputText value="#{(rowNumber+1)}" />
+                                    </p:column>
+                                    <p:column headerText="#{msgs['a103.fee']}" style="text-align: center;width: 70px;" >
+                                        <h:outputText value="#{item.amount}" rendered="#{item.amount != null}" style="float: right;">
+                                            <f:convertNumber  pattern="#,##0.00"/>
+                                        </h:outputText>
+                                    </p:column>
+                                    <p:column headerText="#{msgs['c101.detail']}" style="text-align: center;">
+                                        <h:outputText value="#{item.remark}"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </p:fieldset> 
+                        </div>
+                        <div class="ui-g-12 ui-md-12 ui-lg-12">
+                            <p:fieldset style="border: 0px;">
+                                <p:panel style="max-width: 850px;margin-bottom: 10px;border-right: 0px;border-radius: 0px;">
+                                    <div class="ui-fluid">
+                                        <p:panelGrid columns="4" layout="grid" columnClasses="ui-grid-col-3,ui-grid-col-3,ui-grid-col-3,ui-grid-col-3" styleClass="ui-panelgrid-blank">
+
+                                            <h:panelGroup>
+                                                <p:outputLabel value="#{msgs['common.createDate']} ：" styleClass="sub-label"/>
+                                                <h:outputText value="#{c103Controller.userTxn.createdDt}" styleClass="sub-label">
+                                                    <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
+                                                </h:outputText>
+                                            </h:panelGroup>
+
+                                            <h:panelGroup>
+                                                <p:outputLabel value="#{msgs['common.createBy']} ：" styleClass="sub-label"/>
+                                                <h:outputText value="#{c103Controller.userTxn.createdBy}" styleClass="sub-label"/>
+                                            </h:panelGroup>
+
+                                            <h:panelGroup>
+                                                <p:outputLabel value="#{msgs['common.modifiedDt']} ：" styleClass="sub-label"/>
+                                                <h:outputText value="#{c103Controller.userTxn.approveDt}" styleClass="sub-label">
+                                                    <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
+                                                </h:outputText>
+                                            </h:panelGroup>
+
+                                            <h:panelGroup>
+                                                <p:outputLabel value="#{msgs['common.modifiedBy']} ：" styleClass="sub-label"/>
+                                                <h:outputText value="#{c103Controller.userTxn.approveBy}" styleClass="sub-label"/>
+                                            </h:panelGroup>
+
+                                        </p:panelGrid>
+                                    </div>
+                                </p:panel>
+                            </p:fieldset>
+                        </div>
+                    </div>
+                </p:tab>
+                <p:tab title="#{msgs['account.list']}">
+                    <div class="ui-g">
+                        <div class="ui-g-1 ui-md-1 ui-lg-1 myBorder">
+                            <h:outputText value="#{msgs['common.seq']}"/>
+                        </div>
+                        <div class="ui-g-8 ui-md-3 ui-lg-3 myBorder">
+                            <h:outputText value="#{msgs['account.list']}" style="font-weight: bold;color: #000"/>
+                        </div>
+                        <div class="ui-g-3 ui-md-2 ui-lg-2 myBorder">
+                            <h:outputText value="#{msgs['c101.detail.deposit']}" style="font-weight: bold;color: #000"/>
+                        </div>
+                    </div>
+                    <div class="ui-g">
+                        <div class="ui-g-1 ui-md-1 ui-lg-1 myBorder">1.</div>
+                        <div class="ui-g-8 ui-md-3 ui-lg-3 myBorder">#{msgs['common.username']}</div>
+                        <div class="ui-g-3 ui-md-2 ui-lg-2 myBorder">
+                            <h:outputText value="#{c103Controller.userTxn.getUserId().getUsername()}" style="color: #005aff;" />
+                        </div>
+                    </div>
+                    <div class="ui-g">
+                        <div class="ui-g-1 ui-md-1 ui-lg-1 myBorder alternateRow">2.</div>
+                        <div class="ui-g-8 ui-md-3 ui-lg-3 myBorder alternateRow">#{msgs['c103.lastsuccesswithdrawtime']}</div>
+                        <div class="ui-g-3 ui-md-2 ui-lg-2 myBorder alternateRow">
+                            <h:outputText value="#{c103Controller.lastSuccessWithdrawDate eq null ? '-' : c103Controller.lastSuccessWithdrawDate}" style="color: #005aff;" >
+                                <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
+                            </h:outputText>
+                        </div>
+                    </div>
+                    <div class="ui-g">
+                        <div class="ui-g-1 ui-md-1 ui-lg-1 myBorder">3.</div>
+                        <div class="ui-g-8 ui-md-3 ui-lg-3 myBorder">#{msgs['c103.deposittimes']}</div>
+                        <div class="ui-g-3 ui-md-2 ui-lg-2 myBorder">
+                            <h:outputText value="#{c103Controller.depositTimes}" style="color: #005aff;" />
+                        </div>
+                    </div>
+                    <div class="ui-g">
+                        <div class="ui-g-1 ui-md-1 ui-lg-1 myBorder alternateRow" >4.</div>
+                        <div class="ui-g-8 ui-md-3 ui-lg-3 myBorder alternateRow" >#{msgs['c103.totaldeposit']}</div>
+                        <div class="ui-g-3 ui-md-2 ui-lg-2 myBorder alternateRow" >
+                            <h:outputText value="#{c103Controller.sumDeposit}" style="color: #005aff;" >
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                        </div>
+                    </div>
+                    <div class="ui-g">
+                        <div class="ui-g-1 ui-md-1 ui-lg-1 myBorder">5.</div>
+                        <div class="ui-g-8 ui-md-3 ui-lg-3 myBorder">#{msgs['commissions']}</div>
+                        <div class="ui-g-3 ui-md-2 ui-lg-2 myBorder">
+                            <h:outputText value="#{c103Controller.commission}" style="color: #005aff;" >
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                        </div>
+                    </div>
+                    <div class="ui-g">
+                        <div class="ui-g-1 ui-md-1 ui-lg-1 myBorder alternateRow" >6.</div>
+                        <div class="ui-g-8 ui-md-3 ui-lg-3 myBorder alternateRow" >#{msgs['c103.bonus']}</div>
+                        <div class="ui-g-3 ui-md-2 ui-lg-2 myBorder alternateRow" >
+                            <h:outputText value="#{c103Controller.award}" style="color: #005aff;" >
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                        </div>
+                    </div>
+                    <div class="ui-g">
+                        <div class="ui-g-1 ui-md-1 ui-lg-1 myBorder">7.</div>
+                        <div class="ui-g-8 ui-md-3 ui-lg-3 myBorder">#{msgs['c103.turnoverratio']}</div>
+                        <div class="ui-g-3 ui-md-2 ui-lg-2 myBorder">
+                            <h:outputText value="#{c103Controller.turnoverRatio}" style="color: #005aff;" />
+                        </div>
+                    </div>
+                    <div class="ui-g">
+                        <div class="ui-g-1 ui-md-1 ui-lg-1 myBorder alternateRow" >8.</div>
+                        <div class="ui-g-8 ui-md-3 ui-lg-3 myBorder alternateRow" >#{msgs['c103.totalturnover']}</div>
+                        <div class="ui-g-3 ui-md-2 ui-lg-2 myBorder alternateRow" >
+                            <h:outputText value="#{c103Controller.sumTurnover}" style="color: #005aff;" >
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                        </div>
+                    </div>
+                    <div class="ui-g">
+                        <div class="ui-g-1 ui-md-1 ui-lg-1 myBorder">9.</div>
+                        <div class="ui-g-8 ui-md-3 ui-lg-3 myBorder">#{msgs['c103.difference']}</div>
+                        <div class="ui-g-3 ui-md-2 ui-lg-2 myBorder">
+                            <h:outputText value="#{c103Controller.difference}" style="color: #005aff;" >
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                        </div>
+                    </div>
+                    <div class="ui-g">
+                        <div class="ui-g-1 ui-md-1 ui-lg-1 myBorder alternateRow" >10.</div>
+                        <div class="ui-g-8 ui-md-3 ui-lg-3 myBorder alternateRow" >#{msgs['c103.totalwinloss']}</div>
+                        <div class="ui-g-3 ui-md-2 ui-lg-2 myBorder alternateRow" >
+                            <h:outputText value="#{c103Controller.sumWinloss}" style="color: #005aff;" >
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                        </div>
+                    </div>
+                </p:tab>
+                 <p:tab title="#{msgs['c103.depositlist']}">
+                    <p:dataTable binding="#{bindingController.dataTableModel}" value="#{c103Controller.userFundsDatas}" var="item" style="margin-top: 2px;margin-bottom: 2px;">
+                        <f:facet name="header">
+                            <div class="ui-g">
+                                <div class="ui-g-12 ui-md-12 ui-lg-12"></div>
+                            </div>
+                        </f:facet>
+
+                        <p:column headerText="#{msgs['common.seq']}" style="text-align: center;width: 32px;">
+                            <h:outputText value="#{(rowNumber+1)}" />
+                        </p:column>
+
+                        <p:column headerText="#{msgs['common.username']}" style="text-align: center">
+                            <h:outputText value="#{item.userId.username}"/>
+                        </p:column>
+
+                        <p:column headerText="#{msgs['c101.detail.deposit']}" sortBy="#{item.amount}" style="text-align: center;width:120px;">
+                            <h:outputText value="#{item.amount}" rendered="#{item.amount != null}" style="float: right;">
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                            <h:outputText value="N/A" rendered="#{item.amount eq null}" style="color: red;"/>
+                        </p:column>
+
+                        <p:column headerText="#{msgs['common.promotion']}" style="text-align: center">
+                            <h:outputText value="#{item.txnId.promotionId.promotionName eq null ? '-' : item.txnId.promotionId.promotionName}"/>
+                        </p:column>                        
+
+                        <p:column headerText="#{msgs['c101.deposittime']}" sortBy="#{item.createdDt}" style="text-align: center;width:120px;">
+                            <h:outputText value="#{item.createdDt}">
+                                <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column headerText="#{msgs['common.status']}" style="text-align: center;width:120px;">
+                            <h:outputText value="#{item.status eq PFConstants.USER_TXN_STATUS_ONPROCESS ? msgs['c101.onProcess']:''}" 
+                                          rendered="#{item.status eq PFConstants.USER_TXN_STATUS_ONPROCESS}" style="color:blue;font-weight: bold;"/>
+                            <h:outputText value="#{item.status eq PFConstants.USER_TXN_STATUS_ACCEPT ? msgs['c101.accept']:''}" 
+                                          rendered="#{item.status eq PFConstants.USER_TXN_STATUS_ACCEPT }" style="color:green;font-weight: bold;"/>
+                            <h:outputText value="#{item.status eq PFConstants.USER_TXN_STATUS_REJECT ? msgs['c101.reject']:''}" 
+                                          rendered="#{item.status eq PFConstants.USER_TXN_STATUS_REJECT }" style="color: red;font-weight: bold;"/>
+                        </p:column>
+
+                        <f:facet name="footer">
+                            <h:outputText value="#{msgs['messages.code.2022']} "/>
+                            <h:outputText value="#{c103Controller.userFundsDatas.size()}">
+                                <f:convertNumber pattern="#,##0"/>
+                            </h:outputText>
+                            <h:outputText value=" #{msgs['messages.code.2023']}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </p:tab>
+            </p:tabView>
+            <div class="ui-g-12 ui-md-12 ui-lg-12">
+                <h:panelGrid columns="2">
+                    <p:commandButton binding="#{bindingController.btnBack}" value="#{msgs['btn.back']}" action="#{c103Controller.gotoIndexView()}" styleClass="clear-btn"/>
+                </h:panelGrid>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

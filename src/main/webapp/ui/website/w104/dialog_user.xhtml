@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <p:dialog id="dlg1" header="#{msgs['w201.search.member']}" modal="true" widgetVar="selectUserMsg_dialog" width="600" binding="#{bindingController.defaultDialogModel}" closeOnEscape="true">
+        <p:toolbar style="margin-bottom: 3px;">
+            <f:facet name="right" >
+                <h:form id="rToolbarForm">
+                    <h:panelGrid columnClasses="col1,col2,col1,col2" border="0" columns="10" cellpadding="2" cellspacing="1" style="margin-left: 10px;">
+                        <p:outputLabel value="#{msgs['p101.detail.username']} :"/>
+                        <p:inputText value="#{w104Controller.username}" placeholder="#{msgs['btn.search']}"/>
+
+                        <p:commandButton binding="#{bindingController.btnSearch}" value="#{msgs['btn.search']}" 
+                                         actionListener="${w104Controller.searchMember()}" styleClass="search-btn" update="listFormUser"/>
+                    </h:panelGrid>
+                </h:form>
+            </f:facet>
+        </p:toolbar>
+        <h:form id="listFormUser">
+            <p:dataTable id="itemUser_dialog"  var="item2" value="#{w104Controller.user_items_dialog}"
+                         selection="#{w104Controller.selectd_user_items_dialog}" rowKey="#{item2.id}"
+                         binding="#{bindingController.dataTableModel}"  scrollable="true" scrollHeight="275">
+
+                <p:column selectionMode="multiple" style="text-align: center;width: 30px;" />
+                <p:column headerText="#{msgs['p101.detail.username']}">
+                    <h:outputText value="#{item2.username}"/>
+                </p:column>
+
+                <f:facet name="footer" rendered="#{not empty w104Controller.user_items_dialog}">
+                    <h:outputText value="#{msgs['messages.code.2022']} "/>
+                    <h:outputText value="#{w104Controller.user_items_dialog.size()}">
+                        <f:convertNumber pattern="#,##0"/>
+                    </h:outputText>
+                    <h:outputText value=" #{msgs['messages.code.2023']}"/>
+                </f:facet>
+            </p:dataTable>
+
+            <br/>
+            <h:panelGroup layout="block" style="text-align: right" rendered="#{not empty w104Controller.user_items_dialog}">
+                <p:commandButton styleClass="edit-btn" binding="#{bindingController.btnSave}" value="#{msgs['btn.ok']}" ajax="false"
+                                 actionListener="#{w104Controller.addMember()}">
+                </p:commandButton> 
+                <p:commandButton styleClass="clear-btn"  binding="#{bindingController.btnCancel}" value="#{msgs['btn.cancel']}" 
+                                 oncomplete="PF('selectUserMsg_dialog').hide();"
+                                 actionListener="#{w104Controller.clearData_Member()}" />
+            </h:panelGroup>
+        </h:form>
+
+    </p:dialog>
+
+</ui:composition>

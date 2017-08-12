@@ -1,0 +1,54 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/default-template.xhtml">
+
+    <ui:define name="viewname">#{msgs['menu.report.r101']}</ui:define>
+    <ui:define name="head">
+        <style>
+            .dashboard .overview-box.overview-box-2 {
+                background-color: #009900;
+            }
+            .dashboard .overview-box.overview-box-3 {
+                background-color: #D20005;
+            }
+            .dashboard .overview-box.overview-box-4 {
+                background-color: #CCCCCC;
+            }
+            .dashboard .overview-box.overview-box-5 {
+                background-color: #ff3300;
+            }
+            .dashboard .overview-box.overview-box-6 {
+                background-color: #63c9f1;
+            }
+            .dashboard .overview-box.overview-box-7 {
+                background-color: #036fab;
+            }
+            .dashboard .overview-box.overview-box-8 {
+                background-color: #efa64c;
+            }
+            .dashboard .overview-box.overview-box-7 {
+                background-color: #f37a96;
+            }
+            .dashboard .overview-box.overview-box-8 {
+                background-color: #ce5051;
+            }
+            .dashboard .overview-box.overview-box-9 {
+                background-color: #7e57c2;
+            }
+
+            .nba-grid {
+                width: 100%;
+                table-layout: fixed;
+                word-wrap: break-word;
+            }
+        </style>
+    </ui:define>    
+
+    <ui:define name="content">
+        <ui:include src="list.xhtml"/>
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                template="/templates/default-template.xhtml">
+
+    <ui:define name="viewname">#{msgs['menu.member.m102']} / #{msgs['btn.edit']}</ui:define>
+
+    <ui:define name="content">
+        <h:form id="listForm">
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                    <p:messages id="edit_msg" autoUpdate="false" showIcon="false"/>
+                </div>
+                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                    <p:fieldset style="border: 0px;" legend="#{msgs['btn.edit']} #{msgs['p102.groupname']}">
+                        <p:panel style="max-width: 900px;margin-bottom: 10px;border-right: 0px;border-radius: 0px;">
+                            <div class="ui-fluid">
+                               <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-3,ui-grid-col-8" styleClass="ui-panelgrid-blank form-group">
+                                    <h:panelGroup>
+                                        <p:outputLabel value="#{msgs['m102.membergroupname']}："/>
+                                        <font class="require" style="color: red">*</font>
+                                    </h:panelGroup>
+                                    <p:inputText value="#{m102Controller.userGroup.groupName}" />
+
+                                    <h:panelGroup>
+                                        <p:outputLabel value="#{msgs['p102.point']} :" />
+                                        <font class="require" style="color: red">*</font>
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <p:inputNumber style="float: left;" decimalPlaces="2" minValue="0" maxValue="100" value="#{m102Controller.userGroup.pointProportion}"/>
+                                    </h:panelGroup>    
+
+                                    <h:panelGroup>
+                                        <p:outputLabel value="#{msgs['common.deposit']}："/>
+                                        <font class="require" style="color: red">*</font>
+                                    </h:panelGroup>
+                                    <h:panelGrid columns="2">
+                                        <p:outputLabel value="#{msgs['m102.mindeposit']}："/>
+                                        <p:inputNumber decimalPlaces="0" value="#{m102Controller.userGroup.depositAmountLow}"/>
+                                        <p:outputLabel value="#{msgs['m102.maxdeposit']}："/>
+                                        <p:inputNumber decimalPlaces="0" value="#{m102Controller.userGroup.depositAmountHigh}" />
+                                    </h:panelGrid>
+
+                                    <h:panelGroup>
+                                        <p:outputLabel value="#{msgs['common.withdraw']}："/>
+                                        <font class="require" style="color: red">*</font>
+                                    </h:panelGroup>
+                                    <h:panelGrid columns="2">
+                                        <p:outputLabel value="#{msgs['m102.minwithdraw']}："/>
+                                        <p:inputNumber decimalPlaces="0" value="#{m102Controller.userGroup.drawingAmountLow}"/>
+                                        <p:outputLabel value="#{msgs['m102.maxwithdraw']}："/>
+                                        <p:inputNumber decimalPlaces="0" value="#{m102Controller.userGroup.drawingAmountHigh}"/>
+                                    </h:panelGrid>
+
+                                    <h:panelGroup>
+                                        <p:outputLabel value="#{msgs['common.egames']}："/>
+                                        <font class="require" style="color: red">*</font>
+                                    </h:panelGroup>
+                                    <h:panelGrid columns="2">
+                                        <p:outputLabel value="#{msgs['m102.minbet']}："/>
+                                        <p:inputNumber decimalPlaces="0" value="#{m102Controller.userGroup.electronicGamesAmountLow}"/>
+                                        <p:outputLabel value="#{msgs['m102.maxbet']}："/>
+                                        <p:inputNumber decimalPlaces="0" value="#{m102Controller.userGroup.electronicGamesAmountHigh}"/>
+                                    </h:panelGrid>
+
+                                    <h:panelGroup>
+                                        <p:outputLabel value="#{msgs['common.sportbook']}："/>
+                                        <font class="require" style="color: red">*</font>
+                                    </h:panelGroup>
+                                    <h:panelGrid columns="2">
+                                        <p:outputLabel value="#{msgs['m102.minbet']}："/>
+                                        <p:inputNumber decimalPlaces="0" value="#{m102Controller.userGroup.physicalAmountLow}"/>
+                                        <p:outputLabel value="#{msgs['m102.maxbet']}："/>
+                                        <p:inputNumber decimalPlaces="0" value="#{m102Controller.userGroup.physicalAmountHigh}"/>
+                                    </h:panelGrid>
+
+                                    <h:panelGroup>
+                                        <p:outputLabel for="status" value="#{msgs['common.status']} :" />
+                                        <font class="require" style="color: red">*</font>
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <p:selectOneRadio  id="status" value="#{m102Controller.userGroup.groupStatus}">
+                                            <f:selectItem itemLabel="#{msgs['common.open']}" itemValue="1" />
+                                            <f:selectItem itemLabel="#{msgs['common.pending']}" itemValue="0" />
+                                        </p:selectOneRadio>
+                                    </h:panelGroup>
+
+                                </p:panelGrid>
+                            </div>
+                        </p:panel>
+                    </p:fieldset>
+                </div>
+                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                    <p:fieldset style="border: 0px;" legend="#{msgs['m102.limittransfer']}">
+                        <p:panel style="margin-bottom: 10px;border-right: 0px;border-radius: 0px;">
+                            <div class="ui-fluid">
+                                <ui:repeat var="item" value="#{m102Controller.apiItems_edit}">
+                                    <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-3,ui-grid-col-8" styleClass="ui-panelgrid-blank form-group">
+                                        <p:outputLabel value="#{msgs[item.langCode]} 
+                                           #{item.langCode eq PFConstants.API_CODE_BET168? PFConstants.API_CODE_BET168_KEY:
+                                             item.langCode eq PFConstants.API_CODE_SC?PFConstants.API_CODE_SC_KEY:
+                                             item.langCode eq PFConstants.API_CODE_TOP?PFConstants.API_CODE_TOP_KEY:
+                                             item.langCode eq PFConstants.API_CODE_GR?PFConstants.API_CODE_GR_KEY:
+                                             item.langCode eq PFConstants.API_CODE_COCKFIGHT?PFConstants.API_CODE_COCKFIGHT_KEY:
+                                             item.langCode eq PFConstants.API_CODE_IDNPOKER?PFConstants.API_CODE_IDNPOKER_KEY:
+                                             item.langCode eq PFConstants.API_CODE_FISHINGWORLD?PFConstants.API_CODE_FISHINGWORLD_KEY:
+                                             item.langCode eq PFConstants.API_CODE_SG?PFConstants.API_CODE_SG_KEY:
+                                             item.langCode eq PFConstants.API_CODE_ALLBET?PFConstants.API_CODE_ALLBET_KEY:
+                                             item.langCode eq PFConstants.API_CODE_BET125?PFConstants.API_CODE_BET125_KEY:''} :"/>
+                                        <p:selectOneRadio value="#{item.onOff}">
+                                            <f:selectItem itemLabel="#{msgs['m102.allow']}" itemValue="#{PFConstants.TRANSFER_ALLOW}"/>
+                                            <f:selectItem itemLabel="#{msgs['m102.deny']}" itemValue="#{PFConstants.TRANSFER_DENY}"/>                                
+                                        </p:selectOneRadio>
+                                    </p:panelGrid> 
+                                </ui:repeat>
+                            </div>
+                        </p:panel>
+                    </p:fieldset>
+                </div>
+                <div class="ui-g-12">
+                    <p:fieldset style="border: 0px;">
+                        <p:panel style="max-width: 900px;margin-bottom: 10px;border-right: 0px;border-radius: 0px;">
+                            <div class="ui-fluid">
+                              <p:panelGrid columns="4" layout="grid"  styleClass="ui-panelgrid-blank form-group">
+                                    <h:panelGroup>
+                                        <p:outputLabel value="#{msgs['common.createDate']} ：" styleClass="sub-label"/>
+                                        <h:outputText value="#{m102Controller.userGroup.createdDt}" styleClass="sub-label">
+                                            <f:convertDateTime pattern="dd-MM-yyyy"/>
+                                        </h:outputText>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup>
+                                        <p:outputLabel value="#{msgs['common.createBy']} ：" styleClass="sub-label"/>
+                                        <h:outputText value="#{m102Controller.userGroup.createdBy}" styleClass="sub-label"/>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup>
+                                        <p:outputLabel value="#{msgs['common.modifiedDt']} ：" styleClass="sub-label"/>
+                                        <h:outputText value="#{m102Controller.userGroup.modifieldDt}" styleClass="sub-label">
+                                            <f:convertDateTime pattern="dd-MM-yyyy"/>
+                                        </h:outputText>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup>
+                                        <p:outputLabel value="#{msgs['common.modifiedBy']} ：" styleClass="sub-label"/>
+                                        <h:outputText value="#{m102Controller.userGroup.modifiedBy}" styleClass="sub-label"/>
+                                    </h:panelGroup>
+
+                                </p:panelGrid>
+                            </div>
+                        </p:panel>
+                    </p:fieldset>
+                </div>
+                <div class="ui-g-12">
+                    <h:panelGrid columns="2">
+                        <p:commandButton styleClass="edit-btn" binding="#{bindingController.btnSave}" action="#{m102Controller.edit()}" value="#{msgs['btn.save']}" update="edit_msg"/>
+                        <p:commandButton styleClass="clear-btn" binding="#{bindingController.btnCancel}" action="#{m102Controller.cancel()}" value="#{msgs['btn.cancel']}" update="edit_msg"/>
+                    </h:panelGrid>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+    
+</ui:composition>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:h="http://java.sun.com/jsf/html">
+        <h:form>
+            <p:panel style="max-width: 800px;margin-bottom: 10px;border: 0px;text-align: right">
+                <h:panelGroup>
+                    <font class="require" style="color: red">*</font>
+                    <h:outputLabel value=" Required Fields" style="font-weight: bolder;" styleClass="sub-label"/>
+                </h:panelGroup>
+            </p:panel>
+
+
+            <p:panel style="max-width: 800px;margin-bottom: 10px;border-right: 0px;border-radius: 0px;">
+                <div class="ui-fluid">
+                    <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-3,ui-grid-col-7" styleClass="ui-panelgrid-blank">
+                        <h:panelGroup>
+                            <font class="require" style="color: red">*</font>
+                            <p:outputLabel value="หัวข้อ："/>
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <p:inputText />
+                            <p:outputLabel value="เคล็ดลับ:ตัวอักษรห้ามเกิน 100 ตัว" styleClass="sub-label"/>
+                        </h:panelGroup>
+
+                        <h:panelGroup>
+                            <font class="require" style="color: red">*</font>
+                            <p:outputLabel value="เนื้อหา："/>
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <p:inputTextarea />
+                            <p:outputLabel value="เคล็ดลับ:เคล็ดลับ : กรุณาใส่เนื้อหา" styleClass="sub-label"/>
+                        </h:panelGroup>
+
+                        <h:panelGroup>
+                            <font class="require" style="color: red">*</font>
+                            <p:outputLabel value="เริ่มจาก："/>
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <p:calendar />
+                        </h:panelGroup>
+
+                        <h:panelGroup>
+                            <p:outputLabel value="เลือกกลุ่มสมาชิก："/>
+                        </h:panelGroup>
+                        <h:panelGroup>
+                            <p:selectBooleanCheckbox itemLabel="Defalut" /><br/>
+                            <p:outputLabel value="เคล็ดลับ:คุณสามารถเลือกกลุ่มสมาชิกได้ หากคุณต้องการส่งข้อความถึงพวกเขา" styleClass="sub-label"/>
+                        </h:panelGroup>
+                    </p:panelGrid>
+
+                </div>
+            </p:panel>
+
+            <h:panelGroup style="margin-left: 0px;">
+                <p:commandButton binding="#{bindingController.btnSave}" value="#{msgs['btn.save']}"/>
+                <p:commandButton binding="#{bindingController.btnCancel}" value="#{msgs['btn.cancel']}" update=":content" actionListener="#{naviController.next('message/private_message/index')}"/>
+            </h:panelGroup>
+        </h:form>
+
+</ui:composition>

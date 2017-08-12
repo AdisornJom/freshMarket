@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="/templates/default-template.xhtml">
+
+    <ui:define name="viewname">#{msgs['menu.report.r103']} #{msgs['api.racing_games']} / #{msgs['detail']}</ui:define>
+
+    <ui:define name="content">
+        <h:form id="racingGameForm">
+            <div class="ui-g">
+                <p:dataTable id="gameGr_id" var="gameGr" value="#{r103Controller.gameGrs}"
+                             binding="#{bindingController.defaultDataTableModel}">
+                    <f:facet name="header">
+                        <div class="ui-g ui-fluid">
+                            <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                <p:commandButton binding="#{bindingController.btnBack}" value="#{msgs['btn.back']}" 
+                                                 action="#{r103Controller.cancel()}" styleClass="clear-btn"/>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-1">
+                            </div>
+                        </div>
+                    </f:facet>
+                    <p:column headerText="#{msgs['order']}" style="text-align: center;width: 32px;">
+                        <h:outputText value="#{(rowNumber+1)}" />
+                    </p:column>
+                    <p:column headerText="#{msgs['common.username']}"  style="text-align: center;width: 150px;">
+                        <h:outputText value="#{r103Controller.username}" styleClass="lb_bold" style="color: blue;"/>
+                    </p:column>
+                    <p:column headerText="#{msgs['detail']}" style="text-align: center;width: 120px;">
+                        <h:outputText value="#{gameGr.betId}" styleClass="lb_bold" style="color: blue;"/>
+                        <br/>
+                        <h:outputText value="#{gameGr.datetime}">
+                            <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="#{msgs['event']}" sortBy="#{gameGr.eventId}" style="text-align: center;">
+                        <h:outputText value="#{gameGr.eventId}"/>
+                    </p:column>
+                    <p:column headerText="#{msgs['gametype']}" sortBy="#{gameGr.gameType}" style="text-align: center;">
+                        <h:outputText value="#{gameGr.gameType}"/>
+                    </p:column>
+                    <p:column headerText="#{msgs['subtype']}" sortBy="#{gameGr.subType}" style="text-align: center;">
+                        <h:outputText value="#{gameGr.subType}"/>
+                    </p:column>
+                    <p:column headerText="#{msgs['common.status']}" sortBy="#{gameGr.status}" style="width: 100px;">
+                        <h:outputText value="#{gameGr.status}" styleClass="lb_bold" style="#{gameGr.status eq 'Lost' ? 'color: red;' : 'color: blue;'}"/>
+                    </p:column>
+                    <p:column headerText="#{msgs['betamt']}" style="text-align: right;">
+                        <h:outputText value="#{gameGr.stake}">
+                            <f:convertNumber pattern="#,##0.00"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:column headerText="#{msgs['winloss']}" style="width: 100px;text-align: right;">
+                        <h:outputText value="#{gameGr.winnings - gameGr.stake}" style="#{gameGr.status eq 'Lost' ? 'color: red;' : 'color: blue;'}">
+                            <f:convertNumber pattern="#,##0.00"/>
+                        </h:outputText>
+                    </p:column>
+                    <p:columnGroup type="footer">
+                        <p:row>
+                            <p:column colspan="7" footerText="#{msgs['r103.total']}" style="font-weight: bold;text-align:right;"></p:column>
+                            <p:column footerText="#{r103Controller.gameGrTurnover}" style="font-weight: bold;text-align:right;"></p:column>
+                            <p:column footerText="#{r103Controller.gameGrWinlose}" style="font-weight: bold;text-align:right;color:#{r103Controller.gameGrWinloseFlag ? 'red' : 'blue'};"></p:column>
+                        </p:row>
+                    </p:columnGroup>
+                    <f:facet name="footer">
+                        <h:outputText value="#{msgs['data']} "/>
+                        <h:outputText value="#{r103Controller.gameGrs.size()}">
+                            <f:convertNumber pattern="#,###"/>
+                        </h:outputText>
+                        <h:outputText value=" #{msgs['items']}"/>
+                    </f:facet>
+                </p:dataTable>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

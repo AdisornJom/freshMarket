@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <style type="text/css">
+        .left_panel {
+            width: 150px;
+        }
+        .right_panel {
+        }
+    </style>
+
+    <h:form id="walletForm">
+        <p:dialog widgetVar="wallet" header="Game Wallet" binding="#{bindingController.defaultDialogModel}" closeOnEscape="true"
+                  onShow="loadMainWallet();loadTopSport();load168Sport();load125Sport();loadVenetainCasino();loadAllbetCasino();loadCockFightCasino();loadRacingGame();loadIdnPlayGame();loadFishWorld();loadSpadeGaming();loadLotto999();">
+
+            <p:remoteCommand name="loadMainWallet" async="true" action="#{m101Controller.loadMainWallet()}" global="false" update="balance_pnl" />
+            <p:remoteCommand name="loadTopSport" async="true" action="#{m101Controller.loadTopSport()}" global="false" update="balance_pnl" />
+            <p:remoteCommand name="load168Sport" async="true" action="#{m101Controller.load168Sport()}" global="false" update="balance_pnl" />
+            <p:remoteCommand name="load125Sport" async="true" action="#{m101Controller.load125Sport()}" global="false" update="balance_pnl" />
+            <p:remoteCommand name="loadVenetainCasino" async="true" action="#{m101Controller.loadVenetainCasino()}" global="false" update="balance_pnl" />
+            <p:remoteCommand name="loadAllbetCasino" async="true" action="#{m101Controller.loadAllbetCasino()}" global="false" update="balance_pnl" />
+            <p:remoteCommand name="loadCockFightCasino" async="true" action="#{m101Controller.loadCockFightCasino()}" global="false" update="balance_pnl" />
+            <p:remoteCommand name="loadRacingGame" async="true" action="#{m101Controller.loadRacingGame()}" global="false" update="balance_pnl" />
+            <p:remoteCommand name="loadIdnPlayGame" async="true" action="#{m101Controller.loadIdnPlayGame()}" global="false" update="balance_pnl" />
+            <p:remoteCommand name="loadFishWorld" async="true" action="#{m101Controller.loadFishWorld()}" global="false" update="balance_pnl" />
+            <p:remoteCommand name="loadSpadeGaming" async="true" action="#{m101Controller.loadSpadeGaming()}" global="false" update="balance_pnl" />
+            <p:remoteCommand name="loadLotto999" async="true" action="#{m101Controller.loadLotto999()}" global="false" update="balance_pnl" />
+            <h:panelGroup id="balance_pnl">
+                <table  border="0" style="width: 98%;">
+                    <tr>
+                        <td style="text-align: center;"><h:outputText value="#{msgs['order']}" styleClass="lb_bold"/></td>
+                        <td><h:outputText value="#{msgs['detail']}" styleClass="lb_bold"/></td>
+                        <td style="width: 100px;text-align: right;">
+                            <h:outputText value="#{msgs['account.amount']}" styleClass="lb_bold"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><hr class="style-one"/></td>
+                    </tr>
+
+                    <tr>
+                        <td style="text-align: center;"><h:outputText value=""/></td>
+                        <td><h:outputText value="#{msgs['api.mainwallet']}" style="font-style: italic;color: blue"/></td>
+                        <td style="width: 100px;text-align: right;">
+                            <h:outputText value="#{m101Controller.main}" style="font-style: italic;color: blue">
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><hr class="style-one"/></td>
+                    </tr>
+
+                    <tr>
+                        <td style="text-align: center;"><h:outputText value="1"/></td>
+                        <td><h:outputText value="#{msgs['api.topsport']}"/></td>
+                        <td style="width: 100px;text-align: right;">
+                            <h:outputText value="#{m101Controller.top}">
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                            <h:outputText value="N/A" rendered="#{m101Controller.top eq null}" style="color: red;"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><hr class="style-one"/></td>
+                    </tr>
+
+                    <tr>
+                        <td style="text-align: center;"><h:outputText value="2"/></td>
+                        <td><h:outputText value="#{msgs['api.168sport']}"/></td>
+                        <td style="width: 100px;text-align: right;">
+                            <h:outputText value="#{m101Controller.bet168}">
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                            <h:outputText value="N/A" rendered="#{m101Controller.bet168 eq null}" style="color: red;"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><hr class="style-one"/></td>
+                    </tr>
+
+                    <tr>
+                        <td style="text-align: center;"><h:outputText value="3"/></td>
+                        <td><h:outputText value="#{msgs['api.bet125']}"/></td>
+                        <td style="width: 100px;text-align: right;">
+                            <h:outputText value="#{m101Controller.bet125}">
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                            <h:outputText value="N/A" rendered="#{m101Controller.bet125 eq null}" style="color: red;"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><hr class="style-one"/></td>
+                    </tr>
+
+                    <tr>
+                        <td style="text-align: center;"><h:outputText value="4"/></td>
+                        <td><h:outputText value="#{msgs['api.venetian']}"/></td>
+                        <td style="width: 100px;text-align: right;">
+                            <h:outputText value="#{m101Controller.venetian}">
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                            <h:outputText value="N/A" rendered="#{m101Controller.venetian eq null}" style="color: red;"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><hr class="style-one"/></td>
+                    </tr>
+
+                    <tr>
+                        <td style="text-align: center;"><h:outputText value="5"/></td>
+                        <td><h:outputText value="#{msgs['api.allbet']}"/></td>
+                        <td style="width: 100px;text-align: right;">
+                            <h:outputText value="#{m101Controller.allbet}">
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                            <h:outputText value="N/A" rendered="#{m101Controller.allbet eq null}" style="color: red;"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><hr class="style-one"/></td>
+                    </tr>
+                    
+                    <tr>
+                        <td style="text-align: center;"><h:outputText value="6"/></td>
+                        <td><h:outputText value="#{msgs['api.racing_games']}"/></td>
+                        <td style="width: 100px;text-align: right;">
+                            <h:outputText value="#{m101Controller.racing}">
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                            <h:outputText value="N/A" rendered="#{m101Controller.racing eq null}" style="color: red;"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><hr class="style-one"/></td>
+                    </tr>
+
+                    <tr>
+                        <td style="text-align: center;"><h:outputText value="7"/></td>
+                        <td><h:outputText value="#{msgs['api.cockfight']}"/></td>
+                        <td style="width: 100px;text-align: right;">
+                            <h:outputText value="#{m101Controller.cock}">
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                            <h:outputText value="N/A" rendered="#{m101Controller.cock eq null}" style="color: red;"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><hr class="style-one"/></td>
+                    </tr>
+
+                    <tr>
+                        <td style="text-align: center;"><h:outputText value="8"/></td>
+                        <td><h:outputText value="#{msgs['api.idnpoker']}"/></td>
+                        <td style="width: 100px;text-align: right;">
+                            <h:outputText value="#{m101Controller.idnplay}">
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                            <h:outputText value="N/A" rendered="#{m101Controller.idnplay eq null}" style="color: red;"/>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="3"><hr class="style-one"/></td>
+                    </tr>
+
+                    <tr>
+                        <td style="text-align: center;"><h:outputText value="9"/></td>
+                        <td><h:outputText value="#{msgs['api.fishworld']}"/></td>
+                        <td style="width: 100px;text-align: right;">
+                            <h:outputText value="#{m101Controller.fishWorld}">
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                            <h:outputText value="N/A" rendered="#{m101Controller.fishWorld eq null}" style="color: red;"/>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="3"><hr class="style-one"/></td>
+                    </tr>
+
+                    <tr>
+                        <td style="text-align: center;"><h:outputText value="10"/></td>
+                        <td><h:outputText value="#{msgs['api.sg_gaming']}"/></td>
+                        <td style="width: 100px;text-align: right;">
+                            <h:outputText value="#{m101Controller.spadeGaming}">
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                            <h:outputText value="N/A" rendered="#{m101Controller.spadeGaming eq null}" style="color: red;"/>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="3"><hr class="style-one"/></td>
+                    </tr>
+
+                    <tr>
+                        <td style="text-align: center;"><h:outputText value="11"/></td>
+                        <td><h:outputText value="#{msgs['api.lotto']}"/></td>
+                        <td style="width: 100px;text-align: right;">
+                            <h:outputText value="#{m101Controller.lotto999}">
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                            <h:outputText value="N/A" rendered="#{m101Controller.lotto999 eq null}" style="color: red;"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3"><hr class="style-one"/></td>
+                    </tr>
+
+                    <tr>
+                        <td style="text-align: center;"><h:outputText value=""/></td>
+                        <td><h:outputText value="#{msgs['common.grandtotal']}" style="font-weight: bold;"/></td>
+                        <td style="width: 100px;text-align: right;">
+                            <h:outputText value="#{m101Controller.total}" style="font-weight: bold;">
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                        </td>
+                    </tr>
+
+                </table>
+            </h:panelGroup>
+        </p:dialog>
+    </h:form>
+
+</ui:composition>

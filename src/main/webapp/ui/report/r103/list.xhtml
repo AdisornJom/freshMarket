@@ -1,0 +1,1001 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <p:tabView style="border: 0px;" var="api" activeIndex="#{r103Controller.tab}" value="#{comboController.apis2}">
+        <p:tab title="#{msgs[api.langCode]}">
+            <!-- 1 -->
+            <h:panelGroup rendered="#{api.id eq 2}">
+                <h:form id="sports3mForm">
+                    <p:messages id="msg_sports3mForm" autoUpdate="false" showIcon="false"/>
+                    <p:dataTable id="sports3m_id" var="sports3m" value="#{r103Controller.lazyModelSports3mReportList}" 
+                                 binding="#{bindingController.lazyDataTableModel}">
+                        <f:facet name="header">
+                            <div class="ui-g ui-fluid">
+                                <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                    <p:inputText  value="#{r103Controller.userSports3m}" placeholder="#{msgs['p101.detail.username']}"/>
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                    <p:calendar id="dateFrom3m" value="#{r103Controller.dateFrom3m}" binding="#{bindingController.calendar}" 
+                                                pattern="dd-MM-yyyy HH:mm"  requiredMessage="#{msgs['messages.code.1022']}" timeControlType="select"
+                                                placeholder="#{msgs['common.startDate']}"/>
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                    <p:calendar id="dateTo3m" value="#{r103Controller.dateTo3m}" binding="#{bindingController.calendar}" 
+                                                pattern="dd-MM-yyyy HH:mm"  requiredMessage="#{msgs['messages.code.1022']}" timeControlType="select"
+                                                placeholder="#{msgs['common.toDate']}"/>
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                    <p:commandButton binding="#{bindingController.btnSearch}" styleClass="search-btn" icon="fa fa-search" value="#{msgs['btn.search']}"
+                                                     action="#{r103Controller.searchSports3m()}" update="@(form)"/>
+                                </div>
+                            </div>
+                        </f:facet>
+                        <p:column headerText="#{msgs['common.seq']}" >
+                            <h:outputText value="#{(rowNumber+1)}" />
+                        </p:column>
+                        <p:column headerText="#{msgs['common.username']}" sortBy="#{sports3m.userId}" >
+                            <h:outputText value="#{sports3m.userId}" styleClass="lb_bold" style="color: blue;"/>
+                        </p:column>
+                        <p:column headerText="#{msgs['common.count']}">
+                            <h:outputText value="#{sports3m.count}" style="float: right">
+                                <f:convertNumber pattern="#,##0"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="#{msgs['betamt']}" >
+                            <h:outputText value="#{sports3m.betAmt}" style="float: right">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column rendered="false" headerText="#{msgs['commAmt']}" sortBy="#{sports3m.betAmt}">
+                            <h:outputText value="#{sports3m.commAmt}" style="float: right">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="#{msgs['winloss']}" sortBy="#{sports3m.winAmt}">
+                            <h:outputText value="#{sports3m.winAmt}" style="float: right;color: #{sports3m.winAmt >= 0 ? 'blue' : 'red'};">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column >
+                            <p:commandButton title="#{msgs['detail']}" id="view" icon="fa fa-file-text-o" action="#{r103Controller.findSports3m(true)}">
+                                <f:setPropertyActionListener value="#{sports3m.userId}" target="#{r103Controller.username}" />
+                            </p:commandButton>
+                        </p:column>
+                        <f:facet name="footer">
+                            <h:outputText value="#{msgs['data']} "/>
+                            <h:outputText value="#{r103Controller.lazyModelSports3mReportList.rowCount}">
+                                <f:convertNumber pattern="#,###"/>
+                            </h:outputText>
+                            <h:outputText value=" #{msgs['items']}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </h:form>
+            </h:panelGroup>
+
+            <!-- 2 -->
+            <h:panelGroup rendered="#{api.id eq 3}">
+                <h:form id="sportsBet168Form">
+                    <p:dataTable  var="sportsBet168" rowIndexVar="rowNumber" value="#{r103Controller.lazyModelSportsBet168ReportList}" 
+                                  binding="#{bindingController.lazyDataTableModel}" >
+                        <f:facet name="header">
+                            <div class="ui-g ui-fluid">
+                                <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                    <p:inputText  value="#{r103Controller.userGameBet168}" placeholder="#{msgs['p101.detail.username']}"/>
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">                                
+                                    <p:calendar id="dateFromBet168" value="#{r103Controller.dateFromBet168}" binding="#{bindingController.calendar}" 
+                                                pattern="dd-MM-yyyy HH:mm"  requiredMessage="#{msgs['messages.code.1022']}" timeControlType="select"
+                                                placeholder="#{msgs['common.startDate']}"/>
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                    <p:calendar id="dateToBet168" value="#{r103Controller.dateToBet168}" binding="#{bindingController.calendar}" 
+                                                pattern="dd-MM-yyyy HH:mm"  requiredMessage="#{msgs['messages.code.1022']}" timeControlType="select"
+                                                placeholder="#{msgs['common.toDate']}"/>
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                    <p:commandButton binding="#{bindingController.btnSearch}" styleClass="search-btn" icon="fa fa-search" value="#{msgs['btn.search']}"
+                                                     action="#{r103Controller.searchSportBet168()}" update="@(form)"/>
+                                </div>
+                            </div>
+                        </f:facet>
+                        <p:column headerText="#{msgs['common.seq']}" >
+                            <h:outputText value="#{(rowNumber+1)}" />
+                        </p:column>
+                        <p:column headerText="#{msgs['common.username']}" sortBy="#{sportsBet168.userId}">
+                            <h:outputText value="#{sportsBet168.id} - #{sportsBet168.userId}" styleClass="lb_bold" style="color: blue;"/>
+                        </p:column>
+                        <p:column headerText="#{msgs['common.count']}" >
+                            <h:outputText value="#{sportsBet168.count}">
+                                <f:convertNumber pattern="#,##0"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="#{msgs['betamt']}" >
+                            <h:outputText value="#{sportsBet168.betAmt}" style="float: right">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column rendered="false" headerText="#{msgs['commAmt']}" sortBy="#{sportsBet168.betAmt}" >
+                            <h:outputText value="#{sportsBet168.commAmt}" style="float: right">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="#{msgs['winloss']}" sortBy="#{idnpoker.winAmt}" >
+                            <h:outputText value="#{sportsBet168.winAmt}" style="float: right;color: #{sportsBet168.winAmt >= 0 ? 'blue' : 'red'};">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column >
+                            <p:commandButton title="#{msgs['detail']}" id="view" icon="fa fa-file-text-o" action="#{r103Controller.findSportBet168()}">
+                                <f:setPropertyActionListener value="#{sportsBet168.userId}" target="#{r103Controller.username}" />
+                            </p:commandButton>
+                        </p:column>
+                        <f:facet name="footer">
+                            <h:outputText value="#{msgs['data']} "/>
+                            <h:outputText value="#{r103Controller.lazyModelSportsBet168ReportList.rowCount}">
+                                <f:convertNumber pattern="#,###"/>
+                            </h:outputText>
+                            <h:outputText value=" #{msgs['items']}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </h:form>
+            </h:panelGroup>
+
+            <!-- 3 -->
+            <h:panelGroup rendered="#{api.id eq 4}">
+                <h:form id="sportsBet125winForm">
+                    <p:dataTable  var="sportsBet125win" rowIndexVar="rowNumber" value="#{r103Controller.lazyModelSportsBet125winReportList}" 
+                                  binding="#{bindingController.lazyDataTableModel}" >
+                        <f:facet name="header">
+                            <div class="ui-g ui-fluid">
+                                <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                    <p:inputText  value="#{r103Controller.userGameBet125win}" placeholder="#{msgs['p101.detail.username']}"/>
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">                                
+                                    <p:calendar id="dateFromBet125win" value="#{r103Controller.dateFromBet125win}" binding="#{bindingController.calendar}" 
+                                                pattern="dd-MM-yyyy HH:mm"  requiredMessage="#{msgs['messages.code.1022']}" timeControlType="select"
+                                                placeholder="#{msgs['common.startDate']}"/>
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                    <p:calendar id="dateToBet125win" value="#{r103Controller.dateToBet125win}" binding="#{bindingController.calendar}" 
+                                                pattern="dd-MM-yyyy HH:mm"  requiredMessage="#{msgs['messages.code.1022']}" timeControlType="select"
+                                                placeholder="#{msgs['common.toDate']}"/>
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                    <p:commandButton binding="#{bindingController.btnSearch}" styleClass="search-btn" icon="fa fa-search" value="#{msgs['btn.search']}"
+                                                     action="#{r103Controller.searchSportBet125win()}" update="@(form)"/>
+                                </div>
+                            </div>
+                        </f:facet>
+                        <p:column headerText="#{msgs['common.seq']}">
+                            <h:outputText value="#{(rowNumber+1)}" />
+                        </p:column>
+                        <p:column headerText="#{msgs['common.username']}" sortBy="#{sportsBet125win.userId}">
+                            <h:outputText value="#{sportsBet125win.id} - #{sportsBet125win.userId}" styleClass="lb_bold" style="color: blue;"/>
+                        </p:column>
+                        <p:column headerText="#{msgs['common.count']}" >
+                            <h:outputText value="#{sportsBet125win.count}">
+                                <f:convertNumber pattern="#,##0"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="#{msgs['betamt']}">
+                            <h:outputText value="#{sportsBet125win.betAmt}" style="float: right">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column rendered="false" headerText="#{msgs['commAmt']}" sortBy="#{sportsBet125win.betAmt}" >
+                            <h:outputText value="#{sportsBet125win.commAmt}" style="float: right">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="#{msgs['winloss']}" sortBy="#{idnpoker.winAmt}" >
+                            <h:outputText value="#{sportsBet125win.winAmt}" style="float: right;color: #{sportsBet125win.winAmt >= 0 ? 'blue' : 'red'};">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column >
+                            <p:commandButton title="#{msgs['detail']}" id="view" icon="fa fa-file-text-o" action="#{r103Controller.findSportBet125win()}">
+                                <f:setPropertyActionListener value="#{sportsBet125win.userId}" target="#{r103Controller.username}" />
+                            </p:commandButton>
+                        </p:column>
+                        <f:facet name="footer">
+                            <h:outputText value="#{msgs['data']} "/>
+                            <h:outputText value="#{r103Controller.lazyModelSportsBet125winReportList.rowCount}">
+                                <f:convertNumber pattern="#,###"/>
+                            </h:outputText>
+                            <h:outputText value=" #{msgs['items']}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </h:form>
+            </h:panelGroup>
+
+            <!-- 4 -->
+            <h:panelGroup rendered="#{api.id eq 5}">
+                <h:form id="casinoGdForm">
+                    <p:messages id="msg_casinoGdForm" autoUpdate="false" showIcon="false"/>
+                    <p:dataTable id="venetian_id" var="casinoGd" value="#{r103Controller.lazyModelCasinoGdReportList}" 
+                                 binding="#{bindingController.lazyDataTableModel}">
+                        <f:facet name="header">
+                            <div class="ui-g ui-fluid">
+                                <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                    <p:inputText value="#{r103Controller.userCasinoGd}" placeholder="#{msgs['p101.detail.username']}"/>
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2"> 
+                                    <p:calendar id="dateFromCasinoGd" value="#{r103Controller.dateFromCasinoGd}" binding="#{bindingController.calendar}" 
+                                                pattern="dd-MM-yyyy HH:mm"  requiredMessage="#{msgs['messages.code.1022']}" timeControlType="select"
+                                                placeholder="#{msgs['common.startDate']}"/>
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                    <p:calendar id="dateToCasinoGd" value="#{r103Controller.dateToCasinoGd}" binding="#{bindingController.calendar}" 
+                                                pattern="dd-MM-yyyy HH:mm"  requiredMessage="#{msgs['messages.code.1022']}" timeControlType="select"
+                                                placeholder="#{msgs['common.toDate']}"/>
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                    <p:commandButton binding="#{bindingController.btnSearch}" styleClass="search-btn" icon="fa fa-search" value="#{msgs['btn.search']}"
+                                                     action="#{r103Controller.searchCasinoGd()}" update="@(form)"/>
+                                </div>
+                            </div>
+                        </f:facet>
+                        <p:column headerText="#{msgs['common.seq']}">
+                            <h:outputText value="#{(rowNumber+1)}" />
+                        </p:column>
+                        <p:column headerText="#{msgs['common.username']}" sortBy="#{casinoGd.userId}" >
+                            <h:outputText value="#{casinoGd.userId}" styleClass="lb_bold" style="color: blue;"/>
+                        </p:column>
+                        <p:column headerText="#{msgs['common.count']}" >
+                            <h:outputText value="#{casinoGd.count}" style="float: right">
+                                <f:convertNumber pattern="#,##0"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="#{msgs['betamt']}" >
+                            <h:outputText value="#{casinoGd.betAmt}" style="float: right">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column rendered="false" headerText="#{msgs['commAmt']}" sortBy="#{casinoGd.betAmt}" >
+                            <h:outputText value="#{casinoGd.commAmt}" style="float: right">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="#{msgs['winloss']}" sortBy="#{casinoGd.winAmt}" >
+                            <h:outputText value="#{casinoGd.winAmt}" style="float: right;color: #{casinoGd.winAmt >= 0 ? 'blue' : 'red'};">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column >
+                            <p:commandButton title="#{msgs['detail']}" id="view" icon="fa fa-file-text-o" action="#{r103Controller.findCasinoGd()}" >
+                                <f:setPropertyActionListener value="#{casinoGd.userId}" target="#{r103Controller.username}" />
+                            </p:commandButton>
+                        </p:column>
+                        <f:facet name="footer">
+                            <h:outputText value="#{msgs['data']} "/>
+                            <h:outputText value="#{r103Controller.lazyModelCasinoGdReportList.rowCount}">
+                                <f:convertNumber pattern="#,###"/>
+                            </h:outputText>
+                            <h:outputText value=" #{msgs['items']}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </h:form>
+            </h:panelGroup>
+
+            <!-- 5 -->            
+            <h:panelGroup rendered="#{api.id eq 6}">
+                <h:form id="casinoOpen365Form">
+                    <p:messages id="msg_casinoOpen365Form" autoUpdate="false" showIcon="false"/>
+                    <p:dataTable id="venetian_id" var="casinoOpen365" value="#{r103Controller.lazyModelCasinoOpen365ReportList}" 
+                                 binding="#{bindingController.lazyDataTableModel}">
+                        <f:facet name="header">
+                            <div class="ui-g ui-fluid">
+                                <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                    <p:inputText value="#{r103Controller.userCasinoOpen365}" placeholder="#{msgs['p101.detail.username']}"/>
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">                       
+                                    <p:calendar id="dateFromCasinoOpen365" value="#{r103Controller.dateFromCasinoOpen365}" binding="#{bindingController.calendar}" 
+                                                pattern="dd-MM-yyyy HH:mm"  requiredMessage="#{msgs['messages.code.1022']}" timeControlType="select"
+                                                placeholder="#{msgs['common.startDate']}"/>
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                    <p:calendar id="dateToCasinoOpen365" value="#{r103Controller.dateToCasinoOpen365}" binding="#{bindingController.calendar}" 
+                                                pattern="dd-MM-yyyy HH:mm"  requiredMessage="#{msgs['messages.code.1022']}" timeControlType="select"
+                                                placeholder="#{msgs['common.toDate']}"/>
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                    <p:commandButton binding="#{bindingController.btnSearch}" styleClass="search-btn" icon="fa fa-search" value="#{msgs['btn.search']}"
+                                                     action="#{r103Controller.searchCasinoOpen365()}" update="@(form)"/>
+                                </div>
+                            </div>
+                        </f:facet>
+                        <p:column headerText="#{msgs['common.seq']}" >
+                            <h:outputText value="#{(rowNumber+1)}" />
+                        </p:column>
+                        <p:column headerText="#{msgs['common.username']}" sortBy="#{casinoOpen365.userId}" >
+                            <h:outputText value="#{casinoOpen365.userId}" styleClass="lb_bold" style="color: blue;"/>
+                        </p:column>
+                        <p:column headerText="#{msgs['common.count']}" >
+                            <h:outputText value="#{casinoOpen365.count}" style="float: right">
+                                <f:convertNumber pattern="#,##0"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="#{msgs['betamt']}" >
+                            <h:outputText value="#{casinoOpen365.betAmt}" style="float: right">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column rendered="false" headerText="#{msgs['commAmt']}" sortBy="#{casinoOpen365.betAmt}" >
+                            <h:outputText value="#{casinoOpen365.commAmt}" style="float: right">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="#{msgs['winloss']}" sortBy="#{casinoOpen365.winAmt}" >
+                            <h:outputText value="#{casinoOpen365.winAmt}" style="float: right;color: #{casinoOpen365.winAmt >= 0 ? 'blue' : 'red'};">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column >
+                            <p:commandButton title="#{msgs['detail']}" id="view" icon="fa fa-file-text-o" action="#{r103Controller.findCasinoGd()}" >
+                                <f:setPropertyActionListener value="#{casinoOpen365.userId}" target="#{r103Controller.username}" />
+                            </p:commandButton>
+                        </p:column>
+                        <f:facet name="footer">
+                            <h:outputText value="#{msgs['data']} "/>
+                            <h:outputText value="#{r103Controller.lazyModelCasinoOpen365ReportList.rowCount}">
+                                <f:convertNumber pattern="#,###"/>
+                            </h:outputText>
+                            <h:outputText value=" #{msgs['items']}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </h:form>
+            </h:panelGroup>
+
+            <!-- 6 -->
+            <h:panelGroup rendered="#{api.id eq 8}">
+                <h:form id="gameGrForm">
+                    <p:messages id="msg_gameGrForm" autoUpdate="false" showIcon="false"/>
+                    <p:dataTable id="gameGr_id" var="gameGr" value="#{r103Controller.lazyModelGameGrReportList}" 
+                                 binding="#{bindingController.lazyDataTableModel}">
+                        <f:facet name="header">
+                            <div class="ui-g ui-fluid">
+                                <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                    <p:inputText  value="#{r103Controller.userGameGr}" placeholder="#{msgs['p101.detail.username']}"/>
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                    <p:calendar id="dateFromGameGr" value="#{r103Controller.dateFromGameGr}" binding="#{bindingController.calendar}" 
+                                                pattern="dd-MM-yyyy HH:mm"  requiredMessage="#{msgs['messages.code.1022']}" timeControlType="select"
+                                                placeholder="#{msgs['common.startDate']}"/>
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                    <p:calendar id="dateToGameGr" value="#{r103Controller.dateToGameGr}" binding="#{bindingController.calendar}" 
+                                                pattern="dd-MM-yyyy HH:mm"  requiredMessage="#{msgs['messages.code.1022']}" timeControlType="select"
+                                                placeholder="#{msgs['common.toDate']}"/>
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                    <p:commandButton binding="#{bindingController.btnSearch}" styleClass="search-btn" icon="fa fa-search" value="#{msgs['btn.search']}"
+                                                     action="#{r103Controller.searchGameGr()}" update="@(form)"/>
+                                </div>
+                            </div>
+                        </f:facet>
+                        <p:column headerText="#{msgs['common.seq']}">
+                            <h:outputText value="#{(rowNumber+1)}" />
+                        </p:column>
+                        <p:column headerText="#{msgs['common.username']}" sortBy="#{gameGr.userId}" style="text-align: center;">
+                            <h:outputText value="#{gameGr.userId}" styleClass="lb_bold" style="color: blue;"/>
+                        </p:column>
+                        <p:column headerText="#{msgs['common.count']}">
+                            <h:outputText value="#{gameGr.count}" style="float: right">
+                                <f:convertNumber pattern="#,##0"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="#{msgs['betamt']}" >
+                            <h:outputText value="#{gameGr.betAmt}" style="float: right">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column rendered="false" headerText="#{msgs['commAmt']}" sortBy="#{gameGr.betAmt}" >
+                            <h:outputText value="#{gameGr.commAmt}" style="float: right">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="#{msgs['winloss']}" sortBy="#{gameGr.winAmt}" >
+                            <h:outputText value="#{gameGr.winAmt}" style="float: right;color: #{gameGr.winAmt >= 0 ? 'blue' : 'red'};">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column >
+                            <p:commandButton title="#{msgs['detail']}" id="view" icon="fa fa-file-text-o" action="#{r103Controller.findGameGr()}" >
+                                <f:setPropertyActionListener value="#{gameGr.userId}" target="#{r103Controller.username}" />
+                            </p:commandButton>
+                        </p:column>
+                        <f:facet name="footer">
+                            <h:outputText value="#{msgs['data']} "/>
+                            <h:outputText value="#{r103Controller.lazyModelGameGrReportList.rowCount}">
+                                <f:convertNumber pattern="#,###"/>
+                            </h:outputText>
+                            <h:outputText value=" #{msgs['items']}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </h:form>
+            </h:panelGroup>
+
+            <!-- 7 -->   
+            <h:panelGroup rendered="#{api.id eq 9}">
+                <h:form id="lottoForm">
+                    <p:messages id="msg_lottoForm" autoUpdate="false" showIcon="false"/>
+                    <p:dataTable id="lotto_id" var="lotto" value="#{r103Controller.lazyModelLottoReportList}" 
+                                 binding="#{bindingController.lazyDataTableModel}">
+                        <f:facet name="header">
+                            <div class="ui-g ui-fluid">
+                                <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                    <p:inputText value="#{r103Controller.userLotto}" placeholder="#{msgs['p101.detail.username']}"/>
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                    <p:calendar id="dateFromLottos" value="#{r103Controller.dateFromLottos}" binding="#{bindingController.calendar}" 
+                                                pattern="dd-MM-yyyy HH:mm"  requiredMessage="#{msgs['messages.code.1022']}" timeControlType="select"
+                                                placeholder="#{msgs['common.startDate']}"/>
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                    <p:calendar id="dateToLottos" value="#{r103Controller.dateToLottos}" binding="#{bindingController.calendar}" 
+                                                pattern="dd-MM-yyyy HH:mm"  requiredMessage="#{msgs['messages.code.1022']}" timeControlType="select"
+                                                placeholder="#{msgs['common.toDate']}"/>
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                    <p:commandButton binding="#{bindingController.btnSearch}" styleClass="search-btn" icon="fa fa-search" value="#{msgs['btn.search']}"
+                                                     action="#{r103Controller.searchLotto()}" update="@(form)"/>
+                                </div>
+                            </div>
+                        </f:facet>
+                        <p:columnGroup type="header">
+                            <p:row>
+                                <p:column rowspan="2" headerText="#{msgs['common.seq']}" />
+                                <p:column rowspan="2" headerText="#{msgs['common.username']}" sortBy="#{lotto.userId}"/>
+                                <p:column colspan="4" headerText="#{msgs['r103.seniorMasterAgent']}" />
+                                <p:column colspan="4" headerText="#{msgs['r103.administrator']}" />
+                                <p:column colspan="4" headerText="#{msgs['r103.company']}" />
+                                <p:column rowspan="2" headerText="" />
+                            </p:row>
+                            <p:row>
+                                <p:column headerText="#{msgs['r103.turnover']}" />
+                                <p:column headerText="#{msgs['r103.win']}" />
+                                <p:column headerText="#{msgs['r103.comm']}" />
+                                <p:column headerText="#{msgs['r103.total']}" />
+                                <p:column headerText="#{msgs['r103.turnover']}" />
+                                <p:column headerText="#{msgs['r103.win']}"/>
+                                <p:column headerText="#{msgs['r103.comm']}" />
+                                <p:column headerText="#{msgs['r103.total']}" />
+                                <p:column headerText="#{msgs['r103.turnover']}"/>
+                                <p:column headerText="#{msgs['r103.win']}"/>
+                                <p:column headerText="#{msgs['r103.comm']}"/>
+                                <p:column headerText="#{msgs['r103.total']}" />
+                            </p:row>
+                        </p:columnGroup>
+                        <p:column style="text-align: center;">
+                            <h:outputText value="#{(rowNumber+1)}" />
+                        </p:column>
+                        <p:column style="text-align: center;">
+                            <h:outputText value="#{lotto.userId}" styleClass="lb_bold" style="color: blue;"/>
+                        </p:column>
+                        <p:column >
+                            <h:outputText value="#{lotto.betAmt}" style="float: right">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column >
+                            <h:outputText value="#{lotto.winAmt}" style="float: right;color: #{lotto.winAmt >= 0 ? 'blue' : 'red'};">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column >
+                            <h:outputText value="#{lotto.commAmt}" style="float: right">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column >
+                            <h:outputText value="#{lotto.totalAmt}" style="float: right;color: #{lotto.totalAmt >= 0 ? 'blue' : 'red'};">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column >
+                            <h:outputText value="#{lotto.betAmtAdmin}" style="float: right">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column >
+                            <h:outputText value="#{lotto.winAmtAdmin}" style="float: right;color: #{lotto.winAmtAdmin >= 0 ? 'blue' : 'red'};">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column >
+                            <h:outputText value="#{lotto.commAmtAdmin}" style="float: right;color: #{lotto.commAmtAdmin >= 0 ? 'blue' : 'red'};">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column >
+                            <h:outputText value="#{lotto.totalAmtAdmin}" style="float: right;color: #{lotto.totalAmtAdmin >= 0 ? 'blue' : 'red'};">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column >
+                            <h:outputText value="#{lotto.betAmtCom}" style="float: right">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column >
+                            <h:outputText value="#{lotto.winAmtCom}" style="float: right;color: #{lotto.winAmtCom >= 0 ? 'blue' : 'red'};">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column >
+                            <h:outputText value="#{lotto.commAmtCom}" style="float: right;color: #{lotto.commAmtCom >= 0 ? 'blue' : 'red'};">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column >
+                            <h:outputText value="#{lotto.totalAmtCom}" style="float: right;color: #{lotto.totalAmtCom >= 0 ? 'blue' : 'red'};">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column style="text-align: center;width:40px;">
+                            <p:commandButton title="#{msgs['detail']}" id="view" icon="fa fa-file-text-o" action="#{r103Controller.findLotto()}" >
+                                <f:setPropertyActionListener value="#{lotto.userId}" target="#{r103Controller.username}" />
+                            </p:commandButton>
+                        </p:column>
+                        <p:columnGroup type="footer">
+                            <p:row>
+                                <p:column colspan="2" footerText="#{msgs['r103.total']}" style="font-weight: bold;text-align:right;"></p:column>
+                                <p:column footerText="#{r103Controller.lottoTurnover}" style="font-weight: bold;text-align:right;"></p:column>
+                                <p:column footerText="#{r103Controller.lottoWinlose}" style="font-weight: bold;text-align:right;color:blue;"></p:column>
+                                <p:column footerText="#{r103Controller.lottoCommission}" style="font-weight: bold;text-align:right;"></p:column>
+                                <p:column footerText="#{r103Controller.lottoTotal}" style="font-weight: bold;text-align:right;color:#{r103Controller.lottoTotalFlag ? 'red' : 'blue'};"></p:column>
+                                <p:column footerText="#{r103Controller.lottoTurnoverAdmin}" style="font-weight: bold;text-align:right;"></p:column>
+                                <p:column footerText="#{r103Controller.lottoWinloseAdmin}" style="font-weight: bold;text-align:right;color:blue;color:#{r103Controller.lottoWinloseAdminFlag ? 'red' : 'blue'};"></p:column>
+                                <p:column footerText="#{r103Controller.lottoCommissionAdmin}" style="font-weight: bold;text-align:right;color:#{r103Controller.lottoCommissionAdminFlag ? 'red' : 'blue'};"></p:column>
+                                <p:column footerText="#{r103Controller.lottoTotalAdmin}" style="font-weight: bold;text-align:right;color:#{r103Controller.lottoTotalAdminFlag ? 'red' : 'blue'};"></p:column>
+                                <p:column footerText="#{r103Controller.lottoTurnoverCompany}" style="font-weight: bold;text-align:right;"></p:column>
+                                <p:column footerText="#{r103Controller.lottoWinloseCompany}" style="font-weight: bold;text-align:right;color:blue;color:#{r103Controller.lottoWinloseCompanyFlag ? 'red' : 'blue'};"></p:column>
+                                <p:column footerText="#{r103Controller.lottoCommissionCompany}" style="font-weight: bold;text-align:right;color:#{r103Controller.lottoCommissionCompanyFlag ? 'red' : 'blue'};"></p:column>
+                                <p:column footerText="#{r103Controller.lottoTotalCompany}" style="font-weight: bold;text-align:right;color:#{r103Controller.lottoTotalCompanyFlag ? 'red' : 'blue'};"></p:column>
+                                <p:column footerText=""></p:column>
+                            </p:row>
+                        </p:columnGroup>
+                        <f:facet name="footer">
+                            <h:outputText value="#{msgs['data']} "/>
+                            <h:outputText value="#{r103Controller.lazyModelLottoReportList.rowCount}">
+                                <f:convertNumber pattern="#,###"/>
+                            </h:outputText>
+                            <h:outputText value=" #{msgs['items']}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </h:form>
+            </h:panelGroup>
+
+            <!-- 8 -->   
+            <h:panelGroup rendered="#{api.id eq 11}">
+                <h:form id="cockForm">
+                    <p:dataTable  var="cock" rowIndexVar="rowNumber" value="#{r103Controller.lazyModelCocksReportList}" 
+                                  binding="#{bindingController.lazyDataTableModel}" >
+                        <f:facet name="header">
+                            <div class="ui-g ui-fluid">
+                                <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                    <p:inputText  value="#{r103Controller.userCock}" placeholder="#{msgs['p101.detail.username']}"/>
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                    <p:calendar id="dateFromCock" value="#{r103Controller.dateFromCock}" binding="#{bindingController.calendar}" 
+                                                pattern="dd-MM-yyyy HH:mm"  requiredMessage="#{msgs['messages.code.1022']}" timeControlType="select"
+                                                placeholder="#{msgs['common.startDate']}"/>
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                    <p:calendar  id="dateToCock" value="#{r103Controller.dateToCock}" binding="#{bindingController.calendar}" 
+                                                 pattern="dd-MM-yyyy HH:mm"  requiredMessage="#{msgs['messages.code.1022']}" timeControlType="select"
+                                                 placeholder="#{msgs['common.toDate']}"/>
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                    <p:commandButton binding="#{bindingController.btnSearch}" styleClass="search-btn" icon="fa fa-search" value="#{msgs['btn.search']}"
+                                                     action="#{r103Controller.searchCock()}" update="@(form)"/>
+                                </div>
+                            </div>
+                        </f:facet>
+                        <p:column headerText="#{msgs['common.seq']}" >
+                            <h:outputText value="#{(rowNumber+1)}" />
+                        </p:column>
+                        <p:column headerText="#{msgs['common.username']}" sortBy="#{cock.userId}">
+                            <h:outputText value="#{cock.userId}" styleClass="lb_bold" style="color: blue;"/>
+                        </p:column>
+                        <p:column headerText="#{msgs['common.count']}" >
+                            <h:outputText value="#{cock.count}" style="float: right">
+                                <f:convertNumber pattern="#,##0"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="#{msgs['betamt']}" >
+                            <h:outputText value="#{cock.betAmt}" style="float: right">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column rendered="false" headerText="#{msgs['commAmt']}" sortBy="#{cock.betAmt}">
+                            <h:outputText value="#{cock.commAmt}" style="float: right">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="#{msgs['winloss']}" sortBy="#{cock.winAmt}" >
+                            <h:outputText value="#{cock.winAmt}" style="float: right;color: #{cock.winAmt >= 0 ? 'blue' : 'red'};">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column >
+                            <p:commandButton title="#{msgs['detail']}" id="view" icon="fa fa-file-text-o" action="#{r103Controller.findCock()}" >
+                                <f:setPropertyActionListener value="#{cock.userId}" target="#{r103Controller.username}" />
+                            </p:commandButton>
+                        </p:column>
+                        <f:facet name="footer">
+                            <h:outputText value="#{msgs['data']} "/>
+                            <h:outputText value="#{r103Controller.lazyModelCocksReportList.rowCount}">
+                                <f:convertNumber pattern="#,###"/>
+                            </h:outputText>
+                            <h:outputText value=" #{msgs['items']}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </h:form>
+            </h:panelGroup>
+
+            <!-- 9 -->  
+            <h:panelGroup rendered="#{api.id eq 12}">
+                <h:form id="idnpokersForm">
+                    <p:dataTable  var="idnpoker" rowIndexVar="rowNumber" value="#{r103Controller.lazyModelIdnpokersReportList}" 
+                                  binding="#{bindingController.lazyDataTableModel}" >
+                        <f:facet name="header">
+                            <div class="ui-g ui-fluid">
+                                <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                    <p:inputText  value="#{r103Controller.userIdnpoker}" placeholder="#{msgs['p101.detail.username']}"/>
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                    <p:calendar  id="dateFromIdnpoker" value="#{r103Controller.dateFromIdnpoker}" binding="#{bindingController.calendar}" 
+                                                 pattern="dd-MM-yyyy HH:mm"  requiredMessage="#{msgs['messages.code.1022']}" timeControlType="select"
+                                                 placeholder="#{msgs['common.startDate']}"/>
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                    <p:calendar  id="dateToIdnpoker" value="#{r103Controller.dateToIdnpoker}" binding="#{bindingController.calendar}" 
+                                                 pattern="dd-MM-yyyy HH:mm"  requiredMessage="#{msgs['messages.code.1022']}" timeControlType="select"
+                                                 placeholder="#{msgs['common.toDate']}"/>
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                    <p:commandButton binding="#{bindingController.btnSearch}" styleClass="search-btn" icon="fa fa-search" value="#{msgs['btn.search']}"
+                                                     action="#{r103Controller.searchIdnpoker()}" update="@(form)"/>
+                                </div>
+                            </div>
+                        </f:facet>
+                        <p:column headerText="#{msgs['common.seq']}" >
+                            <h:outputText value="#{(rowNumber+1)}" />
+                        </p:column>
+                        <p:column headerText="#{msgs['common.username']}" sortBy="#{idnpoker.userId}" >
+                            <h:outputText value="#{idnpoker.userId}" styleClass="lb_bold" style="color: blue;"/>
+                        </p:column>
+                        <p:column headerText="#{msgs['common.count']}">
+                            <h:outputText value="#{idnpoker.count}" style="float: right">
+                                <f:convertNumber pattern="#,##0"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="#{msgs['betamt']}" >
+                            <h:outputText value="#{idnpoker.betAmt}" style="float: right">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column rendered="false" headerText="#{msgs['commAmt']}" sortBy="#{idnpoker.betAmt}" >
+                            <h:outputText value="#{idnpoker.commAmt}" style="float: right">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="#{msgs['winloss']}" sortBy="#{idnpoker.winAmt}">
+                            <h:outputText value="#{idnpoker.winAmt}" style="float: right;color: #{idnpoker.winAmt >= 0 ? 'blue' : 'red'};">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column >
+                            <p:commandButton title="#{msgs['detail']}" id="view" icon="fa fa-file-text-o" action="#{r103Controller.findIdnpoker()}" >
+                                <f:setPropertyActionListener value="#{idnpoker.userId}" target="#{r103Controller.username}" />
+                            </p:commandButton>
+                        </p:column>
+                        <f:facet name="footer">
+                            <h:outputText value="#{msgs['data']} "/>
+                            <h:outputText value="#{r103Controller.lazyModelIdnpokersReportList.rowCount}">
+                                <f:convertNumber pattern="#,###"/>
+                            </h:outputText>
+                            <h:outputText value=" #{msgs['items']}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </h:form>
+            </h:panelGroup>
+
+            <!-- 10 -->   
+            <h:panelGroup rendered="#{api.id eq 13}">
+                <h:form id="fishWorldForm">
+                    <p:dataTable  var="fishWorld" rowIndexVar="rowNumber" value="#{r103Controller.lazyModelFishingWorldReportList}" 
+                                  binding="#{bindingController.lazyDataTableModel}" >
+                        <f:facet name="header">
+                            <div class="ui-g ui-fluid">
+                                <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                    <p:inputText  value="#{r103Controller.userfishingWorld}" placeholder="#{msgs['p101.detail.username']}"/>
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2"> 
+                                    <p:calendar  id="dateFromFishWorld" value="#{r103Controller.dateFromFishWorld}" binding="#{bindingController.calendar}" 
+                                                 pattern="dd-MM-yyyy HH:mm"  requiredMessage="#{msgs['messages.code.1022']}" timeControlType="select"
+                                                 placeholder="#{msgs['common.startDate']}"/>
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                    <p:calendar  id="dateToFishWorld" value="#{r103Controller.dateToFishWorld}" binding="#{bindingController.calendar}" 
+                                                 pattern="dd-MM-yyyy HH:mm"  requiredMessage="#{msgs['messages.code.1022']}" timeControlType="select"
+                                                 placeholder="#{msgs['common.toDate']}"/>
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                    <p:commandButton binding="#{bindingController.btnSearch}" styleClass="search-btn" icon="fa fa-search" value="#{msgs['btn.search']}"
+                                                     action="#{r103Controller.searchFishWorld()}" update="@(form)"/>
+                                </div>
+                            </div>
+                        </f:facet>
+                        <p:column headerText="#{msgs['common.seq']}">
+                            <h:outputText value="#{(rowNumber+1)}" />
+                        </p:column>
+                        <p:column headerText="#{msgs['common.username']}" sortBy="#{fishWorld.userId}" >
+                            <h:outputText value="#{fishWorld.userId}" styleClass="lb_bold" style="color: blue;"/>
+                        </p:column>
+                        <p:column headerText="#{msgs['common.count']}" >
+                            <h:outputText value="#{fishWorld.count}" style="float: right">
+                                <f:convertNumber pattern="#,##0"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="#{msgs['betamt']}" >
+                            <h:outputText value="#{fishWorld.betAmt}" style="float: right">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column rendered="false" headerText="#{msgs['commAmt']}" sortBy="#{fishWorld.betAmt}">
+                            <h:outputText value="#{fishWorld.commAmt}" style="float: right">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="#{msgs['winloss']}" sortBy="#{fishWorld.winAmt}" >
+                            <h:outputText value="#{fishWorld.winAmt}" style="float: right;color: #{idnpoker.winAmt >= 0 ? 'blue' : 'red'};">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column >
+                            <p:commandButton title="#{msgs['detail']}" id="view" icon="fa fa-file-text-o" action="#{r103Controller.findFishingWorld()}" >
+                                <f:setPropertyActionListener value="#{fishWorld.userId}" target="#{r103Controller.username}" />
+                            </p:commandButton>
+                        </p:column>
+                        <f:facet name="footer">
+                            <h:outputText value="#{msgs['data']} "/>
+                            <h:outputText value="#{r103Controller.lazyModelFishingWorldReportList.rowCount}">
+                                <f:convertNumber pattern="#,###"/>
+                            </h:outputText>
+                            <h:outputText value=" #{msgs['items']}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </h:form>
+            </h:panelGroup>
+
+            <!-- 11 -->
+            <h:panelGroup rendered="#{api.id eq 14}">
+                <h:form id="casinoAllbetForm">
+                    <p:messages id="msg_casinoAllbetForm" autoUpdate="false" showIcon="false"/>
+                    <p:dataTable id="venetian_id" var="casinoAllbet" value="#{r103Controller.lazyModelCasinoAllbetReportList}" 
+                                 binding="#{bindingController.lazyDataTableModel}">
+                        <f:facet name="header">
+                            <div class="ui-g ui-fluid">
+                                <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                    <p:inputText value="#{r103Controller.userCasinoAllbet}" placeholder="#{msgs['p101.detail.username']}"/>
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">      
+                                    <p:calendar id="dateFromCasinoAllbet" value="#{r103Controller.dateFromCasinoAllbet}" binding="#{bindingController.calendar}" 
+                                                pattern="dd-MM-yyyy HH:mm"  requiredMessage="#{msgs['messages.code.1022']}" timeControlType="select"
+                                                placeholder="#{msgs['common.startDate']}"/>
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                    <p:calendar id="dateToCasinoAllbet" value="#{r103Controller.dateToCasinoAllbet}" binding="#{bindingController.calendar}" 
+                                                pattern="dd-MM-yyyy HH:mm"  requiredMessage="#{msgs['messages.code.1022']}" timeControlType="select"
+                                                placeholder="#{msgs['common.toDate']}"/>
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                    <p:commandButton binding="#{bindingController.btnSearch}" styleClass="search-btn" icon="fa fa-search" value="#{msgs['btn.search']}"
+                                                     action="#{r103Controller.searchCasinoAllbet()}" update="@(form)"/>
+                                </div>
+                            </div>
+                        </f:facet>
+                        <p:column headerText="#{msgs['common.seq']}" >
+                            <h:outputText value="#{(rowNumber+1)}" />
+                        </p:column>
+                        <p:column headerText="#{msgs['common.username']}" sortBy="#{casinoAllbet.userId}" >
+                            <h:outputText value="#{casinoAllbet.userId}" styleClass="lb_bold" style="color: blue;"/>
+                        </p:column>
+                        <p:column headerText="#{msgs['common.count']}">
+                            <h:outputText value="#{casinoAllbet.count}" style="float: right">
+                                <f:convertNumber pattern="#,##0"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="#{msgs['betamt']}" >
+                            <h:outputText value="#{casinoAllbet.betAmt}" style="float: right">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column rendered="false" headerText="#{msgs['commAmt']}" sortBy="#{casinoAllbet.betAmt}" >
+                            <h:outputText value="#{casinoAllbet.commAmt}" style="float: right">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="#{msgs['winloss']}" sortBy="#{casinoAllbet.winAmt}">
+                            <h:outputText value="#{casinoAllbet.winAmt}" style="float: right;color: #{casinoAllbet.winAmt >= 0 ? 'blue' : 'red'};">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column >
+                            <p:commandButton title="#{msgs['detail']}" id="view" icon="fa fa-file-text-o" action="#{r103Controller.findCasinoAllbet()}" >
+                                <f:setPropertyActionListener value="#{casinoAllbet.userId}" target="#{r103Controller.username}" />
+                            </p:commandButton>
+                        </p:column>
+                        <f:facet name="footer">
+                            <h:outputText value="#{msgs['data']} "/>
+                            <h:outputText value="#{r103Controller.lazyModelCasinoAllbetReportList.rowCount}">
+                                <f:convertNumber pattern="#,###"/>
+                            </h:outputText>
+                            <h:outputText value=" #{msgs['items']}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </h:form>
+            </h:panelGroup>
+
+            <!-- 12 -->   
+            <h:panelGroup rendered="#{api.id eq 15}">
+                <h:form id="spadeGamingForm">
+                    <p:dataTable  var="spadeGaming" rowIndexVar="rowNumber" value="#{r103Controller.lazyModelSpadeGamingReportList}" 
+                                  binding="#{bindingController.lazyDataTableModel}" >
+                        <f:facet name="header">
+                            <div class="ui-g ui-fluid">
+                                <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                    <p:inputText  value="#{r103Controller.userSpadeGaming}" placeholder="#{msgs['p101.detail.username']}"/>
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">     
+                                    <p:calendar  id="dateFromSpadeGaming" value="#{r103Controller.dateFromSpadeGaming}" binding="#{bindingController.calendar}" 
+                                                 pattern="dd-MM-yyyy HH:mm"  requiredMessage="#{msgs['messages.code.1022']}" timeControlType="select"
+                                                 placeholder="#{msgs['common.startDate']}"/>
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                    <p:calendar  id="dateToSpadeGaming" value="#{r103Controller.dateToSpadeGaming}" binding="#{bindingController.calendar}" 
+                                                 pattern="dd-MM-yyyy HH:mm"  requiredMessage="#{msgs['messages.code.1022']}" timeControlType="select"
+                                                 placeholder="#{msgs['common.toDate']}"/>
+                                </div>
+                                <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                    <p:commandButton binding="#{bindingController.btnSearch}" styleClass="search-btn" icon="fa fa-search" value="#{msgs['btn.search']}"
+                                                     action="#{r103Controller.searchSpadeGaming()}" update="@(form)"/>
+                                </div>
+                            </div>
+                        </f:facet>
+                        <p:column headerText="#{msgs['common.seq']}">
+                            <h:outputText value="#{(rowNumber+1)}" />
+                        </p:column>
+                        <p:column headerText="#{msgs['common.username']}" sortBy="#{spadeGaming.userId}" >
+                            <h:outputText value="#{spadeGaming.userId}" styleClass="lb_bold" style="color: blue;"/>
+                        </p:column>
+                        <p:column headerText="#{msgs['common.count']}">
+                            <h:outputText value="#{spadeGaming.count}" style="float: right">
+                                <f:convertNumber pattern="#,##0"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="#{msgs['betamt']}" >
+                            <h:outputText value="#{spadeGaming.betAmt}" style="float: right">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column rendered="false" headerText="#{msgs['commAmt']}" sortBy="#{spadeGaming.commAmt}">
+                            <h:outputText value="#{spadeGaming.commAmt}" style="float: right">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="#{msgs['winloss']}" sortBy="#{spadeGaming.winAmt}">
+                            <h:outputText value="#{spadeGaming.winAmt}" style="float: right;color: #{idnpoker.winAmt >= 0 ? 'blue' : 'red'};">
+                                <f:convertNumber pattern="#,##0.00"/>
+                            </h:outputText>
+                        </p:column>                        
+                        <p:column >
+                            <p:commandButton title="#{msgs['detail']}" id="view" icon="fa fa-file-text-o" action="#{r103Controller.findSpadeGaming()}" >
+                                <f:setPropertyActionListener value="#{spadeGaming.userId}" target="#{r103Controller.username}" />
+                            </p:commandButton>
+                        </p:column>
+
+                        <p:columnGroup type="footer">
+                            <p:row>
+                                <p:column colspan="2" footerText="#{msgs['total']}" style="font-weight: bold;text-align:right;" />
+                                <p:column footerText="#{r103Controller.spadeGamingPlay}" style="font-weight: bold;text-align:right;color:blue;"/>
+                                <p:column footerText="#{r103Controller.spadeGamingBetAmt}" style="font-weight: bold;text-align:right;color:blue;"/>
+                                <p:column footerText="#{r103Controller.spadeGamingWinlose}" style="font-weight: bold;text-align:right;color:#{r103Controller.spadeGamingFlag ? 'red' : 'blue'};"/>
+                                <p:column/>
+                            </p:row>
+                        </p:columnGroup>
+
+                        <f:facet name="footer">
+                            <h:outputText value="#{msgs['data']} "/>
+                            <h:outputText value="#{r103Controller.lazyModelSpadeGamingReportList.rowCount}">
+                                <f:convertNumber pattern="#,###"/>
+                            </h:outputText>
+                            <h:outputText value=" #{msgs['items']}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </h:form>
+            </h:panelGroup>
+
+        </p:tab>
+    </p:tabView>
+
+</ui:composition>

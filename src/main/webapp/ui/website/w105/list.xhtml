@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <style type="text/css">
+        .ui-widget-content .ui-icon {
+            background-image: url("./resources/images/ui-icons_333333_256x240.png");
+        }
+    </style>
+
+    <h:form id="listForm">
+          <p:dataTable  id="emailSystem" var="item" binding="#{bindingController.lazyDataTableModel}" value="#{w105Controller.lazyModel}">
+
+            <p:column headerText="#" style="text-align: center;width: 32px;">
+                <h:outputText value="#{(rowNumber+1)}" />
+            </p:column>
+
+            <p:column headerText="#{msgs['p101.detail.username']}" sortBy="#{item.userId.username}" >
+                <h:outputText value="#{item.userId.username}"/>
+            </p:column>
+            
+            <p:column headerText="#{msgs['m201.detail.title']}" sortBy="#{item.title}" style="width: 300px;">
+                <h:outputText value="#{item.title}"/>
+            </p:column>
+
+            <p:column headerText="#{msgs['m202.detail']}"  style="width: 500px;">
+                <h:outputText value="#{item.content}"/>
+            </p:column>
+
+            <p:column  headerText="#{msgs['m201.detail.startDate']} " sortBy="#{item.createdDt}" style="width: 75px;text-align: center">
+                <h:outputText value="#{item.startTime}">
+                    <f:convertDateTime pattern="#{PFConstants.DATE_PATTERN}"/>
+                </h:outputText>
+            </p:column>
+            
+            <p:column style="width: 75px;text-align: center">
+                <p:tooltip for="edit" value="#{msgs['btn.edit']}" trackMouse="true"/>
+                <p:commandButton id="edit" icon="fa fa-edit"  action="#{w105Controller.next('website/w105/edit')}" update=":content">
+                    <f:setPropertyActionListener value="#{item}" target="#{w105Controller.selected}" />
+                </p:commandButton>
+
+                <p:tooltip for="del" value="#{msgs['btn.delete']}" trackMouse="true"/>
+                <p:commandButton id="del" icon="fa fa-trash"  action="#{w105Controller.delete()}" update=":content">
+                    <p:confirm header="#{msgs['dialog.confirm']}" message="#{msgs['dialog.message']}" />
+                    <f:setPropertyActionListener value="#{item}" target="#{w105Controller.selected}" />
+                </p:commandButton>
+            </p:column>
+
+            <f:facet name="footer">
+                <h:outputText value="#{msgs['messages.code.2022']} "/>
+                <h:outputText value="#{w105Controller.lazyModel.rowCount}">    
+                    <f:convertNumber pattern="#,##0"/>
+                </h:outputText>
+                <h:outputText value=" #{msgs['messages.code.2023']}"/>
+            </f:facet>
+        </p:dataTable>
+
+    </h:form>
+
+</ui:composition>

@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="/templates/default-template.xhtml">
+
+    <ui:define name="viewname">#{msgs['menu.commission.p102']} / #{msgs['btn.edit']}</ui:define>
+
+    <ui:define name="content">
+        <h:form id="listForm">
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                    <p:messages id="edit_msg" autoUpdate="false" showIcon="false"/>
+                </div>
+                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                    <p:fieldset legend="#{msgs['c104.detail.header']}" style="border: 0px;">
+                        <p:panel  style="max-width: 900px;margin-bottom: 10px;border-right: 0px;border-radius: 0px;">
+                            <div class="ui-fluid">
+                                <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-3,ui-grid-col-8" styleClass="ui-panelgrid-blank form-group">
+                                    <p:outputLabel value="#{msgs['common.username']} ："/>
+                                    <h:outputText value="#{p102Controller.selected.username}" styleClass="lb_bold"/>  
+
+                                    <p:outputLabel value="#{msgs['p103.balance']} ："/>
+                                    <h:outputText value="#{p102Controller.selected.userFunds.points}">
+                                        <f:convertNumber pattern="#,##0.00"/>
+                                    </h:outputText>
+
+                                    <h:panelGroup>
+                                        <p:outputLabel value="#{msgs['p103.adjust']} :"/>
+                                        <font class="require" style="color: red">*</font>
+                                    </h:panelGroup>
+                                    <p:selectOneRadio value="#{p102Controller.subtype}">
+                                        <f:selectItem itemLabel="#{msgs['common.add']}" itemValue="1" />
+                                        <f:selectItem itemLabel="#{msgs['common.subtract']}" itemValue="2" />
+                                    </p:selectOneRadio>   
+
+                                    <h:panelGroup>
+                                        <p:outputLabel value="#{msgs['p103.point']} ："/> 
+                                        <font class="require" style="color: red">*</font>
+                                    </h:panelGroup>
+                                    <p:inputNumber value="#{p102Controller.point}" style="width: 200px"/>
+
+                                    <p:outputLabel value="#{msgs['common.remark']} ："/>
+                                    <p:inputTextarea value="#{p102Controller.remark}" cols="50" rows="4" maxlength="250"/>                            
+
+                                </p:panelGrid>
+                            </div>
+                        </p:panel>
+                    </p:fieldset>
+                </div>
+                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                    <p:fieldset style="border: 0px;">
+                        <p:panel  style="max-width: 900px;margin-bottom: 10px;border-right: 0px;border-radius: 0px;">
+                            <div class="ui-fluid">
+                                <p:panelGrid columns="4" layout="grid" columnClasses="ui-grid-col-3,ui-grid-col-3,ui-grid-col-3,ui-grid-col-3" styleClass="ui-panelgrid-blank form-group">
+                                    <h:panelGroup>
+                                        <p:outputLabel value="#{msgs['common.createDate']} : " styleClass="sub-label"/>
+                                        <h:outputText value="#{p102Controller.selected.userFunds.createdDt}" styleClass="sub-label">
+                                            <f:convertDateTime pattern="dd-MM-yyyy HH:ss"/>
+                                        </h:outputText>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup>
+                                        <p:outputLabel value="#{msgs['common.createBy']} : " styleClass="sub-label"/>
+                                        <h:outputText value="#{p102Controller.selected.userFunds.createdBy}" styleClass="sub-label"/>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup>
+                                        <p:outputLabel value="#{msgs['common.modifiedDt']} : " styleClass="sub-label"/>
+                                        <h:outputText value="#{p102Controller.selected.userFunds.modifiedDt}" styleClass="sub-label">
+                                            <f:convertDateTime pattern="dd-MM-yyyy  HH:ss"/>
+                                        </h:outputText>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup>
+                                        <p:outputLabel value="#{msgs['common.modifiedBy']} : " styleClass="sub-label"/>
+                                        <h:outputText value="#{p102Controller.selected.userFunds.modifiedBy}" styleClass="sub-label"/>
+                                    </h:panelGroup>
+                                </p:panelGrid>
+                            </div>
+                        </p:panel>
+                    </p:fieldset>
+                </div>
+                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                    <h:panelGrid columns="2" cellpadding="0" cellspacing="1" style="margin-left: 15px;margin-bottom: 10px;">
+                        <p:commandButton binding="#{bindingController.btnSave}" value="#{msgs['btn.save']}" action="#{p102Controller.editData()}" styleClass="edit-btn" update="edit_msg"/>
+                        <p:commandButton binding="#{bindingController.btnCancel}" value="#{msgs['btn.cancel']}" action="#{p102Controller.cancel()}" styleClass="clear-btn" update="edit_msg"/>
+                    </h:panelGrid>
+                </div>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

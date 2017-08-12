@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <h:form id="listForm">
+        <p:outputPanel deferred="true" deferredMode="visible">
+            <p:dataTable id="withdrawTable" binding="#{bindingController.lazyDataTableModel}" value="#{c103Controller.lazyModel}" var="item">
+                <f:facet name="header">
+                    <div class="ui-g ui-fluid">
+                        <div class="ui-g-12 ui-md-6 ui-lg-1">
+                            <p:commandButton value="#{msgs['btn.export']}" styleClass="search-btn"
+                                             rendered="#{p:ifAnyGranted('ROLE_PG,ROLE_ADMIN,ROLE_SUPER,ROLE_AUDIT')}"
+                                             binding="#{bindingController.btnExportExcel}" actionListener="#{c103Controller.export()}" ajax="false"/>
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-2">
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            <p:selectOneMenu value="#{c103Controller.status}">
+                                <f:selectItem itemLabel="#{msgs['common.all']}" itemValue="#{null}" />
+                                <f:selectItem itemLabel="#{msgs['c103.onProcess']}" itemValue="#{PFConstants.USER_TXN_STATUS_ONPROCESS}" />
+                                <f:selectItem itemLabel="#{msgs['c103.accept']}" itemValue="#{PFConstants.USER_TXN_STATUS_ACCEPT}" />
+                                <f:selectItem itemLabel="#{msgs['c103.reject']}" itemValue="#{PFConstants.USER_TXN_STATUS_REJECT}" />
+                                <f:selectItem itemLabel="#{msgs['common.withdrawlock']}" itemValue="#{PFConstants.USER_TXN_STATUS_LOCK}" />
+                                <f:selectItem itemLabel="#{msgs['common.transok']}" itemValue="#{PFConstants.USER_TXN_STATUS_TRANSOK}" />
+                            </p:selectOneMenu>
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            <p:calendar binding="#{bindingController.calendar}" value="#{c103Controller.startDate}" placeholder="#{msgs['common.startDate']}"/>
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            <p:calendar binding="#{bindingController.calendar}" value="#{c103Controller.toDate}" placeholder="#{msgs['common.toDate']}"/>
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            <p:inputText value="#{c103Controller.memberName}" placeholder="#{msgs['common.username']}"/>
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-1">
+                            <p:commandButton id="btnSearch" binding="#{bindingController.btnSearch}" value="#{msgs['btn.search']}" 
+                                             actionListener="#{c103Controller.search()}" styleClass="search-btn"/>
+                            <p:defaultCommand target="btnSearch" />
+                        </div>
+                    </div>
+                </f:facet>
+
+                <p:column headerText="#" style="text-align: center;width:32px;">
+                    <h:outputText value="#{(rowNumber+1)}" />
+                </p:column>
+                <p:column headerText="#{msgs['c103.refcode']}" sortBy="#{item.id}" style="width: 90px;text-align: center">
+                    <h:outputText value="#{item.id}"/>
+                </p:column>
+                <p:column headerText="#{msgs['common.username']}" style="text-align: center;">
+                    <h:outputText value="#{item.userId.username}"/>
+                </p:column>
+
+                <p:column headerText="#{msgs['cash.balance']}"   style="text-align: center;width:100px;">
+                    <ui:repeat var="item1" value="#{item.userFundsDataList}" size="1">
+                        <h:outputText value="#{item1.balance}" rendered="#{item1.balance != null}" style="float: right;">
+                            <f:convertNumber  pattern="#,##0.00"/>
+                        </h:outputText>
+                    </ui:repeat>
+                </p:column>
+
+                <p:column headerText="#{msgs['c103.amount']}" sortBy="#{item.amount}" style="text-align: center;width:75px;">
+                    <h:outputText value="#{item.amount}" rendered="#{item.amount != null}" style="float: right;color:red;font-weight: bold">
+                        <f:convertNumber  pattern="#,##0.00"/>
+                    </h:outputText>
+                    <h:outputText value="N/A" rendered="#{item.amount eq null}" style="color: red;"/>
+                </p:column>            
+                <p:column headerText="#{msgs['c103.createddate']}" sortBy="#{item.createdDt}" style="text-align: center;width:110px;">
+                    <h:outputText value="#{item.createdDt}">
+                        <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
+                    </h:outputText>
+                </p:column>
+
+                <p:column headerText="#{msgs['c103.approver']}" style="text-align: center;width:80px;">
+                    <h:outputText value="#{item.approveBy eq null ? '-' : item.status eq PFConstants.USER_TXN_STATUS_CANCEL ? '-' : item.approveBy}"/>
+                </p:column>
+
+                <p:column headerText="#{msgs['c103.approverdate']}" style="text-align: center;width:110px;">
+                    <h:outputText value="#{item.approveDt eq null ? '-' : item.status eq PFConstants.USER_TXN_STATUS_CANCEL ? '-' : item.approveDt}">
+                        <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
+                    </h:outputText>
+                </p:column>
+
+                <p:column headerText="#{msgs['c103.status']}" sortBy="#{item.status}" style="text-align: center;width:95px;">
+                    <h:outputText value="#{item.status eq PFConstants.USER_TXN_STATUS_ONPROCESS ? msgs['c103.onProcess']:''}" 
+                                  rendered="#{item.status eq PFConstants.USER_TXN_STATUS_ONPROCESS}" style="color:blue;font-weight: bold;"/>
+                    <h:outputText value="#{item.status eq PFConstants.USER_TXN_STATUS_ACCEPT ? msgs['c103.accept']:''}" 
+                                  rendered="#{item.status eq PFConstants.USER_TXN_STATUS_ACCEPT }" style="color:green;font-weight: bold;"/>
+                    <h:outputText value="#{item.status eq PFConstants.USER_TXN_STATUS_REJECT ? msgs['c103.reject']:''}" 
+                                  rendered="#{item.status eq PFConstants.USER_TXN_STATUS_REJECT }" style="color: red;font-weight: bold;"/>
+                    <h:outputText value="#{item.status eq PFConstants.USER_TXN_STATUS_CANCEL ? msgs['c103.cancel']:''}" 
+                                  rendered="#{item.status eq PFConstants.USER_TXN_STATUS_CANCEL }" style="color: gray;font-weight: bold;"/>
+                    <h:outputText value="#{item.status eq PFConstants.USER_TXN_STATUS_LOCK ? msgs['common.withdrawlock']:''}" 
+                                  rendered="#{item.status eq PFConstants.USER_TXN_STATUS_LOCK }" style="color: orange;font-weight: bold;"/>     
+                    <h:outputText value="#{item.status eq PFConstants.USER_TXN_STATUS_TRANSOK ? msgs['common.transok']:''}" 
+                                  rendered="#{item.status eq PFConstants.USER_TXN_STATUS_TRANSOK }" style="color:cornflowerblue;font-weight: bold;"/>                
+                </p:column>
+
+                <p:column style="text-align: center;width:75px;">
+                    <p:commandButton id="turnover" icon="fa fa-money" title="#{msgs['turnover']}" action="#{c103Controller.turnover()}" rendered="false">
+                        <f:setPropertyActionListener value="#{item}" target="#{c103Controller.userTxn}" />
+                    </p:commandButton>
+
+                    <p:spacer width="2"/>
+
+                    <p:commandButton id="view" icon="fa fa-fw fa-file-text-o"
+                                     style="color: #{item.status eq PFConstants.USER_TXN_STATUS_ACCEPT ? 'green' : 
+                                                     item.status eq PFConstants.USER_TXN_STATUS_REJECT ? 'red' : 
+                                                     item.status eq PFConstants.USER_TXN_STATUS_CANCEL ? 'gray' : 
+                                                     item.status eq PFConstants.USER_TXN_STATUS_TRANSOK ? 'cornflowerblue' :  ''}"
+                                     rendered="#{item.status eq PFConstants.USER_TXN_STATUS_ACCEPT or item.status eq PFConstants.USER_TXN_STATUS_REJECT 
+                                                 or item.status eq PFConstants.USER_TXN_STATUS_CANCEL or item.status eq PFConstants.USER_TXN_STATUS_TRANSOK}"
+                                     title="#{msgs['btn.view']}" action="#{c103Controller.gotoViewView()}">
+                        <f:setPropertyActionListener value="#{item}" target="#{c103Controller.userTxn}" />
+                    </p:commandButton>
+
+                    <p:commandButton id="edit" icon="fa fa-edit" style="color: black;" rendered="#{item.status eq PFConstants.USER_TXN_STATUS_ONPROCESS or item.status eq PFConstants.USER_TXN_STATUS_LOCK }"
+                                     title="#{msgs['btn.edit']}" action="#{c103Controller.gotoEditView()}">
+                        <f:setPropertyActionListener value="#{item}" target="#{c103Controller.userTxn}" />
+                    </p:commandButton>
+
+                </p:column>
+
+                <f:facet name="footer">
+                    <h:outputText value="#{msgs['messages.code.2022']} "/>
+                    <h:outputText value="#{c103Controller.lazyModel.rowCount}">
+                        <f:convertNumber pattern="#,##0"/>
+                    </h:outputText>
+                    <h:outputText value=" #{msgs['messages.code.2023']}"/>
+                </f:facet>
+            </p:dataTable>
+        </p:outputPanel>
+    </h:form>
+
+</ui:composition>

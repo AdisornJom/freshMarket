@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <p:toolbar style="margin-top: 3px;margin-bottom: 3px;">
+        <f:facet name="left" >
+            <p:commandButton binding="#{bindingController.btnBack}" value="#{msgs['btn.back']}" actionListener="#{r105Controller.backwardReport('report/r105/turnover')}" 
+                             styleClass="clear-btn" update="listForm"/>
+        </f:facet>
+    </p:toolbar>
+
+    <p:dataTable id="casinoGd_id" var="casinoGd" value="#{r105Controller.casinoGds}"
+                 binding="#{bindingController.defaultDataTableModel}">
+        <p:column headerText="#{msgs['order']}" style="text-align: center;width: 32px;">
+            <h:outputText value="#{(rowNumber+1)}" />
+        </p:column>
+        <p:column headerText="#{msgs['detail']}" style="text-align: center;width: 100px;">
+            <h:outputText value="#{casinoGd.betId}" styleClass="lb_bold" style="color: blue;"/>
+            <br/>
+            <h:outputText value="#{casinoGd.betDt}">
+                <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
+            </h:outputText>
+        </p:column>
+        <p:column headerText="#{msgs['product']}" sortBy="#{casinoGd.productId}" style="text-align: center;">
+            <h:outputText value="#{casinoGd.productId}"/>
+        </p:column>
+        <p:column headerText="#{msgs['gameInterface']}" sortBy="#{casinoGd.gameInterface}" style="text-align: center;">
+            <h:outputText value="#{casinoGd.gameInterface}"/>
+        </p:column>
+        <p:column headerText="#{mgsg['betType']}" sortBy="#{casinoGd.betType}" style="text-align: center;">
+            <h:outputText value="#{casinoGd.betType}"/>
+        </p:column>
+        <p:column headerText="#{msgs['common.status']}" sortBy="#{casinoGd.betResult}" style="width: 100px;text-align: center;">
+            <h:outputText value="#{casinoGd.betResult}" styleClass="lb_bold" style="#{casinoGd.betResult eq 'Loss' ? 'color: red;' : 'color: blue;'}"/>
+        </p:column>
+        <p:column headerText="#{msgs['betamt']}" style="width: 140px;text-align: right;">
+            <h:outputText value="#{casinoGd.betAmount}">
+                <f:convertNumber pattern="#,##0.00"/>
+            </h:outputText>
+        </p:column>
+        <p:column headerText="#{msgs['winloss']}" sortBy="#{casinoGd.realWinLoss}" style="width: 100px;">
+            <h:outputText value="#{casinoGd.realWinLoss}" styleClass="lb_bold" style="float: right;#{casinoGd.betResult eq 'Loss' ? 'color: red;' : 'color: blue;'}">
+                <f:convertNumber pattern="#,##0.00"/>
+            </h:outputText>
+        </p:column>
+        <p:columnGroup type="footer">
+            <p:row>
+                <p:column colspan="6" footerText="#{msgs['r103.total']}" style="font-weight: bold;text-align:right;"></p:column>
+                <p:column footerText="#{r105Controller.casinoGdTurnover}" style="font-weight: bold;text-align:right;"></p:column>
+                <p:column footerText="#{r105Controller.casinoGdWinlose}" style="font-weight: bold;text-align:right;color:#{r105Controller.casinoGdWinloseFlag ? 'red' : 'blue'};"></p:column>
+            </p:row>
+        </p:columnGroup>
+        <f:facet name="footer">
+            <h:outputText value="#{msgs['data']} "/>
+            <h:outputText value="#{r105Controller.casinoGds.size()}">
+                <f:convertNumber pattern="#,###"/>
+            </h:outputText>
+            <h:outputText value=" #{msgs['items']}"/>
+        </f:facet>
+    </p:dataTable>
+</ui:composition>

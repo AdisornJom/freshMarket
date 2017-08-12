@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <p:dialog id="dlg1" header="#{msgs['a201.profile.whitelist']}" modal="true"  widgetVar="selectWhitelistIp_dialog" width="600" binding="#{bindingController.defaultDialogModel}" closeOnEscape="true">
+        <h:form id="listFormIp">
+             <p:panelGrid id="detail" columns="2" layout="grid"  columnClasses="ui-grid-col-3,ui-grid-col-7" styleClass="ui-panelgrid-blank">
+                <h:panelGroup>
+                    <p:outputLabel  value="#{msgs['a201.profile.ip']}" />
+                    <font class="require" style="color: red">*</font>
+                </h:panelGroup>
+                 <p:inputText  value="#{a201Controller.ip_selected.adminWhitelistPK.ip}" maxlength="20" 
+                             style="width: 200px;"/>
+             </p:panelGrid>
+
+            <br/>
+            <h:panelGroup layout="block" style="text-align: right" >
+                <p:commandButton styleClass="edit-btn" binding="#{bindingController.btnSave}" value="#{msgs['btn.ok']}" update="listForm listFormIp:detail"
+                                 actionListener="#{a201Controller.addDetail()}" oncomplete="PF('selectWhitelistIp_dialog').hide()" >
+                </p:commandButton> 
+                <p:commandButton styleClass="clear-btn"  binding="#{bindingController.btnCancel}" value="#{msgs['btn.cancel']}" 
+                                 oncomplete="PF('selectWhitelistIp_dialog').hide();" global="false"
+                                 actionListener="#{a201Controller.clearData_whlitlistip()}"/>
+            </h:panelGroup>
+        </h:form>
+
+    </p:dialog>
+
+</ui:composition>

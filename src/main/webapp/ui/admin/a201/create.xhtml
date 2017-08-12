@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="/templates/default-template.xhtml">
+
+    <ui:define name="viewname">#{msgs['menu.admin.a201']} / #{msgs['btn.add']}</ui:define>
+
+    <ui:define name="content">
+        <h:form id="listForm">
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                    <p:messages id="edit_msg" autoUpdate="false" showIcon="false"/>
+                </div>
+                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                    <p:fieldset id="fieldset1" legend="#{msgs['a201.profile.general']}" style="border: 0px;">
+                        <p:panel style="max-width: 900px;margin-bottom: 10px;border-right: 0px;border-radius: 0px;">
+                            <div class="ui-fluid">
+                                <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-3,ui-grid-col-8" styleClass="ui-panelgrid-blank form-group">
+                                    <h:panelGroup>
+                                        <p:outputLabel value="#{msgs['a201.profile.firstname']} :" />
+                                        <font class="require" style="color: red">*</font>
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <p:inputText  value="#{a201Controller.selected.firstName}"/>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup>
+                                        <p:outputLabel  value="#{msgs['a201.profile.lastname']} :" />
+                                        <font class="require" style="color: red">*</font>
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <p:inputText  value="#{a201Controller.selected.lastName}" />
+                                    </h:panelGroup>
+
+                                    <h:panelGroup>
+                                        <p:outputLabel  value="#{msgs['a201.profile.role']} :" />
+                                        <font class="require" style="color: red">*</font>
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <p:selectOneMenu  value="#{a201Controller.selected.roleId.id}" >
+                                            <f:selectItems value="#{comboController.adminUserRole}" var="item" itemValue="#{item.id}" itemLabel="#{item.roleName}" />
+                                        </p:selectOneMenu>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup>
+                                        <p:outputLabel value="#{msgs['a201.profile.position']} :" />
+                                        <font class="require" style="color: red">*</font>
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <p:inputText  value="#{a201Controller.selected.position}" />
+                                    </h:panelGroup>
+
+                                    <h:panelGroup>
+                                        <p:outputLabel  value="#{msgs['a201.profile.organization']} :" />
+                                        <font class="require" style="color: red">*</font>
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <p:inputText  value="#{a201Controller.selected.organization}" />
+                                    </h:panelGroup>
+
+                                    <h:panelGroup>
+                                        <p:outputLabel  value="#{msgs['a201.profile.email']} :" />
+                                        <font class="require" style="color: red">*</font>
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <p:inputText  value="#{a201Controller.selected.email}" 
+                                                      validatorMessage="#{msgs['messages.code.1003']}">
+                                        </p:inputText>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup>
+                                        <p:outputLabel  value="#{msgs['a201.profile.mobile']} :" />
+                                        <font class="require" style="color: red">*</font>
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <p:inputMask value="#{a201Controller.selected.mobile}" mask="099-999-9999" />
+                                    </h:panelGroup>
+
+                                    <h:panelGroup>
+                                        <p:outputLabel  value="#{msgs['a201.profile.sound']} :" />
+                                        <font class="require" style="color: red">*</font>
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <p:selectOneMenu  value="#{a201Controller.selected.sound}">
+                                            <p:ajax  listener="#{a201Controller.genSound()}"/>
+                                            <f:selectItems value="#{comboController.sounds}" />
+                                        </p:selectOneMenu>
+                                        <audio id="audio" controls="true" style="width: 100%;"></audio>
+                                    </h:panelGroup>
+
+                                    <p:outputLabel  value="#{msgs['a201.profile.sound.interval']} :" />
+                                    <h:panelGroup>
+                                        <p:spinner id="step" value="#{a201Controller.selected.refresh}" stepFactor="15" min="15" max="60" maxlength="2" style="width: 100px"/>
+                                    </h:panelGroup>
+
+                                </p:panelGrid>
+                            </div>
+
+                        </p:panel>
+                    </p:fieldset>
+                </div>
+                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                    <p:fieldset id="fieldset2" legend="#{msgs['a201.profile.access']}" style="border: 0px;">
+                        <p:panel style="max-width: 900px;margin-bottom: 10px;border-right: 0px;border-radius: 0px;">
+                            <div class="ui-fluid">
+                                 <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-3,ui-grid-col-8" styleClass="ui-panelgrid-blank form-group">
+                                    <h:panelGroup>
+                                        <p:outputLabel value="#{msgs['a201.profile.username']} :" />
+                                    </h:panelGroup>
+                                    <h:panelGroup >
+                                        <p:inputText  value="#{a201Controller.selected.username}"   />
+                                        <p:outputLabel value="#{msgs['messages.code.1008']}" styleClass="sub-label"/>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup>
+                                        <p:outputLabel  value="#{msgs['a201.profile.password']} :" />
+                                        <font class="require" style="color: red">*</font>
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <p:password  value="#{a201Controller.selected.password}"  
+                                                     feedback="true" promptLabel="#{msgs['userinfo.passwd.input']}" 
+                                                     goodLabel="#{msgs['userinfo.passwd.good']}" weakLabel="#{msgs['userinfo.passwd.weak']}" 
+                                                     strongLabel="#{msgs['userinfo.passwd.strong']}">
+                                        </p:password>
+                                        <p:outputLabel value=" #{msgs['messages.code.1004']}" styleClass="sub-label"/>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup>
+                                        <p:outputLabel value="#{msgs['a201.profile.confirmPassword']} :" />
+                                        <font class="require" style="color: red">*</font>
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <p:password  value="#{a201Controller.selected.confirmPassword}"  
+                                                     feedback="true" promptLabel="#{msgs['userinfo.passwd.input']}" 
+                                                     goodLabel="#{msgs['userinfo.passwd.good']}" weakLabel="#{msgs['userinfo.passwd.weak']}" 
+                                                     strongLabel="#{msgs['userinfo.passwd.strong']}">
+                                        </p:password>
+                                    </h:panelGroup>
+                                </p:panelGrid>
+                            </div>
+                        </p:panel>
+                    </p:fieldset>
+                </div>
+                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                    <p:fieldset id="fieldset3" legend="#{msgs['a201.profile.whitelist']}" style="border: 0px;">
+                        <p:panel style="max-width: 900px;border:0px;border-radius: 0px;">
+                            <p:commandButton styleClass="search-btn" style="margin-bottom: 5px" binding="#{bindingController.btnAdd}"
+                                             value="#{msgs['btn.add']}"
+                                             oncomplete="PF('selectWhitelistIp_dialog').show()"/>
+
+                            <p:dataTable  id="dt_itemIp" rowIndexVar="rowNumber" value="#{a201Controller.selected.adminWhitelistList}" var="item">
+                                <p:column headerText="#{msgs['common.seq']}" style="text-align: center;width: 32px;">
+                                    <h:outputText value="#{(rowNumber+1)}" />
+                                </p:column>
+                                <p:column headerText="#{msgs['a201.profile.ip1']}">
+                                    <h:outputText value="#{item.adminWhitelistPK.ip}" />
+                                </p:column>
+                                <p:column style="text-align: center;width: 32px;">
+                                    <p:commandButton title="#{msgs['btn.delete']}"  styleClass="clear-btn" icon="fa fa-trash" update="dt_itemIp"
+                                                     action="#{a201Controller.deleteDetail()}" global="false">
+                                        <f:setPropertyActionListener value="#{item}" target="#{a201Controller.ip_selected}" />
+                                    </p:commandButton>
+                                </p:column>
+                            </p:dataTable>
+                        </p:panel>
+                    </p:fieldset>
+                </div>
+                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                    <h:panelGrid columns="2">
+                        <p:commandButton binding="#{bindingController.btnSave}" value="#{msgs['btn.save']}" update="edit_msg,fieldset1,fieldset2,fieldset3"
+                                         action="#{a201Controller.create()}" styleClass="edit-btn"/>
+
+                        <p:commandButton binding="#{bindingController.btnCancel}" value="#{msgs['btn.cancel']}" styleClass="clear-btn"
+                                         action="index?faces-redirect=true"/>
+                    </h:panelGrid> 
+                </div>
+            </div>
+        </h:form>
+
+        <ui:include src="dialog_ip.xhtml" />
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+
+    <p:toolbar style="margin-top: 3px;margin-bottom: 3px;">
+        <f:facet name="left" >
+            <p:commandButton binding="#{bindingController.btnBack}" value="#{msgs['btn.back']}" actionListener="#{r105Controller.backwardReport('report/r105/turnover')}" 
+                             styleClass="clear-btn" update="listForm"/>
+        </f:facet>
+    </p:toolbar>
+    <p:dataTable  var="fishing" rowIndexVar="rowNumber" value="#{r105Controller.fishingWorlds}" 
+                  binding="#{bindingController.defaultDataTableModel}" >
+        <p:column headerText="#{msgs['order']}" style="text-align: center;width: 32px;">
+            <h:outputText value="#{(rowNumber+1)}" />
+        </p:column>
+
+        <p:column headerText="#{msgs['link_id']}" sortBy="#{fishing.link_id}" style="text-align: center;">
+            <h:outputText value="#{fishing.link_id}"/><br/>
+        </p:column>
+
+        <p:column headerText="#{msgs['betting']}" sortBy="#{fishing.bet}" style="width: 100px;text-align: center">
+            <h:outputText value="#{fishing.bet}" style="color: blue;float: right;">
+                <f:convertNumber pattern="#,##0.00"/>
+            </h:outputText>
+        </p:column>
+
+        <p:column headerText="#{msgs['payout']}" sortBy="#{fishing.profit}" style="width: 100px;text-align: center">
+            <h:outputText value="#{(fishing.bet + fishing.profit)}" style="float: right;">
+                <f:convertNumber pattern="#,##0.00"/>
+            </h:outputText>
+        </p:column>
+
+        <p:column headerText="#{msgs['winloss']}" sortBy="#{fishing.profit}" style="width: 100px;text-align: center">
+            <h:outputText value="#{fishing.profit}" style="float: right;color: red">
+                <f:convertNumber pattern="#,##0.00"/>
+            </h:outputText>
+        </p:column>
+
+        <p:column headerText="#{msgs['currency']}" sortBy="#{fishing.currency}" style="width: 100px;text-align: center">
+            <h:outputText value="#{fishing.currency}"/>
+        </p:column>
+
+        <p:column headerText="#{msgs['datetime']}" sortBy="#{fishing.bet_time}" style="width: 100px;text-align: center">
+            <h:outputText value="#{fishing.bet_time}">
+                <f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+            </h:outputText>
+        </p:column>
+
+        <p:columnGroup type="footer">
+            <p:row>
+                <p:column colspan="2" footerText="#{msgs['r103.total']}" style="font-weight: bold;text-align:right;"></p:column>
+                <p:column footerText="#{r105Controller.fishingWorldTurnover}" style="font-weight: bold;text-align:right;"></p:column>
+                <p:column footerText="#{r105Controller.fishingWorldBlance}" style="font-weight: bold;text-align:right;"></p:column>
+                <p:column footerText="#{r105Controller.fishingWorldWinlose}" style="font-weight: bold;text-align:right;color:#{r105Controller.fishingWorldWinloseFlag ? 'red' : 'blue'};"></p:column>
+                <p:column />
+                <p:column />
+            </p:row>
+        </p:columnGroup>
+
+        <f:facet name="footer">
+            <h:outputText value="#{msgs['data']} "/>
+            <h:outputText value="#{r105Controller.fishingWorlds.size()}">
+                <f:convertNumber pattern="#,###"/>
+            </h:outputText>
+            <h:outputText value=" #{msgs['items']}"/>
+        </f:facet>
+    </p:dataTable>
+</ui:composition>

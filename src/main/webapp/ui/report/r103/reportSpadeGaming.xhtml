@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="/templates/default-template.xhtml">
+
+    <ui:define name="viewname">#{msgs['menu.report.r103']} #{msgs['api.sg_gaming']} / #{msgs['detail']}</ui:define>
+
+    <ui:define name="content">
+        <h:form id="spadeGamingForm">
+            <div class="ui-g">
+                <p:dataTable  var="spadegaming" rowIndexVar="rowNumber" value="#{r103Controller.spadeGamings}" 
+                              binding="#{bindingController.defaultDataTableModel}" >
+                    <f:facet name="header">
+                        <div class="ui-g ui-fluid">
+                            <div class="ui-g-12 ui-md-6 ui-lg-1">
+                                <p:commandButton binding="#{bindingController.btnBack}" value="#{msgs['btn.back']}" 
+                                                 action="#{r103Controller.cancel()}" styleClass="clear-btn"/>
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            </div>
+                            <div class="ui-g-12 ui-md-6 ui-lg-1">
+                            </div>
+                        </div>
+                    </f:facet>
+                    
+                    <p:column headerText="#{msgs['order']}" style="text-align: center;width: 32px;">
+                        <h:outputText value="#{(rowNumber+1)}" />
+                    </p:column>
+
+                    <p:column headerText="#{msgs['link_id']}" sortBy="#{spadegaming.spadegamingDetailPK.ticketid}" style="text-align: center;">
+                        <h:outputText value="#{spadegaming.spadegamingDetailPK.ticketid}"/><br/>
+                    </p:column>
+
+                    <p:column headerText="#{msgs['betting']}" sortBy="#{spadegaming.betamount}" style="width: 100px;text-align: center">
+                        <h:outputText value="#{spadegaming.betamount}" style="color: blue;float: right;">
+                            <f:convertNumber pattern="#,##0.00"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="#{msgs['jpamt']}" sortBy="#{spadegaming.jackpotamount}" style="width: 100px;text-align: center">
+                        <h:outputText value="#{spadegaming.jackpotamount}" style="color: blue;float: right;">
+                            <f:convertNumber pattern="#,##0.00"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="#{msgs['jpwin']}" sortBy="#{spadegaming.jpwin}" style="width: 100px;text-align: center">
+                        <h:outputText value="#{spadegaming.jpwin}" style="color: blue;float: right;">
+                            <f:convertNumber pattern="#,##0.00"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="#{msgs['winloss']}" sortBy="#{spadegaming.winloss}" style="width: 100px;text-align: center">
+                        <h:outputText value="#{spadegaming.winloss}" style="float: right;color:#{spadegaming.winloss >= 0 ? 'blue' : 'red'};">
+                            <f:convertNumber pattern="#,##0.00"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:column headerText="#{msgs['currency']}" sortBy="#{spadegaming.currency}" style="width: 100px;text-align: center">
+                        <h:outputText value="#{spadegaming.currency}"/>
+                    </p:column>
+
+                    <p:column headerText="#{msgs['datetime']}" sortBy="#{spadegaming.tickettime}" style="width: 120px;text-align: center">
+                        <h:outputText value="#{spadegaming.tickettime}">
+                            <f:convertDateTime pattern="dd/MM/yyyy HH:mm"/>
+                        </h:outputText>
+                    </p:column>
+
+                    <p:columnGroup type="footer">
+                        <p:row>
+                            <p:column colspan="2" footerText="#{msgs['r103.total']}" style="font-weight: bold;text-align:right;"></p:column>
+                            <p:column footerText="#{r103Controller.spadeGamingTurnover}" style="font-weight: bold;text-align:right;"></p:column>
+                            <p:column/>
+                            <p:column/>
+                            <p:column footerText="#{r103Controller.spadeGamingWL}" style="font-weight: bold;text-align:right;color:#{r103Controller.spadeGamingWLFlag ? 'red' : 'blue'};"></p:column>
+                            <p:column />
+                            <p:column />
+                        </p:row>
+                    </p:columnGroup>
+
+                    <f:facet name="footer">
+                        <h:outputText value="#{msgs['data']} "/>
+                        <h:outputText value="#{r103Controller.spadeGamings.size()}">
+                            <f:convertNumber pattern="#,###"/>
+                        </h:outputText>
+                        <h:outputText value=" #{msgs['items']}"/>
+                    </f:facet>
+                </p:dataTable>
+            </div>
+        </h:form>
+    </ui:define>
+</ui:composition>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/templates/default-template.xhtml">
+
+    <ui:define name="viewname">#{msgs['menu.member.m101']}</ui:define>
+
+    <ui:define name="content">
+        
+         <p:messages id="notify_msg" autoUpdate="false" showIcon="false"/>
+        
+        <p:tabView id="member" dynamic="true" activeIndex="#{m101Controller.tab}" >
+            <p:tab title="#{msgs['m101.member']}">
+               <ui:include src="list.xhtml"/>
+            </p:tab>
+            <p:tab id="register" title="#{msgs['m101.registrant']}">
+               <ui:include src="list_regist.xhtml"/>
+            </p:tab>
+        </p:tabView>
+        <ui:include src="view.xhtml"/>
+        <ui:include src="wallet.xhtml"/>
+        <ui:include src="turnover.xhtml"/>
+    </ui:define>
+
+</ui:composition>

@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <p:panel id="content_panel" header="#{msgs['menu.report.r103']}">
+
+
+        <p:toolbar style="margin-top: 3px;margin-bottom: 3px;">
+            <f:facet name="left" >
+                <h:form id="lToolbarForm">
+                    <p:commandButton binding="#{bindingController.btnBack}" value="#{msgs['btn.back']}" action="#{r103Controller.cancel()}"/>
+                </h:form>
+            </f:facet>
+        </p:toolbar>
+
+        <h:form id="sportsOpen365Form">
+            <p:messages id="msg_sportsOpen365Form" autoUpdate="false" showIcon="false"/>
+            <p:dataTable id="sportsOpen365_id" var="sportsOpen365" value="#{r103Controller.sportsOpen365Details}"
+                         binding="#{bindingController.defaultDataTableModel}">
+                <p:column headerText="#{msgs['order']}" style="text-align: center;width: 32px;">
+                    <h:outputText value="#{(rowNumber+1)}" />
+                </p:column>
+                <p:column headerText="#{msgs['common.username']}" style="text-align: center;width: 150px;">
+                    <h:outputText value="#{r103Controller.username}" styleClass="lb_bold" style="color: blue;"/>
+                </p:column>
+                <p:column headerText="#{msgs['detail']}" style="text-align: center;width: 100px;">
+                    <h:outputText value="#{sportsOpen365.betId}" styleClass="lb_bold" style="color: blue;"/>
+                    <br/>
+                    <h:outputText value="#{sportsOpen365.tranDate}">
+                        <f:convertDateTime pattern="dd-MM-yyyy"/>
+                    </h:outputText>
+                    <br/>
+                    <h:outputText value="#{sportsOpen365.matchDate}"/>
+                </p:column>
+                <p:column headerText="#{msgs['desc']}" sortBy="#{sportsOpen365.game}" style="text-align: right;">
+                    <p:rowToggler rendered="#{sportsOpen365.game eq 'PAR'}"/>
+                    <h:panelGroup rendered="#{sportsOpen365.game != 'PAR'}">
+                        <h:outputText value="#{sportsOpen365.homeName}@#{sportsOpen365.info}" style="color: red;" rendered="#{sportsOpen365.side == '1'}"/>
+                        <h:outputText value="#{sportsOpen365.awayName}@#{sportsOpen365.info}" style="color: red;" rendered="#{sportsOpen365.side == '2'}"/>
+                        <br/>
+                    </h:panelGroup>
+                    <h:outputText value="#{sportsOpen365.game}" style="font-size: 8px;color: blue;"/>
+                    <h:outputText value=" @ (x #{sportsOpen365.dataList.size()})" rendered="#{sportsOpen365.game eq 'PAR'}"/>
+                    <br/>
+                    <h:outputText value="#{sportsOpen365.homeName}" styleClass="lb_bold"/>-vs-<h:outputText value="#{sportsOpen365.awayName}" styleClass="lb_bold"/>
+                    <br/>
+                    <h:outputText value="#{sportsOpen365.leagueName} @ " style="font-size: 8px;color: red;"/>
+                    <h:outputText value="#{sportsOpen365.tranDate}" style="font-size: 8px;color: red;">
+                        <f:convertDateTime pattern="dd-MM-yyy"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="#{msgs['odds']}" style="width: 50px;text-align: center;">
+                    <h:outputText value="#{sportsOpen365.odds}">
+                        <f:convertNumber pattern="#,##0"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="#{msgs['winloss']}" sortBy="#{sportsOpen365.winAmt}" style="width: 100px;">
+                    <h:outputText value="#{sportsOpen365.winAmt}" style="float: right;color: #{sportsOpen365.winAmt >= 0 ? 'blue' : 'red'};">
+                        <f:convertNumber pattern="#,##0.00"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="#{msgs['betamt']}" sortBy="#{sportsOpen365.betAmt}" style="width: 140px;">
+                    <h:outputText value="#{sportsOpen365.betAmt}" style="float: right">
+                        <f:convertNumber pattern="#,##0.00"/>
+                    </h:outputText>
+                </p:column>
+                <p:column headerText="#{msgs['score']}" style="width: 60px;text-align: center;">
+                    <h:outputText value="#{sportsOpen365.score}" />
+                </p:column>
+                <p:rowExpansion >
+                    <p:dataTable var="sportsOpen365Parlay"  value="#{sportsOpen365.dataList}" style="width: 60%;"
+                                 binding="#{bindingController.defaultDataTableModel}" paginator="false">
+                        <p:column headerText="#{msgs['order']}" style="text-align: center;width: 32px;">
+                            <h:outputText value="#{(rowNumber+1)}" />
+                        </p:column>
+                        <p:column headerText="#{msgs['desc']}" sortBy="#{sportsOpen365Parlay.game}" style="text-align: right;">
+                            <h:outputText value="#{sportsOpen365Parlay.homeName}@#{sportsOpen365Parlay.info}" style="color: red;" rendered="#{sportsOpen365Parlay.side == '1'}"/>
+                            <h:outputText value="#{sportsOpen365Parlay.awayName}@#{sportsOpen365Parlay.info}" style="color: red;" rendered="#{sportsOpen365Parlay.side == '2'}"/>
+                            <br/>
+                            <h:outputText value="#{sportsOpen365Parlay.game}" style="font-size: 8px;color: blue;"/>
+                            <br/>
+                            <h:outputText value="#{sportsOpen365Parlay.homeName}" styleClass="lb_bold"/>-vs-<h:outputText value="#{sportsOpen365.awayName}" styleClass="lb_bold"/>
+                            <br/>
+                            <h:outputText value="#{sportsOpen365Parlay.leagueName} @ " style="font-size: 8px;color: red;"/>
+                            <h:outputText value="#{sportsOpen365Parlay.matchDate}" style="font-size: 8px;color: red;"/>
+                        </p:column>
+                        <p:column headerText="#{msgs['odds']}" style="width: 50px;text-align: center;">
+                            <h:outputText value="#{sportsOpen365Parlay.odds}">
+                                <f:convertNumber pattern="#,##0"/>
+                            </h:outputText>
+                        </p:column>
+                        <p:column headerText="#{msgs['score']}" style="width: 60px;text-align: center;">
+                            <h:outputText value="#{sportsOpen365Parlay.score}" />
+                        </p:column>
+                        <f:facet name="footer">
+                            <h:outputText value="#{msgs['data']} "/>
+                            <h:outputText value="#{sportsOpen365.dataList.size()}">
+                                <f:convertNumber pattern="#,###"/>
+                            </h:outputText>
+                            <h:outputText value=" #{msgs['items']}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </p:rowExpansion>
+                <f:facet name="footer">
+                    <h:outputText value="#{msgs['data']} "/>
+                    <h:outputText value="#{r103Controller.sportsOpen365Details.size()}">
+                        <f:convertNumber pattern="#,###"/>
+                    </h:outputText>
+                    <h:outputText value=" #{msgs['items']}"/>
+                </f:facet>
+            </p:dataTable>
+        </h:form>
+    </p:panel>
+</ui:composition>

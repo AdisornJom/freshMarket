@@ -1,0 +1,344 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="/templates/default-template.xhtml">
+
+    <ui:define name="viewname">#{msgs['menu.cash.c103']} / #{msgs['turnover']}</ui:define>
+
+    <ui:define name="head">
+        <style>
+            .myBorder{
+                border-width: 1px;border-color: #CCCCCC;border-style: solid;
+            }
+            .alternateRow{
+                background-color: #f6f6f6;
+            }
+        </style>
+    </ui:define>
+
+
+
+    <ui:define name="content">
+        <h:form id="listForm">     
+            <p:tabView>
+                <p:tab title="#{msgs['c101.detail']}">
+                    <div class="ui-g">
+                        <div class="ui-g-1 ui-md-1 ui-lg-1 myBorder">
+                            <h:outputText value="#{msgs['common.seq']}"/>
+                        </div>
+                        <div class="ui-g-8 ui-md-3 ui-lg-3 myBorder">
+                            <h:outputText value="รายการ" style="font-weight: bold;color: #000"/>
+                        </div>
+                        <div class="ui-g-3 ui-md-2 ui-lg-2 myBorder">
+                            <h:outputText value="จำนวน" style="font-weight: bold;color: #000"/>
+                        </div>
+                    </div>
+                    <div class="ui-g">
+                        <div class="ui-g-1 ui-md-1 ui-lg-1 myBorder">1.</div>
+                        <div class="ui-g-8 ui-md-3 ui-lg-3 myBorder">#{msgs['common.username']}</div>
+                        <div class="ui-g-3 ui-md-2 ui-lg-2 myBorder">
+                            <h:outputText value="#{c103Controller.userTxn.getUserId().getUsername()}" style="color: #005aff;" />
+                        </div>
+                    </div>
+                    <div class="ui-g">
+                        <div class="ui-g-1 ui-md-1 ui-lg-1 myBorder alternateRow">2.</div>
+                        <div class="ui-g-8 ui-md-3 ui-lg-3 myBorder alternateRow">#{msgs['c103.lastsuccesswithdrawtime']}</div>
+                        <div class="ui-g-3 ui-md-2 ui-lg-2 myBorder alternateRow">
+                            <h:outputText value="#{c103Controller.lastSuccessWithdrawDate eq null ? '-' : c103Controller.lastSuccessWithdrawDate}" style="color: #005aff;" >
+                                <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
+                            </h:outputText>
+                        </div>
+                    </div>
+                    <div class="ui-g">
+                        <div class="ui-g-1 ui-md-1 ui-lg-1 myBorder">3.</div>
+                        <div class="ui-g-8 ui-md-3 ui-lg-3 myBorder">#{msgs['c103.deposittimes']}</div>
+                        <div class="ui-g-3 ui-md-2 ui-lg-2 myBorder">
+                            <h:outputText value="#{c103Controller.depositTimes}" style="color: #005aff;" />
+                        </div>
+                    </div>
+                    <div class="ui-g">
+                        <div class="ui-g-1 ui-md-1 ui-lg-1 myBorder alternateRow" >4.</div>
+                        <div class="ui-g-8 ui-md-3 ui-lg-3 myBorder alternateRow" >#{msgs['c103.totaldeposit']}</div>
+                        <div class="ui-g-3 ui-md-2 ui-lg-2 myBorder alternateRow" >
+                            <h:outputText value="#{c103Controller.sumDeposit}" style="color: #005aff;" >
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                        </div>
+                    </div>
+                    <div class="ui-g">
+                        <div class="ui-g-1 ui-md-1 ui-lg-1 myBorder">5.</div>
+                        <div class="ui-g-8 ui-md-3 ui-lg-3 myBorder">#{msgs['commissions']}</div>
+                        <div class="ui-g-3 ui-md-2 ui-lg-2 myBorder">
+                            <h:outputText value="#{c103Controller.commission}" style="color: #005aff;" >
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                        </div>
+                    </div>
+                    <div class="ui-g">
+                        <div class="ui-g-1 ui-md-1 ui-lg-1 myBorder alternateRow" >6.</div>
+                        <div class="ui-g-8 ui-md-3 ui-lg-3 myBorder alternateRow" >#{msgs['c103.bonus']}</div>
+                        <div class="ui-g-3 ui-md-2 ui-lg-2 myBorder alternateRow" >
+                            <h:outputText value="#{c103Controller.award}" style="color: #005aff;" >
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                        </div>
+                    </div>
+                    <div class="ui-g">
+                        <div class="ui-g-1 ui-md-1 ui-lg-1 myBorder">7.</div>
+                        <div class="ui-g-8 ui-md-3 ui-lg-3 myBorder">#{msgs['c103.turnoverratio']}</div>
+                        <div class="ui-g-3 ui-md-2 ui-lg-2 myBorder">
+                            <h:outputText value="#{c103Controller.turnoverRatio}" style="color: #005aff;" />
+                        </div>
+                    </div>
+                    <div class="ui-g">
+                        <div class="ui-g-1 ui-md-1 ui-lg-1 myBorder alternateRow" >8.</div>
+                        <div class="ui-g-8 ui-md-3 ui-lg-3 myBorder alternateRow" >#{msgs['c103.totalturnover']}</div>
+                        <div class="ui-g-3 ui-md-2 ui-lg-2 myBorder alternateRow" >
+                            <h:outputText value="#{c103Controller.sumTurnover}" style="color: #005aff;" >
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                        </div>
+                    </div>
+                    <div class="ui-g">
+                        <div class="ui-g-1 ui-md-1 ui-lg-1 myBorder">9.</div>
+                        <div class="ui-g-8 ui-md-3 ui-lg-3 myBorder">#{msgs['c103.difference']}</div>
+                        <div class="ui-g-3 ui-md-2 ui-lg-2 myBorder">
+                            <h:outputText value="#{c103Controller.difference}" style="color: #005aff;" >
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                        </div>
+                    </div>
+                    <div class="ui-g">
+                        <div class="ui-g-1 ui-md-1 ui-lg-1 myBorder alternateRow" >10.</div>
+                        <div class="ui-g-8 ui-md-3 ui-lg-3 myBorder alternateRow" >#{msgs['c103.totalwinloss']}</div>
+                        <div class="ui-g-3 ui-md-2 ui-lg-2 myBorder alternateRow" >
+                            <h:outputText value="#{c103Controller.sumWinloss}" style="color: #005aff;" >
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                        </div>
+                    </div>
+                </p:tab>
+                <p:tab title="#{msgs['turnover']}">
+                    <div class="ui-g">
+                        <div class="ui-g-1 ui-md-1 ui-lg-1 myBorder" style="font-weight: bold;color: #000">
+                            <h:outputText value="#{msgs['common.seq']}"/>
+                        </div>
+                        <div class="ui-g-7 ui-md-7 ui-lg-3 myBorder">
+                            <h:outputText value="API" style="font-weight: bold;color: #000"/>
+                        </div>
+                        <div class="ui-g-2 ui-md-2 ui-lg-2 myBorder" style="font-weight: bold;color: #000">
+                            #{msgs['turnover']}
+                        </div>
+                        <div class="ui-g-2 ui-md-2 ui-lg-2 myBorder" style="font-weight: bold;color: #000">
+                            #{msgs['winloss']}
+                        </div>
+                    </div>
+                    <div class="ui-g">
+                        <div class="ui-g-1 ui-md-1 ui-lg-1 myBorder">1.</div>
+                        <div class="ui-g-7 ui-md-7 ui-lg-3 myBorder">#{msgs['api.topsport']}</div>
+                        <div class="ui-g-2 ui-md-2 ui-lg-2 myBorder">
+                            <h:outputText value="#{c103Controller.sport3mTurnover}" style="color: #005aff;" >
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                        </div>
+                        <div class="ui-g-2 ui-md-2 ui-lg-2 myBorder">
+                            <h:outputText value="#{c103Controller.sport3mWinloss}" style="#{c103Controller.sport3mWinloss lt 0 ? 'color: red;' : 'color: #005aff;'}" >
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                        </div>
+                    </div>
+                    <div class="ui-g">
+                        <div class="ui-g-1 ui-md-1 ui-lg-1 myBorder alternateRow">2.</div>
+                        <div class="ui-g-7 ui-md-7 ui-lg-3 myBorder alternateRow">#{msgs['api.bet168']}</div>
+                        <div class="ui-g-2 ui-md-2 ui-lg-2 myBorder alternateRow">
+                            <h:outputText value="#{c103Controller.bets168Turnover}" style="color: #005aff;" >
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                        </div>
+                        <div class="ui-g-2 ui-md-2 ui-lg-2 myBorder alternateRow">
+                            <h:outputText value="#{c103Controller.bets168Winloss}" style="#{c103Controller.bets168Winloss lt 0 ? 'color: red;' : 'color: #005aff;'}" >
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                        </div>
+                    </div>
+                    <div class="ui-g">
+                        <div class="ui-g-1 ui-md-1 ui-lg-1 myBorder">3.</div>
+                        <div class="ui-g-7 ui-md-7 ui-lg-3 myBorder">#{msgs['api.venetian']}</div>
+                        <div class="ui-g-2 ui-md-2 ui-lg-2 myBorder">
+                            <h:outputText value="#{c103Controller.casinoGdTurnover}" style="color: #005aff;" >
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                        </div>
+                        <div class="ui-g-2 ui-md-2 ui-lg-2 myBorder">
+                            <h:outputText value="#{c103Controller.casinoGdWinloss}" style="#{c103Controller.casinoGdWinloss lt 0 ? 'color: red;' : 'color: #005aff;'}" >
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                        </div>
+                    </div>
+                    <div class="ui-g">
+                        <div class="ui-g-1 ui-md-1 ui-lg-1 myBorder alternateRow">4.</div>
+                        <div class="ui-g-7 ui-md-7 ui-lg-3 myBorder alternateRow">#{msgs['api.allbet']}</div>
+                        <div class="ui-g-2 ui-md-2 ui-lg-2 myBorder alternateRow">
+                            <h:outputText value="#{c103Controller.casinoAllbetTurnover}" style="color: #005aff;" >
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                        </div>
+                        <div class="ui-g-2 ui-md-2 ui-lg-2 myBorder alternateRow">
+                            <h:outputText value="#{c103Controller.casinoAllbetWinloss}" style="#{c103Controller.casinoAllbetWinloss lt 0 ? 'color: red;' : 'color: #005aff;'}">
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                        </div>
+                    </div>
+                    <div class="ui-g">
+                        <div class="ui-g-1 ui-md-1 ui-lg-1 myBorder">5.</div>
+                        <div class="ui-g-7 ui-md-7 ui-lg-3 myBorder">#{msgs['api.cockfight']}</div>
+                        <div class="ui-g-2 ui-md-2 ui-lg-2 myBorder">
+                            <h:outputText value="#{c103Controller.cockTurnover}" style="color: #005aff;" >
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                        </div>
+                        <div class="ui-g-2 ui-md-2 ui-lg-2 myBorder">
+                            <h:outputText value="#{c103Controller.cockWinloss}" style="#{c103Controller.cockWinloss lt 0 ? 'color: red;' : 'color: #005aff;'}">
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                        </div>
+                    </div>
+                    <div class="ui-g">
+                        <div class="ui-g-1 ui-md-1 ui-lg-1 myBorder alternateRow">6.</div>
+                        <div class="ui-g-7 ui-md-7 ui-lg-3 myBorder alternateRow">#{msgs['api.racing_games']}</div>
+                        <div class="ui-g-2 ui-md-2 ui-lg-2 myBorder alternateRow">
+                            <h:outputText value="#{c103Controller.gameGrTurnover}" style="color: #005aff;" >
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                        </div>
+                        <div class="ui-g-2 ui-md-2 ui-lg-2 myBorder alternateRow">
+                            <h:outputText value="#{c103Controller.gameGrWinloss}" style="#{c103Controller.gameGrWinloss lt 0 ? 'color: red;' : 'color: #005aff;'}">
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                        </div>
+                    </div>
+                    <div class="ui-g">
+                        <div class="ui-g-1 ui-md-1 ui-lg-1 myBorder">7.</div>
+                        <div class="ui-g-7 ui-md-7 ui-lg-3 myBorder">#{msgs['api.idnpoker']}</div>
+                        <div class="ui-g-2 ui-md-2 ui-lg-2 myBorder">
+                            <h:outputText value="#{c103Controller.idnTurnover}" style="color: #005aff;" >
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                        </div>
+                        <div class="ui-g-2 ui-md-2 ui-lg-2 myBorder">
+                            <h:outputText value="#{c103Controller.idnWinloss}" style="#{c103Controller.idnWinloss lt 0 ? 'color: red;' : 'color: #005aff;'}" >
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                        </div>
+                    </div>
+                    <div class="ui-g">
+                        <div class="ui-g-1 ui-md-1 ui-lg-1 myBorder alternateRow">8.</div>
+                        <div class="ui-g-7 ui-md-7 ui-lg-3 myBorder alternateRow">#{msgs['api.fishworld']}</div>
+                        <div class="ui-g-2 ui-md-2 ui-lg-2 myBorder alternateRow">
+                            <h:outputText value="#{c103Controller.fishWorldTurnover}" style="color: #005aff;" >
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                        </div>
+                        <div class="ui-g-2 ui-md-2 ui-lg-2 myBorder alternateRow">
+                            <h:outputText value="#{c103Controller.fishWorldWinloss}" style="#{c103Controller.fishWorldWinloss lt 0 ? 'color: red;' : 'color: #005aff;'}">
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                        </div>
+                    </div>
+                    <div class="ui-g">
+                        <div class="ui-g-1 ui-md-1 ui-lg-1 myBorder">9.</div>
+                        <div class="ui-g-7 ui-md-7 ui-lg-3 myBorder">#{msgs['api.sg_gaming']}</div>
+                        <div class="ui-g-2 ui-md-2 ui-lg-2 myBorder">
+                            <h:outputText value="#{c103Controller.sgTurnover}" style="color: #005aff;" >
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                        </div>
+                        <div class="ui-g-2 ui-md-2 ui-lg-2 myBorder">
+                            <h:outputText value="#{c103Controller.sgWinloss}" style="#{c103Controller.sgWinloss lt 0 ? 'color: red;' : 'color: #005aff;'}">
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                        </div>
+                    </div>
+                    <div class="ui-g">
+                        <div class="ui-g-1 ui-md-1 ui-lg-1 myBorder alternateRow">10.</div>
+                        <div class="ui-g-7 ui-md-7 ui-lg-3 myBorder alternateRow">#{msgs['api.lotto']}</div>
+                        <div class="ui-g-2 ui-md-2 ui-lg-2 myBorder alternateRow">
+                            <h:outputText value="#{c103Controller.lottoTurnover}" style="color: #005aff;" >
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                        </div>
+                        <div class="ui-g-2 ui-md-2 ui-lg-2 myBorder alternateRow">
+                            <h:outputText value="#{c103Controller.lottoWinloss}" style="#{c103Controller.lottoWinloss lt 0 ? 'color: red;' : 'color: #005aff;'}" >
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                        </div>
+                    </div>
+                </p:tab>
+                <p:tab title="#{msgs['c103.depositlist']}">
+                    <p:dataTable binding="#{bindingController.dataTableModel}" value="#{c103Controller.userFundsDatas}" var="item" style="margin-top: 2px;margin-bottom: 2px;">
+                        <f:facet name="header">
+                            <div class="ui-g">
+                                <div class="ui-g-12 ui-md-12 ui-lg-12"></div>
+                            </div>
+                        </f:facet>
+
+                        <p:column headerText="#{msgs['common.seq']}" style="text-align: center;width: 32px;">
+                            <h:outputText value="#{(rowNumber+1)}" />
+                        </p:column>
+
+                        <p:column headerText="#{msgs['common.username']}" style="text-align: center">
+                            <h:outputText value="#{item.userId.username}"/>
+                        </p:column>
+
+                        <p:column headerText="#{msgs['c101.detail.deposit']}" sortBy="#{item.amount}" style="text-align: center;width:120px;">
+                            <h:outputText value="#{item.amount}" rendered="#{item.amount != null}" style="float: right;">
+                                <f:convertNumber  pattern="#,##0.00"/>
+                            </h:outputText>
+                            <h:outputText value="N/A" rendered="#{item.amount eq null}" style="color: red;"/>
+                        </p:column>
+
+                        <p:column headerText="#{msgs['common.promotion']}" style="text-align: center">
+                            <h:outputText value="#{item.txnId.promotionId.promotionName eq null ? '-' : item.txnId.promotionId.promotionName}"/>
+                        </p:column>                        
+
+                        <p:column headerText="#{msgs['c101.deposittime']}" sortBy="#{item.createdDt}" style="text-align: center;width:120px;">
+                            <h:outputText value="#{item.createdDt}">
+                                <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
+                            </h:outputText>
+                        </p:column>
+
+                        <p:column headerText="#{msgs['common.status']}" style="text-align: center;width:120px;">
+                            <h:outputText value="#{item.status eq PFConstants.USER_TXN_STATUS_ONPROCESS ? msgs['c101.onProcess']:''}" 
+                                          rendered="#{item.status eq PFConstants.USER_TXN_STATUS_ONPROCESS}" style="color:blue;font-weight: bold;"/>
+                            <h:outputText value="#{item.status eq PFConstants.USER_TXN_STATUS_ACCEPT ? msgs['c101.accept']:''}" 
+                                          rendered="#{item.status eq PFConstants.USER_TXN_STATUS_ACCEPT }" style="color:green;font-weight: bold;"/>
+                            <h:outputText value="#{item.status eq PFConstants.USER_TXN_STATUS_REJECT ? msgs['c101.reject']:''}" 
+                                          rendered="#{item.status eq PFConstants.USER_TXN_STATUS_REJECT }" style="color: red;font-weight: bold;"/>
+                        </p:column>
+
+                        <f:facet name="footer">
+                            <h:outputText value="#{msgs['messages.code.2022']} "/>
+                            <h:outputText value="#{c103Controller.userFundsDatas.size()}">
+                                <f:convertNumber pattern="#,##0"/>
+                            </h:outputText>
+                            <h:outputText value=" #{msgs['messages.code.2023']}"/>
+                        </f:facet>
+                    </p:dataTable>
+                </p:tab>
+
+            </p:tabView>
+            <BR/>
+            <h:panelGrid columns="2" >
+                <p:commandButton binding="#{bindingController.btnBack}" value="#{msgs['btn.back']}" action="#{c103Controller.gotoIndexView()}" styleClass="clear-btn"/>
+            </h:panelGrid>
+
+        </h:form>
+    </ui:define>
+
+
+
+</ui:composition>

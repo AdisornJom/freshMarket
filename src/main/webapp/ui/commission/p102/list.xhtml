@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <h:form id="listForm">
+        <p:dataTable id="memberTable" var="item" value="#{p102Controller.lazyModel}" binding="#{bindingController.lazyDataTableModel}" reflow="true">
+            <f:facet name="header">
+                <div class="ui-g ui-fluid">
+                    <div class="ui-g-12 ui-md-6 ui-lg-1">
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                         <p:selectOneMenu value="#{p102Controller.userStatus}" >
+                            <f:selectItem itemValue="#{null}" itemLabel="#{msgs['common.all']}" noSelectionOption="true" />
+                            <f:selectItem itemLabel="#{msgs['common.normal']}" itemValue="#{m101Controller.USER_STATUS_NORMAL}"/>
+                            <f:selectItem itemLabel="#{msgs['common.pending']}" itemValue="#{m101Controller.USER_STATUS_INACTIVE}"/>
+                        </p:selectOneMenu>
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                        <p:inputText  value="#{p102Controller.username}" placeholder="#{msgs['p101.detail.username']}"/>
+                    </div>
+                    <div class="ui-g-12 ui-md-6 ui-lg-1">
+                        <p:commandButton binding="#{bindingController.btnSearch}" value="#{msgs['btn.search']}" 
+                                         action="#{p102Controller.search()}" styleClass="search-btn" update="listForm"/>
+                    </div>
+                </div>
+            </f:facet>
+
+            <p:column headerText="#{msgs['common.seq']}">
+                <h:outputText value="#{(rowNumber+1)}" />
+            </p:column>
+
+            <p:column headerText="#{msgs['common.username']}" sortBy="#{item.username}" >
+                <h:outputText value="#{item.username}"/>
+            </p:column>
+
+            <p:column headerText="#{msgs['common.mobile']}" >
+                <h:outputText value="#{item.mobile}"/>
+            </p:column>
+
+            <p:column headerText="#{msgs['p103.usergroup']}" >
+                <h:outputText value="#{item.groupId.groupName}" style="#{item.groupId.id eq '2' ? 'color:#0033cc;':'color: #000;'}"/>
+            </p:column>
+
+            <p:column headerText="#{msgs['p103.balance']}" style="color: blue;">
+                <h:outputText value="#{item.userFunds.points}" style="float: right">
+                    <f:convertNumber pattern="#,##0.00"/>
+                </h:outputText>
+            </p:column>
+
+            <p:column headerText="#{msgs['common.status']}" sortBy="#{item.status}" >
+                <h:outputText value="#{item.status eq m101Controller.USER_STATUS_INACTIVE ? msgs['m101.label.withhold'] : msgs['common.normal']}" style="color: #{item.status eq m101Controller.USER_STATUS_INACTIVE ? 'red' : 'blue'}"/>
+            </p:column>
+
+            <p:column >
+                <p:commandButton id="edit" title="#{msgs['btn.edit']}" icon="fa fa-edit" action="#{p102Controller.prepareEdit()}">
+                    <f:setPropertyActionListener value="#{item}" target="#{p102Controller.selected}" />
+                </p:commandButton>
+            </p:column>
+
+            <f:facet name="footer">
+                <h:outputText value="#{msgs['messages.code.2022']}"/>
+                 <h:outputText value="#{m101Controller.lazyModel.rowCount}">
+                    <f:convertNumber pattern="#,##0"/>
+                </h:outputText>
+                <h:outputText value=" #{msgs['messages.code.2023']}"/>
+            </f:facet>
+        </p:dataTable>
+
+    </h:form>
+
+</ui:composition>

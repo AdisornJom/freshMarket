@@ -1,0 +1,82 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <h:form id="listForm">
+        <p:outputPanel deferred="true" deferredMode="visible">
+            <p:dataTable id="memberLogTable" var="item" value="#{m103Controller.lazyModel}" binding="#{bindingController.lazyDataTableModel}" rendered="#{not empty m103Controller.lazyModel}">
+                <f:facet name="header">
+                    <div class="ui-g ui-fluid">
+                        <div class="ui-g-12 ui-md-6 ui-lg-1">
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-2">
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-2">
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-2">
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            <p:selectOneMenu value="#{m103Controller.field1}" >
+                                <f:selectItem itemLabel="#{msgs['common.username']}" itemValue="1"/>
+                                <f:selectItem itemLabel="#{msgs['userinfo.ip']}" itemValue="2"/>
+                                <p:ajax event="change" update="findTxt" global="false"/>
+                            </p:selectOneMenu>
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-2">
+                            <p:inputText id="findTxt" placeholder="#{m103Controller.field1 eq '2' ? msgs['userinfo.ip']:msgs['common.username']}" value="#{m103Controller.txt}" />
+                        </div>
+                        <div class="ui-g-12 ui-md-6 ui-lg-1">
+                            <p:commandButton styleClass="search-btn" binding="#{bindingController.btnSearch}" value="#{msgs['btn.search']}" 
+                                             actionListener="#{m103Controller.search()}" update="listForm"/>  
+                        </div>
+                    </div>
+                </f:facet>
+
+                <p:column headerText="#{msgs['common.seq']}" style="text-align: center;width:32px;height: 27px;">
+                    <h:outputText value="#{(rowNumber+1)}" />
+                </p:column>
+
+                <p:column headerText="#{msgs['common.username']}" style="text-align: center;">
+                    <h:outputText value="#{item.userId.username}"/>
+                </p:column>
+
+                <p:column headerText="#{msgs['common.type']}" sortBy="#{item.type}" style="text-align: center;width:72px;">
+                    <h:outputText value="#{item.type}"/>
+                </p:column>
+
+                <p:column headerText="#{msgs['btn.view']}" style="text-align: center;width:15%;">
+                    <h:outputText value="#{item.type eq 'Login' ? '-' : msgs[item.detail]}"/>
+                </p:column>
+
+                <p:column headerText="#{msgs['userinfo.browser']}" sortBy="#{item.browser}" style="text-align: center;width:10%;">
+                    <h:outputText value="#{item.browser}"/>
+                </p:column>
+
+                <p:column headerText="#{msgs['userinfo.equipment']}" sortBy="#{item.device}" style="text-align: center;width:10%;">
+                    <h:outputText value="#{item.device}"/>
+                </p:column>
+
+                <p:column headerText="#{msgs['userinfo.ip']}" sortBy="#{item.ip}" style="text-align: center;width:10%;">
+                    <h:outputText value="#{item.ip}"/>
+                </p:column>
+
+                <p:column headerText="#{msgs['userinfo.datetime']}" sortBy="#{item.createdDt}" style="width: 110px;text-align: center">
+                    <h:outputText value="#{item.createdDt}">
+                        <f:convertDateTime pattern="dd-MM-yyyy HH:mm"/>
+                    </h:outputText>
+                </p:column>
+
+                <f:facet name="footer">
+                    <h:outputText value="#{msgs['messages.code.2022']} "/>
+                    <h:outputText value="#{m103Controller.lazyModel.rowCount}">
+                        <f:convertNumber pattern="#,##0"/>
+                    </h:outputText>
+                    <h:outputText value=" #{msgs['messages.code.2023']}"/>
+                </f:facet>
+            </p:dataTable>
+        </p:outputPanel>
+    </h:form>
+
+</ui:composition>

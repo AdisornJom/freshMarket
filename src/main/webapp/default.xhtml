@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <style>
+        .panel .ui-selectonemenu-list { 
+            background: #000;
+        }
+    </style>
+
+    <h:head>
+        <f:facet name="first">
+            <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+            <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+            <meta name="apple-mobile-web-app-capable" content="yes" />
+            <link href="#{request.contextPath}/resources/images/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+            <link href="#{request.contextPath}/resources/images/favicon.ico" rel="icon" type="image/x-icon" />
+        </f:facet>
+        <title><h:outputText value="#{apps['app.name']} - #{commonController.PLATFORM_ID}"/></title>
+    </h:head>
+
+    <h:body styleClass="login-body">
+        <p:growl id="messages" showDetail="false" autoUpdate="false" life="1800"/>
+        <h:form id="loginForm">
+            <div class="login-panel ui-fluid">
+                <div class="ui-g">
+                    <div class="ui-g-12 logo-container">
+                        <p:graphicImage value="./resources/images/logo-1.png" library="poseidon-layout"/>
+                    </div>
+                    <div class="ui-g-12">
+                        <p:inputText value="#{loginController.username}" placeholder="#{msgs['login.username']}" />
+                    </div>
+                    <div class="ui-g-12">
+                        <p:password value="#{loginController.password}" placeholder="#{msgs['login.password']}" feedback="false"/>
+                    </div>
+                    <div class="ui-g-12">
+                        <p:inputText value="#{loginController.captchaCode}" placeholder="#{msgs['common.capture']}" autocomplete="off"/>
+                    </div>
+                    <div class="ui-g-12">
+                        <p:graphicImage value="/Captcha.jpg"/>
+                    </div>
+                    
+                    <div class="ui-g-12">
+                     <p:selectOneMenu id="language" var="t" value="#{localeController.lang}"  panelStyleClass="panel"  converter="langConverter" >
+                            <p:ajax listener="#{localeController.changeLocale()}" update="loginForm" global="false"/>
+                            <f:selectItems var="lang" value="#{localeController.langs}" itemLabel="#{lang.country}" itemValue="#{lang}"/>
+                            <p:column>
+                                <h:graphicImage value="./resources/images/flag/#{t.flag}" style="border: 0px;"/>
+                                <h:outputText value=" #{t.country}" />
+                            </p:column>
+                        </p:selectOneMenu>
+                    </div>
+
+                    <div class="ui-g-12 button-container">
+                        <p:commandButton value="#{msgs['login.login']}"
+                                         icon="fa fa-user" styleClass="turquoise-btn"
+                                         ajax="false" actionListener="#{loginController.login()}"/>
+                    </div>
+                     
+                </div>
+            </div>
+        </h:form>
+        <h:outputStylesheet name="css/layout-#{guestPreferences.theme}.css" library="poseidon-layout" />
+    </h:body>
+</html>

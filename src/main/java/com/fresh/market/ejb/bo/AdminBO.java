@@ -13,7 +13,7 @@ import javax.ejb.Stateless;
 
 /**
  *
- * @author Aekasit
+ * @author Adisorn.jo
  */
 @Stateless(name = "market.AdminBO")
 public class AdminBO {

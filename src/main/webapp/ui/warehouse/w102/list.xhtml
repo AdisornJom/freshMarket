@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <h:form id="listForm">
+        <p:dataTable id="itemTable" var="item" value="#{w102Controller.lazyModel}" binding="#{bindingController.lazyDataTableModel}" reflow="true">
+            <f:facet name="header">
+                <div class="ui-fluid">
+                    <p:panelGrid columns="3" layout="grid" columnClasses="ui-grid-col-4,ui-grid-col-4,ui-grid-col-4" styleClass="ui-panelgrid-blank">
+                        <p:commandButton styleClass="search-btn" binding="#{bindingController.btnAdd}" value="#{msgs['btn.add']}" update="listForm" action="#{w102Controller.prepareCreate()}"/>
+                        <p:inputText value="#{w102Controller.itemName}" placeholder="รายการสินค้า"/>
+                        <p:commandButton binding="#{bindingController.btnSearch}" value="#{msgs['btn.search']}" 
+                                         actionListener="${w102Controller.search()}" styleClass="search-btn" update="listForm">
+                        </p:commandButton>
+                    </p:panelGrid>
+                </div>
+            </f:facet>
+
+            <p:column headerText="#{msgs['common.seq']}" >
+                <h:outputText value="#{(rowNumber+1)}" />
+            </p:column>
+
+            <p:column headerText="รหัสสินค้า" sortBy="#{item.itemCode}">
+                <h:outputText value="#{item.itemCode}"/>
+            </p:column>
+
+            <p:column headerText="ชื่อสินค้า(ไทย)" sortBy="#{item.item}" >
+                <h:outputText value="#{item.itemTh}"/>
+            </p:column>
+            
+            <p:column headerText="ชื่อสินค้า(Eng)" sortBy="#{item.item}" >
+                <h:outputText value="#{item.itemEng}"/>
+            </p:column>
+
+            <p:column headerText="หน่วย" sortBy="#{item.itemUnit}" >
+                <h:outputText value="#{item.itemUnit}"/>
+            </p:column>
+
+            <p:column headerText="ราคาต่อหน่อย" sortBy="#{item.itemPrice}" >
+                <h:outputText  value="#{item.itemPrice}"  style="float: right;" styleClass="lb_bold">
+                   <f:convertNumber  pattern="#,##0.00"/>
+               </h:outputText>  
+            </p:column>
+
+            <p:column >
+                <p:commandButton rendered="fasle" id="view" title="#{msgs['btn.view']}" icon="fa fa-fw fa-file-text-o">
+                    <f:setPropertyActionListener value="#{item}" target="#{w102Controller.selected}" />
+                </p:commandButton>
+
+                <p:commandButton id="edit" title="#{msgs['btn.edit']}" icon="fa fa-edit" action="#{w102Controller.prepareEdit()}">
+                    <f:setPropertyActionListener value="#{item}" target="#{w102Controller.selected}" />
+                </p:commandButton>
+
+                <p:commandButton id="del" title="#{msgs['btn.delete']}" icon="fa fa-trash" action="#{w102Controller.delete()}" update="listForm" 
+                                 rendered="#{p:ifAnyGranted('ROLE_PG,ROLE_ADMIN')}">
+                    <p:confirm header="#{msgs['dialog.confirm']}" message="#{msgs['dialog.message']}" />
+                    <f:setPropertyActionListener value="#{item}" target="#{w102Controller.selected}" />
+                </p:commandButton>
+
+            </p:column>
+
+            <f:facet name="footer">
+                <h:outputText value="#{msgs['messages.code.2022']} "/>
+                <h:outputText value="#{w102Controller.lazyModel.rowCount}">
+                    <f:convertNumber pattern="#,##0"/>
+                </h:outputText>
+                <h:outputText value=" #{msgs['messages.code.2023']}"/>
+            </f:facet>
+        </p:dataTable>
+    </h:form>
+</ui:composition>

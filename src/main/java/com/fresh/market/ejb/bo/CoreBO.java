@@ -16,7 +16,7 @@ import javax.ejb.Stateless;
 
 /**
  *
- * @author Aekasit
+ * @author Adisorn.jo
  */
 @Stateless(name = "market.CoreBO")
 public class CoreBO {

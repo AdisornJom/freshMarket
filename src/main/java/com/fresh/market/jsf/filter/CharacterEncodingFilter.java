@@ -18,7 +18,7 @@ import javax.servlet.annotation.WebFilter;
 
 /**
  *
- * @author Aekasit
+ * @author Adisorn.jo
  */
 @WebFilter(filterName = "CharacterEncodingFilter", urlPatterns = {"/*"})
 public class CharacterEncodingFilter implements Filter {

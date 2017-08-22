@@ -8,7 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 /**
  *
- * @author Aekasit
+ * @author Adisorn.jo
  */
 @RequestScoped
 @Named(CheckDeviceController.CONTROLLER_NAME)

@@ -14,7 +14,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author Aekasit
+ * @author Adisorn.jo
  */
 @Embeddable
 public class AdminWhitelistPK implements Serializable {

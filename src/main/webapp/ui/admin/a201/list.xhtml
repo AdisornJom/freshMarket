@@ -9,36 +9,27 @@
     <h:form id="listForm">
         <p:dataTable var="item" value="#{a201Controller.items}" binding="#{bindingController.dataTableModel}">
             <f:facet name="header">
-                <div class="ui-g ui-fluid">
-                    <div class="ui-g-12 ui-md-6 ui-lg-1">
+                <div class="ui-fluid">
+                    <p:panelGrid columns="5" layout="grid" columnClasses="ui-grid-col-3,ui-grid-col-3,ui-grid-col-3,ui-grid-col-3,ui-grid-col-3" styleClass="ui-panelgrid-blank">
                         <p:commandButton styleClass="search-btn"  binding="#{bindingController.btnAdd}" value="#{msgs['btn.add']}"
-                                         update="listForm" action="#{a201Controller.prepareCreate()}"/>
-                    </div>
-                    <div class="ui-g-12 ui-md-6 ui-lg-2">
-                    </div>
-                    <div class="ui-g-12 ui-md-6 ui-lg-2">
-                    </div>
-                    <div class="ui-g-12 ui-md-6 ui-lg-2">
+                                         update="listForm" action="#{a201Controller.prepareCreate()}">
+                        </p:commandButton>
                         <p:selectOneMenu value="#{a201Controller.status}">
                             <f:selectItem itemLabel="#{msgs['a201.profile.selected']}" itemValue="#{null}" />
                             <f:selectItem itemLabel="#{msgs['a201.profile.status.normal']}" itemValue="#{PFConstants.USER_STATUS_NORMAL}" />
                             <f:selectItem itemLabel="#{msgs['a201.profile.status.cancel']}" itemValue="#{PFConstants.USER_STATUS_DELETE}" />
                         </p:selectOneMenu>
-                    </div>
-                    <div class="ui-g-12 ui-md-6 ui-lg-2">
                         <p:selectOneMenu value="#{a201Controller.choice}" >
                             <f:selectItem itemLabel="#{msgs['common.username']}" itemValue="username"/>
                             <f:selectItem itemLabel="#{msgs['a201.profile.firstname']}" itemValue="firstName"/>
                             <p:ajax event="change" update="findTxt" global="false"/>
                         </p:selectOneMenu>
-                    </div>
-                    <div class="ui-g-12 ui-md-6 ui-lg-2">
-                        <p:inputText id="findTxt" placeholder="#{a201Controller.choice eq 'username' ? msgs['common.username'] : msgs['a201.profile.firstname'] }" value="#{a201Controller.choiceValue}" />
-                    </div>
-                    <div class="ui-g-12 ui-md-6 ui-lg-1">
+                        <p:inputText id="findTxt" placeholder="#{a201Controller.choice eq 'username' ? msgs['common.username'] : msgs['a201.profile.firstname'] }" value="#{a201Controller.choiceValue}" >
+                        </p:inputText>
                         <p:commandButton binding="#{bindingController.btnSearch}" value="#{msgs['btn.search']}" 
-                                         actionListener="#{a201Controller.search()}" styleClass="search-btn" update="listForm"/>
-                    </div>
+                                         actionListener="#{a201Controller.search()}" styleClass="search-btn" update="listForm">
+                        </p:commandButton>
+                    </p:panelGrid>
                 </div>
             </f:facet>
 

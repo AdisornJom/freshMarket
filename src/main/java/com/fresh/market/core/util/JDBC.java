@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 
 /**
  *
- * @author Aekasit
+ * @author Adisorn.jo
  */
 public class JDBC {
 

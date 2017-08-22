@@ -9,7 +9,7 @@ import java.io.Serializable;
 
 /**
  *
- * @author Aekasit
+ * @author Adisorn.jo
  */
 public class ResultTO implements Serializable {
 

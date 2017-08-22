@@ -17,7 +17,7 @@ import org.joda.time.DateTimeZone;
 
 /**
  *
- * @author s.aekasit
+ * @author s.Adisorn.jo
  */
 public class DateTimeUtil {
     

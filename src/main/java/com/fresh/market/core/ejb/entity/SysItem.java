@@ -45,9 +45,12 @@ public class SysItem implements Serializable {
     @Size(max = 20)
     @Column(name = "item_code")
     private String itemCode;
-    @Size(max = 150)
-    @Column(name = "item")
-    private String item;
+    @Size(max = 200)
+    @Column(name = "item_th")
+    private String itemTh;
+    @Size(max = 200)
+    @Column(name = "item_eng")
+    private String itemEng;
     @Size(max = 20)
     @Column(name = "item_unit")
     private String itemUnit;
@@ -59,6 +62,11 @@ public class SysItem implements Serializable {
     @Size(max = 255)
     @Column(name = "item_remark")
     private String itemRemark;
+    
+    @Size(max = 20)
+    @Column(name = "item_status")
+    private String itemStatus;
+    
     @Column(name = "created_dt")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDt;
@@ -97,12 +105,20 @@ public class SysItem implements Serializable {
         this.itemCode = itemCode;
     }
 
-    public String getItem() {
-        return item;
+    public String getItemTh() {
+        return itemTh;
     }
 
-    public void setItem(String item) {
-        this.item = item;
+    public void setItemTh(String itemTh) {
+        this.itemTh = itemTh;
+    }
+
+    public String getItemEng() {
+        return itemEng;
+    }
+
+    public void setItemEng(String itemEng) {
+        this.itemEng = itemEng;
     }
 
     public String getItemUnit() {
@@ -168,6 +184,15 @@ public class SysItem implements Serializable {
     public void setModifiedBy(String modifiedBy) {
         this.modifiedBy = modifiedBy;
     }
+
+    public String getItemStatus() {
+        return itemStatus;
+    }
+
+    public void setItemStatus(String itemStatus) {
+        this.itemStatus = itemStatus;
+    }
+    
 
     @XmlTransient
     public List<SysItemCompany> getSysItemCompanyList() {

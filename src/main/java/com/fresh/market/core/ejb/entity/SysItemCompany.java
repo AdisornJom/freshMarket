@@ -6,7 +6,6 @@
 package com.fresh.market.core.ejb.entity;
 
 import java.io.Serializable;
-import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,11 +16,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -38,11 +35,8 @@ public class SysItemCompany implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
-    @Column(name = "company_id")
-    private Integer companyId;
-    @Size(max = 20)
-    @Column(name = "company_code")
-    private String companyCode;
+    @Column(name = "item_company_id")
+    private Integer itemCompanyId;
     @Size(max = 10)
     @Column(name = "company_unit")
     private String companyUnit;
@@ -55,8 +49,12 @@ public class SysItemCompany implements Serializable {
     @Size(max = 10)
     @Column(name = "company_remark")
     private String companyRemark;
-    @OneToMany(mappedBy = "compaynyId")
-    private List<SysBillingDetail> sysBillingDetailList;
+    @Size(max = 5)
+    @Column(name = "company_status")
+    private String companyStatus;
+    @JoinColumn(name = "company_id", referencedColumnName = "company_id")
+    @ManyToOne
+    private SysCompany companyId;
     @JoinColumn(name = "item_id", referencedColumnName = "item_id")
     @ManyToOne
     private SysItem itemId;
@@ -64,24 +62,16 @@ public class SysItemCompany implements Serializable {
     public SysItemCompany() {
     }
 
-    public SysItemCompany(Integer companyId) {
-        this.companyId = companyId;
+    public SysItemCompany(Integer itemCompanyId) {
+        this.itemCompanyId = itemCompanyId;
     }
 
-    public Integer getCompanyId() {
-        return companyId;
+    public Integer getItemCompanyId() {
+        return itemCompanyId;
     }
 
-    public void setCompanyId(Integer companyId) {
-        this.companyId = companyId;
-    }
-
-    public String getCompanyCode() {
-        return companyCode;
-    }
-
-    public void setCompanyCode(String companyCode) {
-        this.companyCode = companyCode;
+    public void setItemCompanyId(Integer itemCompanyId) {
+        this.itemCompanyId = itemCompanyId;
     }
 
     public String getCompanyUnit() {
@@ -116,13 +106,20 @@ public class SysItemCompany implements Serializable {
         this.companyRemark = companyRemark;
     }
 
-    @XmlTransient
-    public List<SysBillingDetail> getSysBillingDetailList() {
-        return sysBillingDetailList;
+    public String getCompanyStatus() {
+        return companyStatus;
     }
 
-    public void setSysBillingDetailList(List<SysBillingDetail> sysBillingDetailList) {
-        this.sysBillingDetailList = sysBillingDetailList;
+    public void setCompanyStatus(String companyStatus) {
+        this.companyStatus = companyStatus;
+    }
+
+    public SysCompany getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(SysCompany companyId) {
+        this.companyId = companyId;
     }
 
     public SysItem getItemId() {
@@ -136,7 +133,7 @@ public class SysItemCompany implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (companyId != null ? companyId.hashCode() : 0);
+        hash += (itemCompanyId != null ? itemCompanyId.hashCode() : 0);
         return hash;
     }
 
@@ -147,7 +144,7 @@ public class SysItemCompany implements Serializable {
             return false;
         }
         SysItemCompany other = (SysItemCompany) object;
-        if ((this.companyId == null && other.companyId != null) || (this.companyId != null && !this.companyId.equals(other.companyId))) {
+        if ((this.itemCompanyId == null && other.itemCompanyId != null) || (this.itemCompanyId != null && !this.itemCompanyId.equals(other.itemCompanyId))) {
             return false;
         }
         return true;
@@ -155,7 +152,7 @@ public class SysItemCompany implements Serializable {
 
     @Override
     public String toString() {
-        return "com.fresh.market.core.ejb.entity.SysItemCompany[ companyId=" + companyId + " ]";
+        return "com.fresh.market.core.ejb.entity.SysItemCompany[ itemCompanyId=" + itemCompanyId + " ]";
     }
     
 }

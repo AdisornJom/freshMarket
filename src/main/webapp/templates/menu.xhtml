@@ -12,12 +12,17 @@
                     <pp:menu widgetVar="me">
                         <p:menuitem id="menuHome" icon="fa fa-home" value="#{msgs['menu.home']}"  action ="#{naviController.gotoMenu('/ui/dashboard/index?faces-redirect=true', 'DashBoardController', 'menu.home')}"/>
 
-                        <p:submenu id="menuW" label="#{msgs['menu.website']}" icon="fa fa-gear" rendered="#{p:ifAnyGranted('ROLE_PG,ROLE_ADMIN,ROLE_SUPER,ROLE_STAFF')}">
-                            <p:menuitem id="menuW101" value="#{msgs['menu.website.w101']}" action ="#{naviController.gotoMenu('/ui/website/w101/index?faces-redirect=true', 'W101Controller', 'menu.website.w101')}"/>
-                            <p:menuitem id="menuW102" value="#{msgs['menu.website.w102']}" action ="#{naviController.gotoMenu('/ui/website/w102/index?faces-redirect=true', 'W102Controller', 'menu.website.w102')}"/>                            
-                            <p:menuitem id="menuW103" value="#{msgs['menu.website.w103']}" action ="#{naviController.gotoMenu('/ui/website/w103/index?faces-redirect=true', 'W103Controller', 'menu.website.w103')}"/>
-                            <p:menuitem id="menuW104" value="#{msgs['menu.website.w104']}" action ="#{naviController.gotoMenu('/ui/website/w104/index?faces-redirect=true', 'W104Controller', 'menu.website.w104')}"/>
-                            <p:menuitem id="menuW105" value="#{msgs['menu.website.w105']}" url="/web-email" rendered="false"/>
+                        
+                        <p:submenu id="menuW" label="การจัดการข้อมูล" icon="fa fa-gear" rendered="#{p:ifAnyGranted('ROLE_PG,ROLE_ADMIN,ROLE_SUPER,ROLE_STAFF')}">
+                            <p:menuitem id="menuC101" value="C101 - ข้อมูลบริษัท" action ="#{naviController.gotoMenu('/ui/custom/c101/index?faces-redirect=true', 'C101Controller', 'C101 - ข้อมูลบริษัท')}"/>
+                       </p:submenu>
+                        
+                        <p:submenu id="menuI" label="รายงการ" icon="fa fa-gear" rendered="#{p:ifAnyGranted('ROLE_PG,ROLE_ADMIN,ROLE_SUPER,ROLE_STAFF')}">
+                            <p:menuitem id="menuI101" value="I101 - รายงการที่สั่ง" action ="#{naviController.gotoMenu('/ui/website/w101/index?faces-redirect=true', 'I101Controller', 'I101 - รายงการที่สั่ง')}"/>
+                        </p:submenu>
+                        
+                        <p:submenu id="menuB" label="บิล" icon="fa fa-gear" rendered="#{p:ifAnyGranted('ROLE_PG,ROLE_ADMIN,ROLE_SUPER,ROLE_STAFF')}">
+                            <p:menuitem id="menuB101" value="B101 - บิลสินค้า" action ="#{naviController.gotoMenu('/ui/website/w101/index?faces-redirect=true', 'B101Controller', 'B101 - บิลสินค้า')}"/>
                         </p:submenu>
                         
                         <p:submenu id ="menuR" label="#{msgs['menu.report']}" icon="fa fa-bar-chart" rendered="#{p:ifAnyGranted('ROLE_PG,ROLE_ADMIN,ROLE_SUPER,ROLE_STAFF')}">

@@ -32,14 +32,7 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
- * @author MR Aekasit Sengnualnim (Aek) System Analyst
- *
- * Progress Software Co.,Ltd Fl. 6-7 306 Supha Road, Phomphlab
- * Phomphlabsattupai, Bangkok 10100 Thailand Tel :+66 (0) 2867 5020 Mobile : +66
- * 91004 1009 Skype : s.aekasit MSN : aekasit.se@gmail.com Email :
- * aekasit.s@kasikornbank.com Website http://www.kasikornbank.com
- *
- * @create 11-11-2014 3:58:48 PM
+ * @author MR Adisorn.jo 
  */
 @SessionScoped
 @ManagedBean(name = LoginController.CONTROLLER_NAME)

@@ -7,7 +7,7 @@ package com.fresh.market.core.util;
 
 /**
  *
- * @author Aekasit
+ * @author Adisorn.jo
  */
 public class Jndi {
 

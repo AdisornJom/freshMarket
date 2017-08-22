@@ -16,7 +16,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author Aekasit
+ * @author Adisorn.jo
  */
 @Stateless
 public class LanguageDAO extends AbstractDAO<Language> {

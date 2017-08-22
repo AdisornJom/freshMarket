@@ -13,7 +13,7 @@ import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author Aekasit
+ * @author Adisorn.jo
  */
 @Stateless
 public class AdminUserRoleDAO extends AbstractDAO<AdminUserRole> {

@@ -18,7 +18,7 @@ import org.quartz.impl.matchers.KeyMatcher;
 
 /**
  *
- * @author Aekasit
+ * @author Adisorn.jo
  */
 public class CronTriggerExample {
 

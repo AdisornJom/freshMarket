@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:pe="http://primefaces.org/ui/extensions"
+                template="/templates/default-template.xhtml">
+
+    <ui:define name="viewname">W101 - รายการสินค้าหลัก / #{msgs['btn.add']}</ui:define>
+    
+    <ui:define name="head">
+
+        <style>
+        .left_panel{
+            width: 150px;
+        }
+        .ui-autocomplete-input{ 
+            width: 370px;
+        }
+        .pe-inputNumber {
+            text-align: right;
+            width:120px;
+            float:right;
+            font-size: 24px;
+        }
+        
+        .ui-datatable tbody  {
+            white-space: normal;
+            word-wrap: break-word;
+        }
+        
+        </style>
+    </ui:define>
+    <ui:define name="content">
+        <h:form id="listForm">
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                    <p:messages id="create_msg" autoUpdate="false" showIcon="false"/>
+                </div>
+                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                    <p:fieldset id="fieldset1" legend="#{msgs['a201.profile.general']}" style="border: 0px;">
+                        <p:panel style="max-width: 900px;margin-bottom: 10px;border-right: 0px;border-radius: 0px;">
+                            <div class="ui-fluid">
+                                <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-3,ui-grid-col-8" styleClass="ui-panelgrid-blank form-group">
+                                    <h:panelGroup>
+                                        <p:outputLabel value="รหัสสินค้า :" />
+                                        <font class="require" style="color: red">*</font>
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <p:inputText  value="#{w101Controller.selected.itemCode}"/>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup>
+                                        <p:outputLabel  value="ชื่อสินค้า(ไทย) :" />
+                                        <font class="require" style="color: red">*</font>
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <p:inputText  value="#{w101Controller.selected.itemTh}" />
+                                    </h:panelGroup>
+                                    
+                                    <h:panelGroup>
+                                        <p:outputLabel  value="ชื่อสินค้า(Eng) :" />
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <p:inputText  value="#{w101Controller.selected.itemEng}" />
+                                    </h:panelGroup>
+
+                                    <h:panelGroup>
+                                        <p:outputLabel  value="หน่วย :" />
+                                        <font class="require" style="color: red">*</font>
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <p:selectOneMenu id="unit" value="#{w101Controller.selected.itemUnit}"  >
+                                            <f:selectItems value="#{comboController.equipments}" />
+                                        </p:selectOneMenu>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup>
+                                        <p:outputLabel  value="ราคาต่อหน่วย :" />
+                                        <font class="require" style="color: red">*</font>
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                         <p:inputText  value="#{w101Controller.selected.itemPrice}" style="vertical-align:middle;">
+                                            <f:convertNumber  pattern="#,##0.00"/>
+                                        </p:inputText>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup>
+                                        <p:outputLabel  value="หมายเหตุ :" />
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <p:inputTextarea id="address" value="#{w101Controller.selected.itemRemark}" cols="50" rows="3" 
+                                           maxlength="250" />
+                                    </h:panelGroup>
+                                </p:panelGrid>
+                            </div>
+
+                        </p:panel>
+                    </p:fieldset>
+                </div>
+                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                    <h:panelGrid columns="2">
+                        <p:commandButton binding="#{bindingController.btnSave}" value="#{msgs['btn.save']}" update="create_msg,fieldset1"
+                                         action="#{w101Controller.create()}" styleClass="edit-btn"/>
+
+                        <p:commandButton binding="#{bindingController.btnCancel}" value="#{msgs['btn.cancel']}" styleClass="clear-btn"
+                                         action="index?faces-redirect=true"/>
+                    </h:panelGrid> 
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

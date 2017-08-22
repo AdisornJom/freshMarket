@@ -11,7 +11,7 @@ import javax.ejb.Stateless;
 
 /**
  *
- * @author Aekasit
+ * @author Adisorn.jo
  */
 @Stateless
 public class AdminFacade implements Serializable {

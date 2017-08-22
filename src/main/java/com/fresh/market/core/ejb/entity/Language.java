@@ -18,7 +18,7 @@ import javax.validation.constraints.Size;
 
 /**
  *
- * @author Aekasit
+ * @author Adisorn.jo
  */
 @Entity
 @Table(name = "core_language")

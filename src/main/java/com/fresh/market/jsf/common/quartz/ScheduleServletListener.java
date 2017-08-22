@@ -10,7 +10,7 @@ import javax.servlet.annotation.WebListener;
 /**
  * Web application lifecycle listener.
  *
- * @author Aekasit
+ * @author Adisorn.jo
  */
 @WebListener()
 public class ScheduleServletListener implements ServletContextListener {

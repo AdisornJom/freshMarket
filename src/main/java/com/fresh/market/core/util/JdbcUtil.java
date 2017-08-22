@@ -14,7 +14,7 @@ import javax.sql.DataSource;
 
 /**
  *
- * @author Aekasit
+ * @author Adisorn.jo
  */
 public class JdbcUtil {
 

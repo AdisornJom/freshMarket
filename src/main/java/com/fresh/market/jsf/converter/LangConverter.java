@@ -19,7 +19,7 @@ import javax.faces.convert.FacesConverter;
 
 /**
  *
- * @author Aekasit
+ * @author Adisorn.jo
  */
 @FacesConverter("langConverter")
 public class LangConverter implements Converter {

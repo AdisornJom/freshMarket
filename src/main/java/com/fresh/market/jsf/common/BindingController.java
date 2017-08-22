@@ -16,7 +16,7 @@ import org.primefaces.component.dialog.Dialog;
 
 /**
  *
- * @author s.aekasit
+ * @author s.Adisorn.jo
  */
 @RequestScoped
 @Named(BindingController.CONTROLLER_NAME)

@@ -11,15 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * @author Mr.Aekasit Sengnualnim (Aek) Information System
- *
- * Siam Samsung Life Insurance Company Limited Charnissara II Tower 15 Floor,
- * 2922/222-227 Phetchaburi Road Tadmai Bangkapi, Huai Khwang, Bangkok 10310
- * THAILAND Tel : +66 0230 82245 #8242 Fax : +66 2298 0053 Mobile : +66 8912
- * 90006 Skype : s.aekasit Email : aekasit@siamsamsung.co.th MSN :
- * s.aekasit@hotmail.com http://www.siamsamsung.co.th
- *
- * @create 31-01-2554 13:27:31
+ * @author Mr.Adisorn.jo  
  */
 public class MD5Generator {
 

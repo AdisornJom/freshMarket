@@ -21,7 +21,7 @@ import org.primefaces.push.EventBusFactory;
 
 /**
  *
- * @author Aekasit
+ * @author Adisorn.jo
  */
 public class UserAgentListener implements Filter {
 

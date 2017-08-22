@@ -13,7 +13,7 @@ import javax.persistence.Query;
 
 /**
  *
- * @author aekasit
+ * @author Adisorn.jo
  */
 @Stateless
 public class SeqGeneratorDAO {

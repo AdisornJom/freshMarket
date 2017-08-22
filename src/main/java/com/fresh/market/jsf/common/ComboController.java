@@ -2,6 +2,7 @@ package com.fresh.market.jsf.common;
 
 import com.fresh.market.core.ejb.entity.AdminUserRole;
 import com.fresh.market.core.ejb.entity.Language;
+import com.fresh.market.core.ejb.entity.SysSeleteitem;
 import com.fresh.market.ejb.facade.ComboFacade;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,7 @@ public class ComboController extends BaseController {
     private List<AdminUserRole> adminUserRole;
     private List<SelectItem> sounds;
     private List<Language> langs;
+    private List<SelectItem> equipments;
 
     @PostConstruct
     @Override
@@ -81,6 +83,13 @@ public class ComboController extends BaseController {
 
            
             langs = comboFacade.findLanguageList();
+            
+            List<SysSeleteitem> seleteItems = comboFacade.findSysSeleteitemByCriteria("equipment");
+            equipments = new ArrayList<>();
+            if(null!=seleteItems && seleteItems.size()>0){
+                for(SysSeleteitem detail:seleteItems)
+                    equipments.add(new SelectItem(detail.getTypeKey(),detail.getTypeName()));
+            }
 
         } catch (Exception ex) {
             LOG.error(ex.getMessage(), ex);
@@ -105,5 +114,13 @@ public class ComboController extends BaseController {
 
     public void setLangs(List<Language> langs) {
         this.langs = langs;
+    }
+    
+    public List<SelectItem> getEquipments() {
+        return equipments;
+    }
+
+    public void setEquipments(List<SelectItem> equipments) {
+        this.equipments = equipments;
     }
 }

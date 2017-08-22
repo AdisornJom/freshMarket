@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 
 /**
  *
- * @author Aekasit
+ * @author Adisorn.jo
  */
 @SessionScoped
 @Named(UserLogController.CONTROLLER_NAME)

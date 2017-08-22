@@ -23,7 +23,7 @@ import org.primefaces.model.ScheduleModel;
 
 /**
  *
- * @author Aekasit
+ * @author Adisorn.jo
  */
 @SessionScoped
 @Named

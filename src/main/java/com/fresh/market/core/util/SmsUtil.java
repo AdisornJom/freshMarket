@@ -30,7 +30,7 @@ import org.apache.http.message.BasicNameValuePair;
 
 /**
  *
- * @author Aekasit
+ * @author Adisorn.jo
  */
 public class SmsUtil {
 

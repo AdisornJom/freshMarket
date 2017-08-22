@@ -16,7 +16,7 @@ import org.quartz.JobExecutionException;
 
 /**
  *
- * @author Aekasit
+ * @author Adisorn.jo
  */
 public class OpenMAConfigJob implements Job, Serializable {
 

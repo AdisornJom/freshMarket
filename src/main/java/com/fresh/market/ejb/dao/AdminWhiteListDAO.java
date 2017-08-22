@@ -16,7 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 
 /**
  *
- * @author Aekasit
+ * @author Adisorn.jo
  */
 @Stateless
 public class AdminWhiteListDAO extends AbstractDAO<AdminWhitelist> {

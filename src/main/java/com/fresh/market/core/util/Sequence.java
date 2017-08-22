@@ -6,14 +6,7 @@
 package com.fresh.market.core.util;
 
 /**
- * @author MR Aekasit Sengnualnim (Aek) System Analyst
- *
- * Progress Software Co.,Ltd Fl. 6-7 306 Supha Road, Phomphlab
- * Phomphlabsattupai, Bangkok 10100 Thailand Tel :+66 (0) 2867 5020 Mobile : +66
- * 91004 1009 Skype : s.aekasit MSN : aekasit.se@gmail.com Email :
- * aekasit.s@kasikornbank.com Website http://www.kasikornbank.com
- *
- * @create 11-12-2014 1:29:39 PM
+ * @author MR Adisorn.jo  
  */
 public class Sequence {
 

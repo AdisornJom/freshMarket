@@ -17,7 +17,7 @@ import org.apache.commons.mail.HtmlEmail;
 
 /**
  *
- * @author Aekasit
+ * @author Adisorn.jo
  */
 public class SmtpMailUtil {
 
@@ -64,7 +64,7 @@ public class SmtpMailUtil {
         email.setHostName("smtp.gmail.com");
         email.setSmtpPort(587);
         email.setAuthenticator(new DefaultAuthenticator("noreply@bets789.com", "gfaojkiyd"));
-        email.setFrom("aekasit.se@gmail.com");
+        email.setFrom("Adisorn.jo.se@gmail.com");
         email.setSubject(subject);
         email.setHtmlMsg(message);
         email.setCharset("utf-8");
@@ -103,7 +103,7 @@ public class SmtpMailUtil {
         try {
            
            //String[] bcc={"111111@doctorgaming.com","222222@gmail.com","333333@doctorgaming.com","444444@gmail.com","555555@gmail.com","666666@gmail.com","7777777@gmail.com"};
-           //String[] from={"hirochi_new@hotmail.com","aekasit.se@gmail.com"};
+           //String[] from={"hirochi_new@hotmail.com","Adisorn.jo.se@gmail.com"};
            String aa="SEND_EMAIL5";
            System.out.println("==================>>>>"+aa.indexOf("SEND_EMAIL"));
            
@@ -118,7 +118,7 @@ public class SmtpMailUtil {
            
            List<String> from=new ArrayList();
            from.add("hirochi_new@hotmail.com");
-           from.add("aekasit.se@gmail.com");
+           from.add("Adisorn.jo.se@gmail.com");
            
            
            int account=bcc.size();

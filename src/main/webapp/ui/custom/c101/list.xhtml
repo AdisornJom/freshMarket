@@ -12,7 +12,7 @@
                 <div class="ui-fluid">
                     <p:panelGrid columns="3" layout="grid" columnClasses="ui-grid-col-4,ui-grid-col-4,ui-grid-col-4" styleClass="ui-panelgrid-blank">
                         <p:commandButton styleClass="search-btn" binding="#{bindingController.btnAdd}" value="#{msgs['btn.add']}" update="listForm" action="#{c101Controller.prepareCreate()}"/>
-                        <p:inputText value="#{c101Controller.itemName}" placeholder="ชื่อบริษัท"/>
+                        <p:inputText value="#{c101Controller.companyName}" placeholder="ชื่อบริษัท"/>
                         <p:commandButton binding="#{bindingController.btnSearch}" value="#{msgs['btn.search']}" 
                                          actionListener="${c101Controller.search()}" styleClass="search-btn" update="listForm">
                         </p:commandButton>
@@ -24,24 +24,24 @@
                 <h:outputText value="#{(rowNumber+1)}" />
             </p:column>
 
-            <p:column headerText="รหัสบริษัท" sortBy="#{item.itemCode}">
-                <h:outputText value="#{item.itemCode}"/>
+            <p:column headerText="รหัสบริษัท" sortBy="#{item.companyCode}">
+                <h:outputText value="#{item.companyCode}"/>
             </p:column>
 
-            <p:column headerText="ชื่อชื่อบริษัท(ไทย)" sortBy="#{item.item}" >
-                <h:outputText value="#{item.itemTh}"/>
+            <p:column headerText="ชื่อชื่อบริษัท(ไทย)" sortBy="#{item.companyNameTh}" >
+                <h:outputText value="#{item.companyNameTh}"/>
             </p:column>
             
-            <p:column headerText="ชื่อบริษัท(Eng)" sortBy="#{item.item}" >
-                <h:outputText value="#{item.itemEng}"/>
+            <p:column headerText="ชื่อบริษัท(Eng)" sortBy="#{item.companyNameEng}" >
+                <h:outputText value="#{item.companyNameEng}"/>
             </p:column>
 
-            <p:column headerText="ที่อยู่" sortBy="#{item.itemUnit}" >
-                <h:outputText value="#{item.itemUnit}"/>
+            <p:column headerText="ที่อยู่" sortBy="#{item.companyAddress}" >
+                <h:outputText value="#{item.companyAddress}"/>
             </p:column>
             
-             <p:column headerText="เบอร์โทร" sortBy="#{item.itemUnit}" >
-                <h:outputText value="#{item.itemUnit}"/>
+            <p:column headerText="เบอร์โทร" sortBy="#{item.companyTel}" >
+                <h:outputText value="#{item.companyTel}"/>
             </p:column>
             
             <p:column >

@@ -17,6 +17,14 @@ public class CustomFacade implements Serializable {
     @EJB
     private CustomBO customBO;
 
+     public List<SysCompany> findSysCompanyList() throws Exception {
+        return customBO.findSysCompanyList();
+    }
+     
+    public SysCompany findSysCompanyById(SysCompany sysCompany) throws Exception {
+        return customBO.findSysCompanyById(sysCompany);
+    }
+     
     public List<SysCompany> findSysCompanyByCriteria(String companyNameTh, String status, int[] range) throws Exception {
         return customBO.findSysCompanyByCriteria(companyNameTh, status, range);
     }

@@ -1,16 +1,12 @@
 package com.fresh.market.jsf.controller.custom;
 
 import com.fresh.market.core.ejb.entity.SysCompany;
-import com.fresh.market.core.ejb.entity.SysCompany;
 import com.fresh.market.core.util.DateTimeUtil;
 import com.fresh.market.core.util.MessageBundleLoader;
 import com.fresh.market.ejb.facade.CustomFacade;
-import com.fresh.market.ejb.facade.WareHouseFacade;
 import com.fresh.market.jsf.common.UserInfoController;
 import com.fresh.market.jsf.model.LazyCompanyDataModel;
-import com.fresh.market.jsf.model.LazyItemDataModel;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
@@ -75,24 +71,8 @@ public class C101Controller implements Serializable {
    public String create() {
         try {
 
-            if (StringUtils.isEmpty(selected.getItemCode())) {
-                Messages.addError("listForm:create_msg", MessageBundleLoader.getMessageFormat("messages.code.2002", "รหัสสินค้า"));
-                RequestContext.getCurrentInstance().execute("window.scrollTo(0,0);");
-                return null;
-            }
-
-            if (StringUtils.isEmpty(selected.getItemTh())) {
-                Messages.addError("listForm:create_msg", MessageBundleLoader.getMessageFormat("messages.code.2002", "ชื่อสินค้า"));
-                RequestContext.getCurrentInstance().execute("window.scrollTo(0,0);");
-                return null;
-            }
-            if (StringUtils.isEmpty(selected.getItemUnit())) {
-                Messages.addError("listForm:create_msg", MessageBundleLoader.getMessageFormat("messages.code.2002", "หน่วย"));
-                RequestContext.getCurrentInstance().execute("window.scrollTo(0,0);");
-                return null;
-            }
-            if (selected.getItemPrice()== null || 0.0 >= selected.getItemPrice().compareTo(BigDecimal.ZERO)) {
-                Messages.addError("listForm:create_msg", MessageBundleLoader.getMessageFormat("messages.code.2002", "ราคาต่อหน่วย"));
+            if (StringUtils.isEmpty(selected.getCompanyNameTh())) {
+                Messages.addError("listForm:create_msg", MessageBundleLoader.getMessageFormat("messages.code.2002", "ชื่อสินค้า(ไทย)"));
                 RequestContext.getCurrentInstance().execute("window.scrollTo(0,0);");
                 return null;
             }
@@ -100,7 +80,7 @@ public class C101Controller implements Serializable {
             selected.setCreatedDt(DateTimeUtil.getSystemDate());
             selected.setModifiedBy(userInfo.getAdminUser().getUsername());
             selected.setModifiedDt(DateTimeUtil.getSystemDate());
-            wareHouseFacade.createSysCompany(selected);
+            customFacade.createSysCompany(selected);
 
             //refresh data
             clearData();
@@ -119,31 +99,15 @@ public class C101Controller implements Serializable {
     
     public String edit() {
         try {
-            if (StringUtils.isEmpty(selected.getItemCode())) {
-                Messages.addError("listForm:edit_msg", MessageBundleLoader.getMessageFormat("messages.code.2002", "รหัสสินค้า"));
-                RequestContext.getCurrentInstance().execute("window.scrollTo(0,0);");
-                return null;
-            }
-
-            if (StringUtils.isEmpty(selected.getItemTh())) {
-                Messages.addError("listForm:edit_msg", MessageBundleLoader.getMessageFormat("messages.code.2002", "ชื่อสินค้า"));
-                RequestContext.getCurrentInstance().execute("window.scrollTo(0,0);");
-                return null;
-            }
-            if (StringUtils.isEmpty(selected.getItemUnit())) {
-                Messages.addError("listForm:edit_msg", MessageBundleLoader.getMessageFormat("messages.code.2002", "หน่วย"));
-                RequestContext.getCurrentInstance().execute("window.scrollTo(0,0);");
-                return null;
-            }
-            if (selected.getItemPrice()== null || 0.0 >= selected.getItemPrice().compareTo(BigDecimal.ZERO)) {
-                Messages.addError("listForm:edit_msg", MessageBundleLoader.getMessageFormat("messages.code.2002", "ราคาต่อหน่วย"));
+            if (StringUtils.isEmpty(selected.getCompanyNameTh())) {
+                Messages.addError("listForm:edit_msg", MessageBundleLoader.getMessageFormat("messages.code.2002", "ชื่อสินค้า(ไทย)"));
                 RequestContext.getCurrentInstance().execute("window.scrollTo(0,0);");
                 return null;
             }
 
             selected.setModifiedBy(userInfo.getAdminUser().getUsername());
             selected.setModifiedDt(DateTimeUtil.getSystemDate());
-            wareHouseFacade.editSysCompany(selected);
+            customFacade.editSysCompany(selected);
             search();
             return "index?faces-redirect=true";
         } catch (Exception ex) {
@@ -158,7 +122,7 @@ public class C101Controller implements Serializable {
         try {
             selected.setModifiedBy(userInfo.getAdminUser().getUsername());
             selected.setModifiedDt(DateTimeUtil.getSystemDate());
-            wareHouseFacade.deleteSysCompany(selected);
+            customFacade.deleteSysCompany(selected);
             
             search();
         } catch (Exception ex) {

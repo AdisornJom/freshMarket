@@ -12,7 +12,21 @@
                 <div class="ui-fluid">
                     <p:panelGrid columns="3" layout="grid" columnClasses="ui-grid-col-4,ui-grid-col-4,ui-grid-col-4" styleClass="ui-panelgrid-blank">
                         <p:commandButton styleClass="search-btn" binding="#{bindingController.btnAdd}" value="#{msgs['btn.add']}" update="listForm" action="#{w102Controller.prepareCreate()}"/>
+                        <h:panelGroup>
+                            <p:autoComplete id="companyName" dropdown="true" value="#{w102Controller.sysCompany_find}" 
+                                            completeMethod="#{w102Controller.completeCompany}" 
+                                            var="company" itemLabel="#{company.companyNameTh}" 
+                                            itemValue="#{company}" 
+                                            converter="#{companyConverter}"
+                                            scrollHeight="250" forceSelection="true" >
+                                <p:ajax event="query"  global="false"/>
+                            </p:autoComplete>
+                            <p:watermark  for="companyName" value="กรอกข้อมูลเพื่อ ค้นหา" />
+                        </h:panelGroup>
+
                         <p:inputText value="#{w102Controller.itemName}" placeholder="รายการสินค้า"/>
+                        <p:calendar placeholder="#{msgs['common.startDate']}" binding="#{bindingController.calendar}" value="#{w102Controller.startDate}"/>
+                        <p:calendar placeholder="#{msgs['common.toDate']}" binding="#{bindingController.calendar}" value="#{w102Controller.toDate}"/>
                         <p:commandButton binding="#{bindingController.btnSearch}" value="#{msgs['btn.search']}" 
                                          actionListener="${w102Controller.search()}" styleClass="search-btn" update="listForm">
                         </p:commandButton>
@@ -24,24 +38,42 @@
                 <h:outputText value="#{(rowNumber+1)}" />
             </p:column>
 
-            <p:column headerText="รหัสสินค้า" sortBy="#{item.itemCode}">
+            <p:column headerText="ชื่อบริษัท" sortBy="#{item.companyId.companyNameTh}">
                 <h:outputText value="#{item.itemCode}"/>
             </p:column>
 
-            <p:column headerText="ชื่อสินค้า(ไทย)" sortBy="#{item.item}" >
-                <h:outputText value="#{item.itemTh}"/>
+            <p:column headerText="รายการสินค้า(ไทย)" sortBy="#{item.itemId.itemTh}" >
+                <h:outputText value="#{item.itemId.itemTh}"/>
             </p:column>
             
-            <p:column headerText="ชื่อสินค้า(Eng)" sortBy="#{item.item}" >
-                <h:outputText value="#{item.itemEng}"/>
+            <p:column headerText="รายการสินค้า(Eng)" sortBy="#{item.itemId.itemEng}" >
+                <h:outputText value="#{item.itemId.itemEng}"/>
+            </p:column>
+            
+            <p:column  headerText="วันที่ทำรายการ" sortBy="#{item.createdDt}" >
+                <h:outputText value="#{item.createdDt}">
+                    <f:convertDateTime pattern="dd-MM-yyyy"/>
+                </h:outputText>
+            </p:column>
+            
+            <p:column  headerText="วันที่ทำรายการล่าสุด" sortBy="#{item.modifiedDt}" >
+                <h:outputText value="#{item.modifiedDt}">
+                    <f:convertDateTime pattern="dd-MM-yyyy"/>
+                </h:outputText>
+            </p:column>
+            
+            <p:column headerText="จำนวน" sortBy="#{item.companyQty}" >
+                <h:outputText  value="#{item.companyQty}"  style="float: right;" styleClass="lb_bold">
+                   <f:convertNumber  pattern="#,##0.00"/>
+               </h:outputText>  
             </p:column>
 
-            <p:column headerText="หน่วย" sortBy="#{item.itemUnit}" >
-                <h:outputText value="#{item.itemUnit}"/>
+            <p:column headerText="หน่วย" sortBy="#{item.companyUnit}" >
+                <h:outputText value="#{item.companyUnit}"/>
             </p:column>
 
-            <p:column headerText="ราคาต่อหน่อย" sortBy="#{item.itemPrice}" >
-                <h:outputText  value="#{item.itemPrice}"  style="float: right;" styleClass="lb_bold">
+            <p:column headerText="ราคาต่อหน่อย" sortBy="#{item.companyPrice}" >
+                <h:outputText  value="#{item.companyPrice}"  style="float: right;" styleClass="lb_bold">
                    <f:convertNumber  pattern="#,##0.00"/>
                </h:outputText>  
             </p:column>

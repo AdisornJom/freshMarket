@@ -1,17 +1,15 @@
 package com.fresh.market.jsf.controller.warehouse;
 
-import com.fresh.market.core.ejb.entity.SysItem;
-import com.fresh.market.core.util.DateTimeUtil;
-import com.fresh.market.core.util.MessageBundleLoader;
+import com.fresh.market.core.ejb.entity.SysCompany;
+import com.fresh.market.core.ejb.entity.SysItemCompany;
+import com.fresh.market.ejb.facade.CustomFacade;
 import com.fresh.market.ejb.facade.WareHouseFacade;
 import com.fresh.market.jsf.common.UserInfoController;
-import com.fresh.market.jsf.model.LazyItemDataModel;
+import com.fresh.market.jsf.model.LazyItemCompanyDataModel;
 import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
-import java.math.BigDecimal;
-import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -19,9 +17,7 @@ import javax.inject.Named;
 import javax.inject.Inject;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
-import org.omnifaces.util.Messages;
 import org.primefaces.component.datatable.DataTable;
-import org.primefaces.context.RequestContext;
 import org.primefaces.model.LazyDataModel;
 import org.slf4j.LoggerFactory;
 
@@ -36,15 +32,20 @@ public class W102Controller implements Serializable {
     private UserInfoController userInfo;
     @Inject
     private WareHouseFacade wareHouseFacade;
+    @Inject
+    private CustomFacade customFacade;
 
-    private List<SysItem> items;
-    private SysItem selected;
+    private List<SysItemCompany> items;
+    private SysItemCompany selected;
     
-    private LazyDataModel<SysItem> lazyModel;
+    private LazyDataModel<SysItemCompany> lazyModel;
 
     //find by criteria
+    private SysCompany sysCompany_find;
     private String itemName;
     private String status;
+    private Date startDate;
+    private Date toDate;
 
     @PostConstruct
     public void init() {
@@ -53,7 +54,7 @@ public class W102Controller implements Serializable {
 
     public void search() {
         try {
-            lazyModel = new LazyItemDataModel(wareHouseFacade, StringUtils.trimToEmpty(itemName),"Y");
+            lazyModel = new LazyItemCompanyDataModel(wareHouseFacade,(null!=sysCompany_find)?sysCompany_find:null,StringUtils.trimToEmpty(itemName),"Y");
             DataTable dataTable = (DataTable) FacesContext.getCurrentInstance().getViewRoot().findComponent("listForm:itemTable");
             if (null != dataTable) {
                 dataTable.setFirst(0);
@@ -64,7 +65,7 @@ public class W102Controller implements Serializable {
     }
 
     public String prepareCreate() {
-        selected = new SysItem();
+        selected = new SysItemCompany();
         return "create?faces-redirect=true";
     }
 
@@ -72,7 +73,7 @@ public class W102Controller implements Serializable {
         return "edit?faces-redirect=true";
     }
     //..........................................................................................................................................................................................................................      
-   public String create() {
+/*   public String create() {
         try {
 
             if (StringUtils.isEmpty(selected.getItemCode())) {
@@ -165,10 +166,29 @@ public class W102Controller implements Serializable {
             LOG.error(ex.getMessage(), ex);
         }
     }
-
+    */
+    //Auto Complete==========================================================================  
+     //Auto complete Foreman
+    public List<SysCompany> completeCompany(String query) {
+         List<SysCompany> filteredSysCompany = new ArrayList<>();
+       try {
+            List<SysCompany> allCompanys = customFacade.findSysCompanyList();
+            for (SysCompany sysCompany:allCompanys) {
+               if(sysCompany.getCompanyNameTh()!=null && sysCompany.getCompanyNameTh().length()>0){
+                if(sysCompany.getCompanyNameTh().toLowerCase().startsWith(query)) {
+                    filteredSysCompany.add(sysCompany);
+                }
+               }
+            }
+         } catch (Exception ex) {
+            LOG.error(ex.getMessage(), ex);
+        }
+        return filteredSysCompany;
+    }
+ //End Auto Complete==========================================================================  
 
     private void clearData() {
-         selected=new SysItem();
+         selected=new SysItemCompany();
     }
 
     public String cancel() {
@@ -177,29 +197,31 @@ public class W102Controller implements Serializable {
         return "index?faces-redirect=true";
     }
 
-    public List<SysItem> getItems() {
+    public List<SysItemCompany> getItems() {
         return items;
     }
 
-    public void setItems(List<SysItem> items) {
+    public void setItems(List<SysItemCompany> items) {
         this.items = items;
     }
 
-    public SysItem getSelected() {
+    public SysItemCompany getSelected() {
         return selected;
     }
 
-    public void setSelected(SysItem selected) {
+    public void setSelected(SysItemCompany selected) {
         this.selected = selected;
     }
 
-    public LazyDataModel<SysItem> getLazyModel() {
+    public LazyDataModel<SysItemCompany> getLazyModel() {
         return lazyModel;
     }
 
-    public void setLazyModel(LazyDataModel<SysItem> lazyModel) {
+    public void setLazyModel(LazyDataModel<SysItemCompany> lazyModel) {
         this.lazyModel = lazyModel;
     }
+
+   
 
     public String getItemName() {
         return itemName;
@@ -215,6 +237,30 @@ public class W102Controller implements Serializable {
 
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    public SysCompany getSysCompany_find() {
+        return sysCompany_find;
+    }
+
+    public void setSysCompany_find(SysCompany sysCompany_find) {
+        this.sysCompany_find = sysCompany_find;
+    }
+
+    public Date getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
+    }
+
+    public Date getToDate() {
+        return toDate;
+    }
+
+    public void setToDate(Date toDate) {
+        this.toDate = toDate;
     }
 
     

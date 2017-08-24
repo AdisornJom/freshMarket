@@ -35,6 +35,8 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "SysCompany.findAll", query = "SELECT s FROM SysCompany s")})
 public class SysCompany implements Serializable {
 
+    
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -53,6 +55,15 @@ public class SysCompany implements Serializable {
     @Size(max = 5)
     @Column(name = "status")
     private String status;
+    @Size(max = 255)
+    @Column(name = "company_address")
+    private String companyAddress;
+    @Size(max = 20)
+    @Column(name = "company_tel")
+    private String companyTel;
+    @Size(max = 255)
+    @Column(name = "remark")
+    private String remark;
     @Column(name = "created_dt")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDt;
@@ -179,6 +190,30 @@ public class SysCompany implements Serializable {
     @Override
     public String toString() {
         return "com.fresh.market.core.ejb.entity.SysCompany[ companyId=" + companyId + " ]";
+    }
+
+    public String getCompanyAddress() {
+        return companyAddress;
+    }
+
+    public void setCompanyAddress(String companyAddress) {
+        this.companyAddress = companyAddress;
+    }
+
+    public String getCompanyTel() {
+        return companyTel;
+    }
+
+    public void setCompanyTel(String companyTel) {
+        this.companyTel = companyTel;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
     }
     
 }

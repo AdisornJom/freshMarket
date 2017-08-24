@@ -27,6 +27,18 @@ public class SysCompanyDAO extends AbstractDAO<SysCompany> {
     public SysCompanyDAO() {
         super(SysCompany.class);
     }
+    
+    public List<SysCompany> findSysCompanyList() {
+        Query q = em.createQuery("select o from SysCompany o where o.status ='Y'");
+        return q.getResultList();
+    }
+
+    public SysCompany findSysCompanyById(SysCompany sysCompany) {
+        Query q = em.createQuery("select o from SysCompany o where o.companyId =:companyId order by companyNameTh asc ");
+        q.setParameter("companyId", sysCompany.getCompanyId());
+
+        return (SysCompany) q.getSingleResult();
+    }
 
     public List<SysCompany> findSysCompanyByCriteria(String companyNameTh, String status, int[] range) throws Exception {
         StringBuilder sb = new StringBuilder("SELECT u FROM SysCompany u WHERE 1=1");

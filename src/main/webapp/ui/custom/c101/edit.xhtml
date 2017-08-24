@@ -21,11 +21,10 @@
                             <div class="ui-fluid">
                                 <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-3,ui-grid-col-8" styleClass="ui-panelgrid-blank form-group">
                                    <h:panelGroup>
-                                        <p:outputLabel value="รหัสสินค้า :" />
-                                        <font class="require" style="color: red">*</font>
+                                        <p:outputLabel value="รหัสบริษัท :" />
                                     </h:panelGroup>
                                     <h:panelGroup>
-                                        <p:inputText  value="#{c101Controller.selected.itemCode}"/>
+                                        <h:outputText  value="#{c101Controller.selected.companyCode}"/>
                                     </h:panelGroup>
 
                                    <h:panelGroup>
@@ -33,41 +32,35 @@
                                         <font class="require" style="color: red">*</font>
                                     </h:panelGroup>
                                     <h:panelGroup>
-                                        <p:inputText  value="#{c101Controller.selected.itemTh}" />
+                                        <p:inputText  value="#{c101Controller.selected.companyNameTh}" />
                                     </h:panelGroup>
                                     
                                     <h:panelGroup>
                                         <p:outputLabel  value="ชื่อสินค้า(Eng) :" />
                                     </h:panelGroup>
                                     <h:panelGroup>
-                                        <p:inputText  value="#{c101Controller.selected.itemEng}" />
+                                        <p:inputText  value="#{c101Controller.selected.companyNameEng}" />
                                     </h:panelGroup>
 
                                     <h:panelGroup>
-                                        <p:outputLabel  value="หน่วย :" />
-                                        <font class="require" style="color: red">*</font>
+                                        <p:outputLabel  value="ที่อยู่ :" />
                                     </h:panelGroup>
                                     <h:panelGroup>
-                                        <p:selectOneMenu id="unit" value="#{c101Controller.selected.itemUnit}"  >
-                                            <f:selectItems value="#{comboController.equipments}" />
-                                        </p:selectOneMenu>
+                                        <p:inputText  value="#{c101Controller.selected.companyAddress}" />
                                     </h:panelGroup>
 
                                     <h:panelGroup>
-                                        <p:outputLabel  value="ราคาต่อหน่วย :" />
-                                        <font class="require" style="color: red">*</font>
+                                        <p:outputLabel  value="เบอร์โทร :" />
                                     </h:panelGroup>
                                     <h:panelGroup>
-                                         <p:inputText  value="#{c101Controller.selected.itemPrice}" style="vertical-align:middle;">
-                                            <f:convertNumber  pattern="#,##0.00"/>
-                                        </p:inputText>
+                                        <p:inputText  value="#{c101Controller.selected.companyTel}" />
                                     </h:panelGroup>
 
                                     <h:panelGroup>
                                         <p:outputLabel  value="หมายเหตุ :" />
                                     </h:panelGroup>
                                     <h:panelGroup>
-                                        <p:inputTextarea id="address" value="#{c101Controller.selected.itemRemark}" cols="50" rows="3" 
+                                        <p:inputTextarea id="address" value="#{c101Controller.selected.remark}" cols="50" rows="3" 
                                            maxlength="250" />
                                     </h:panelGroup>
                                 </p:panelGrid>

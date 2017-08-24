@@ -17,6 +17,15 @@ public class CustomBO {
     @EJB
     private SysCompanyDAO sysCompanyDAO;
 
+        
+    public List<SysCompany> findSysCompanyList() throws Exception {
+        return sysCompanyDAO.findSysCompanyList();
+    }
+    
+    public SysCompany findSysCompanyById(SysCompany sysCompany) throws Exception {
+        return sysCompanyDAO.findSysCompanyById(sysCompany);
+    }
+     
     public List<SysCompany> findSysCompanyByCriteria(String companyNameTh, String status, int[] range) throws Exception {
         return sysCompanyDAO.findSysCompanyByCriteria(companyNameTh, status, range);
     }

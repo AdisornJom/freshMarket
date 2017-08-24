@@ -6,6 +6,8 @@
 package com.fresh.market.core.ejb.entity;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,6 +19,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -37,16 +41,17 @@ public class SysItemCompany implements Serializable {
     @Basic(optional = false)
     @Column(name = "item_company_id")
     private Integer itemCompanyId;
-    @Size(max = 10)
+   
+    @Size(max = 20)
     @Column(name = "company_unit")
     private String companyUnit;
-    @Size(max = 10)
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "company_qty")
-    private String companyQty;
-    @Size(max = 10)
+    private BigDecimal companyQty;
     @Column(name = "company_price")
-    private String companyPrice;
-    @Size(max = 10)
+    private BigDecimal companyPrice;
+    
+    @Size(max = 255)
     @Column(name = "company_remark")
     private String companyRemark;
     @Size(max = 5)
@@ -58,6 +63,19 @@ public class SysItemCompany implements Serializable {
     @JoinColumn(name = "item_id", referencedColumnName = "item_id")
     @ManyToOne
     private SysItem itemId;
+    
+    @Column(name = "created_dt")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdDt;
+    @Size(max = 32)
+    @Column(name = "created_by")
+    private String createdBy;
+    @Column(name = "modified_dt")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date modifiedDt;
+    @Size(max = 32)
+    @Column(name = "modified_by")
+    private String modifiedBy;
 
     public SysItemCompany() {
     }
@@ -82,21 +100,22 @@ public class SysItemCompany implements Serializable {
         this.companyUnit = companyUnit;
     }
 
-    public String getCompanyQty() {
+    public BigDecimal getCompanyQty() {
         return companyQty;
     }
 
-    public void setCompanyQty(String companyQty) {
+    public void setCompanyQty(BigDecimal companyQty) {
         this.companyQty = companyQty;
     }
 
-    public String getCompanyPrice() {
+    public BigDecimal getCompanyPrice() {
         return companyPrice;
     }
 
-    public void setCompanyPrice(String companyPrice) {
+    public void setCompanyPrice(BigDecimal companyPrice) {
         this.companyPrice = companyPrice;
     }
+
 
     public String getCompanyRemark() {
         return companyRemark;
@@ -130,6 +149,39 @@ public class SysItemCompany implements Serializable {
         this.itemId = itemId;
     }
 
+    public Date getCreatedDt() {
+        return createdDt;
+    }
+
+    public void setCreatedDt(Date createdDt) {
+        this.createdDt = createdDt;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public Date getModifiedDt() {
+        return modifiedDt;
+    }
+
+    public void setModifiedDt(Date modifiedDt) {
+        this.modifiedDt = modifiedDt;
+    }
+
+    public String getModifiedBy() {
+        return modifiedBy;
+    }
+
+    public void setModifiedBy(String modifiedBy) {
+        this.modifiedBy = modifiedBy;
+    }
+
+    
     @Override
     public int hashCode() {
         int hash = 0;

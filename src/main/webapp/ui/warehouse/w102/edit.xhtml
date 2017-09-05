@@ -20,27 +20,35 @@
                         <p:panel style="max-width: 900px;margin-bottom: 10px;border-right: 0px;border-radius: 0px;">
                             <div class="ui-fluid">
                                 <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-3,ui-grid-col-8" styleClass="ui-panelgrid-blank form-group">
-                                   <h:panelGroup>
-                                        <p:outputLabel value="รหัสสินค้า :" />
-                                        <font class="require" style="color: red">*</font>
+                                    <h:panelGroup>
+                                        <p:outputLabel value="ชื่อบริษัท :" />
                                     </h:panelGroup>
                                     <h:panelGroup>
-                                        <p:inputText  value="#{w102Controller.selected.itemCode}"/>
+                                        <h:outputText  value="#{w102Controller.selected.companyId.companyNameTh}" styleClass="lb_bold"/>
+                                    </h:panelGroup>
+                                    
+                                     <h:panelGroup>
+                                        <p:outputLabel value="รายการสินค้า(ไทย) :" />
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <h:outputText  value="#{w102Controller.selected.itemId.itemTh}" styleClass="lb_bold"/>
+                                    </h:panelGroup>
+                                    
+                                     <h:panelGroup>
+                                        <p:outputLabel value="รายการสินค้า(Eng) :" />
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <h:outputText  value="#{w102Controller.selected.itemId.itemEng}" styleClass="lb_bold"/>
                                     </h:panelGroup>
 
                                    <h:panelGroup>
-                                        <p:outputLabel  value="ชื่อสินค้า(ไทย) :" />
+                                        <p:outputLabel  value="จำนวน :" />
                                         <font class="require" style="color: red">*</font>
                                     </h:panelGroup>
                                     <h:panelGroup>
-                                        <p:inputText  value="#{w102Controller.selected.itemTh}" />
-                                    </h:panelGroup>
-                                    
-                                    <h:panelGroup>
-                                        <p:outputLabel  value="ชื่อสินค้า(Eng) :" />
-                                    </h:panelGroup>
-                                    <h:panelGroup>
-                                        <p:inputText  value="#{w102Controller.selected.itemEng}" />
+                                        <p:inputText  value="#{w102Controller.selected.companyQty}" style="vertical-align:middle;">
+                                            <f:convertNumber  pattern="#,##0.00"/>
+                                        </p:inputText>
                                     </h:panelGroup>
 
                                     <h:panelGroup>
@@ -48,7 +56,8 @@
                                         <font class="require" style="color: red">*</font>
                                     </h:panelGroup>
                                     <h:panelGroup>
-                                        <p:selectOneMenu id="unit" value="#{w102Controller.selected.itemUnit}"  >
+                                        <p:selectOneMenu id="unit" value="#{w102Controller.selected.companyUnit}"  >
+                                            <f:selectItem  itemLabel="-"  itemValue="" />
                                             <f:selectItems value="#{comboController.equipments}" />
                                         </p:selectOneMenu>
                                     </h:panelGroup>
@@ -58,7 +67,7 @@
                                         <font class="require" style="color: red">*</font>
                                     </h:panelGroup>
                                     <h:panelGroup>
-                                         <p:inputText  value="#{w102Controller.selected.itemPrice}" style="vertical-align:middle;">
+                                        <p:inputText  value="#{w102Controller.selected.companyPrice}" style="vertical-align:middle;">
                                             <f:convertNumber  pattern="#,##0.00"/>
                                         </p:inputText>
                                     </h:panelGroup>
@@ -67,7 +76,7 @@
                                         <p:outputLabel  value="หมายเหตุ :" />
                                     </h:panelGroup>
                                     <h:panelGroup>
-                                        <p:inputTextarea id="address" value="#{w102Controller.selected.itemRemark}" cols="50" rows="3" 
+                                        <p:inputTextarea id="address" value="#{w102Controller.selected.companyRemark}" cols="50" rows="3" 
                                            maxlength="250" />
                                     </h:panelGroup>
                                 </p:panelGrid>

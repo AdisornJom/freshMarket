@@ -22,12 +22,8 @@
                             <p:menuitem id="menuW102" value="W102 - รายการสินค้าต่อบริษัท" action ="#{naviController.gotoMenu('/ui/warehouse/w102/index?faces-redirect=true', 'W102Controller', 'W102 - รายการสินค้าต่อบริษัท')}"/>
                         </p:submenu>
 
-                        <p:submenu id="menuI" label="รายงการ" icon="fa fa-gear" rendered="#{p:ifAnyGranted('ROLE_PG,ROLE_ADMIN,ROLE_SUPER,ROLE_STAFF')}">
-                            <p:menuitem id="menuI101" value="I101 - รายงการที่สั่ง" action ="#{naviController.gotoMenu('/ui/website/w101/index?faces-redirect=true', 'I101Controller', 'I101 - รายงการที่สั่ง')}"/>
-                        </p:submenu>
-                        
                         <p:submenu id="menuB" label="บิล" icon="fa fa-gear" rendered="#{p:ifAnyGranted('ROLE_PG,ROLE_ADMIN,ROLE_SUPER,ROLE_STAFF')}">
-                            <p:menuitem id="menuB101" value="B101 - บิลสินค้า" action ="#{naviController.gotoMenu('/ui/website/w101/index?faces-redirect=true', 'B101Controller', 'B101 - บิลสินค้า')}"/>
+                            <p:menuitem id="menuB101" value="B101 - รายงการที่สั่ง" action ="#{naviController.gotoMenu('/ui/billing/b101/index?faces-redirect=true', 'B101Controller', 'B101 - รายงการที่สั่ง')}"/>
                         </p:submenu>
                         
                         <p:submenu id ="menuR" label="#{msgs['menu.report']}" icon="fa fa-bar-chart" rendered="#{p:ifAnyGranted('ROLE_PG,ROLE_ADMIN,ROLE_SUPER,ROLE_STAFF')}">

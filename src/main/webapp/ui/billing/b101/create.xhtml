@@ -8,7 +8,7 @@
                 xmlns:pe="http://primefaces.org/ui/extensions"
                 template="/templates/default-template.xhtml">
 
-    <ui:define name="viewname">W102 - รายการสินค้าต่อบริษัท / #{msgs['btn.add']}</ui:define>
+    <ui:define name="viewname">B101 - รายการสินค้าที่สั่ง / #{msgs['btn.add']}</ui:define>
     
     <ui:define name="head">
 
@@ -49,15 +49,48 @@
                                             <font class="require">*</font>
                                         </h:panelGroup>
                                         <h:panelGroup>
-                                            <p:autoComplete id="companyName" dropdown="true" value="#{w102Controller.selected.companyId}" 
-                                                            completeMethod="#{w102Controller.completeCompany}" 
+                                            <p:autoComplete id="companyName" dropdown="true" value="#{b101Controller.selected.companyId}" 
+                                                            completeMethod="#{b101Controller.completeCompany}" 
                                                             var="company" itemLabel="#{company.companyNameTh}" 
                                                             itemValue="#{company}" 
                                                             converter="#{companyConverter}"
                                                             scrollHeight="250" forceSelection="true" >
                                                 <p:ajax event="query"  global="false"/>
+                                                <p:ajax event="itemSelect"  global="false"/> 
                                             </p:autoComplete>
                                             <p:watermark  for="companyName" value="กรอกข้อมูลเพื่อ ค้นหา" />
+                                        </h:panelGroup>
+                                    
+                                        <h:panelGroup>
+                                            <p:outputLabel value="วันที่ทำรายการ ："/>
+                                            <font class="require">*</font>
+                                        </h:panelGroup>
+                                        <h:panelGroup>
+                                            <p:calendar binding="#{bindingController.calendar}" value="#{b101Controller.selected.orderDate}" />
+                                        </h:panelGroup>
+                                    
+                                        <h:panelGroup>
+                                            <p:outputLabel value="บิลวันที่ ："/>
+                                            <font class="require">*</font>
+                                        </h:panelGroup>
+                                        <h:panelGroup>
+                                            <p:calendar binding="#{bindingController.calendar}" value="#{b101Controller.selected.billingDate}" />
+                                        </h:panelGroup>
+                                    
+                                        <h:panelGroup>
+                                            <p:outputLabel value="วันที่ส่ง ："/>
+                                            <font class="require">*</font>
+                                        </h:panelGroup>
+                                        <h:panelGroup>
+                                            <p:calendar binding="#{bindingController.calendar}" value="#{b101Controller.selected.sendDate}" />
+                                        </h:panelGroup>
+                                    
+                                    
+                                       <h:panelGroup>
+                                            <p:outputLabel value="หมายเหตุ ："/>
+                                        </h:panelGroup>
+                                        <h:panelGroup>
+                                            <p:inputTextarea value="#{b101Controller.selected.remark}"/>
                                         </h:panelGroup>
                                 </p:panelGrid>
                             </div>
@@ -72,14 +105,14 @@
                                         <font class="require" style="color: red">*</font>
                                     </h:panelGroup>
                                     <h:panelGroup>
-                                        <p:autoComplete id="detail_items" dropdown="true" value="#{w102Controller.sysItem}" 
-                                                        completeMethod="#{w102Controller.completeItem}" 
-                                                        var="item" itemLabel="#{item.itemTh}" 
+                                        <p:autoComplete id="detail_items" dropdown="true" value="#{b101Controller.sysItemCompany}" 
+                                                        completeMethod="#{b101Controller.completeItemCompany}" 
+                                                        var="item" itemLabel="#{item.itemId.itemTh}" 
                                                         itemValue="#{item}" 
-                                                        converter="#{itemConverter}"
+                                                        converter="#{itemCompanyConverter}"
                                                         scrollHeight="250" >
                                             <p:ajax event="query"  global="false"/>
-                                            <p:ajax event="itemSelect"  update="listForm:unitpriceStandard" global="false"/> 
+                                            <p:ajax event="itemSelect"  update="listForm:fieldset" global="false"/> 
                                         </p:autoComplete>
                                         <p:watermark  for="detail_items" value="กรอกข้อมูลเพื่อ ค้นหา" />
                                     </h:panelGroup>
@@ -89,9 +122,9 @@
                                         <font class="require" style="color: red">*</font>
                                     </h:panelGroup>
                                     <h:panelGroup>
-                                        <p:inputText  value="#{w102Controller.itemCompanyDetail_selected.companyQty}" style="vertical-align:middle;">
+                                        <h:outputText  value="#{b101Controller.sysItemCompany.companyQty}" style="vertical-align:middle;">
                                             <f:convertNumber  pattern="#,##0.00"/>
-                                        </p:inputText>
+                                        </h:outputText>
                                     </h:panelGroup>
 
                                     <h:panelGroup>
@@ -99,22 +132,29 @@
                                         <font class="require" style="color: red">*</font>
                                     </h:panelGroup>
                                     <h:panelGroup>
-                                        <p:selectOneMenu id="unit" value="#{w102Controller.itemCompanyDetail_selected.companyUnit}"  >
+                                        <p:selectOneMenu id="unit" value="#{b101Controller.sysItemCompany.companyUnit}" rendered="false" >
                                             <f:selectItem  itemLabel="-"  itemValue="" />
                                             <f:selectItems value="#{comboController.equipments}" />
                                         </p:selectOneMenu>
+                                         <h:outputText  value="#{b101Controller.sysItemCompany.companyUnit}" style="vertical-align:middle;"/>
                                     </h:panelGroup>
-
+                                    
                                     <h:panelGroup>
-                                        <p:outputLabel  value="ราคาต่อหน่วย :" />
+                                        <p:outputLabel  value="ราคาต่อหน่วย(อิงบริษัท) :" />
                                         <font class="require" style="color: red">*</font>
                                     </h:panelGroup>
                                     <h:panelGroup>
-                                        <p:inputText  value="#{w102Controller.itemCompanyDetail_selected.companyPrice}" style="vertical-align:middle;">
+                                        <h:outputText id="unitpriceCompany" value="#{b101Controller.sysItemCompany.companyPrice}" style="vertical-align:middle;">
                                             <f:convertNumber  pattern="#,##0.00"/>
-                                        </p:inputText>
-                                        <p:outputLabel  value="  ราคามาตรฐาน :  " styleClass="lb_bold"/>
-                                        <h:outputText id="unitpriceStandard" value="#{w102Controller.sysItem.itemPrice}" style="width: 50px;color:#f50505;font-weight:bold;" styleClass="lb_bold">
+                                        </h:outputText>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup>
+                                        <p:outputLabel  value="ราคาต่อหน่วย(มาตรฐาน) :" />
+                                        <font class="require" style="color: red">*</font>
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <h:outputText id="unitpriceStandard" value="#{b101Controller.sysItemCompany.itemId.itemPrice}" style="width: 50px;color:#f50505;font-weight:bold;" styleClass="lb_bold">
                                             <f:convertNumber  pattern="#,##0.00"/>
                                         </h:outputText> 
                                          <p:outputLabel  value="  บาท" styleClass="lb_bold"/>
@@ -125,41 +165,41 @@
                                 <h:panelGroup layout="block" style="text-align: center" >
                                     <p:commandButton styleClass="search-btn" binding="#{bindingController.btnAdd}" value="#{msgs['btn.add']}" global="false" 
                                                      update="listForm"
-                                                     actionListener="#{w102Controller.addItemDetail()}">
+                                                     actionListener="#{b101Controller.addItemDetail()}">
                                     </p:commandButton> 
                                 </h:panelGroup>
                             </div>
                         </p:panel>
                         <br/>
-                        <p:dataTable id="dt_itemDetail" binding="#{bindingController.dataTableModel}" value="#{w102Controller.items_add}" var="detail">
+                        <p:dataTable id="dt_itemDetail" binding="#{bindingController.dataTableModel}" value="#{b101Controller.selected.sysBillingDetailList}" var="detail">
                             <p:column headerText="#" style="text-align: center;">
                                 <h:outputText value="#{(rowNumber+1)}" />
                             </p:column>
 
                             <p:column headerText="รายการ"  >
-                                <h:outputText value="#{detail.itemId.itemTh}"  />
+                                <h:outputText value="#{detail.compaynyId.itemId.itemTh}"  />
                             </p:column>
 
                             <p:column headerText="จำนวน" >
-                                <h:outputText  value="#{detail.companyQty}"  style="float: right;">
+                                <h:outputText  value="#{detail.volume}"  style="float: right;">
                                     <f:convertNumber  pattern="#,##0.00"/>
                                 </h:outputText>     
                             </p:column>
                             
                             <p:column headerText="หน่วย" >
-                                <h:outputText value="#{detail.companyUnit}"  />
+                                <h:outputText value="#{detail.unit}"  />
                             </p:column>
 
                             <p:column headerText="ราคา" >
-                                <h:outputText  value="#{detail.companyPrice}"  style="float: right;">
+                                <h:outputText  value="#{detail.price}"  style="float: right;">
                                     <f:convertNumber  pattern="#,##0.00"/>
                                 </h:outputText>     
                             </p:column>
 
                             <p:column headerText="#{msgs['common.manage']}" style="text-align: center">
-                                <p:commandButton title="#{msgs['btn.delete']}" icon="fa fa-trash" action="#{w102Controller.deleteItemDetail()}" styleClass="delete-btn"
-                                                 update="listForm:dt_itemDetail" global="false">
-                                    <f:setPropertyActionListener value="#{detail}" target="#{w102Controller.selected_add}" />
+                                <p:commandButton title="#{msgs['btn.delete']}" icon="fa fa-trash" action="#{b101Controller.deleteItemDetail()}" styleClass="delete-btn"
+                                                update="listForm:dt_itemDetail" global="false">
+                                    <f:setPropertyActionListener value="#{detail}" target="#{b101Controller.sysBillingDetail_selected}" />
                                 </p:commandButton>
                             </p:column>
                         </p:dataTable>
@@ -168,7 +208,7 @@
                 <div class="ui-g-12 ui-md-12 ui-lg-12">
                     <h:panelGrid columns="2">
                         <p:commandButton binding="#{bindingController.btnSave}" value="#{msgs['btn.save']}" update="create_msg,fieldset1,fieldset"
-                                         action="#{w102Controller.create()}" styleClass="edit-btn"/>
+                                         action="#{b101Controller.create()}" styleClass="edit-btn"/>
 
                         <p:commandButton binding="#{bindingController.btnCancel}" value="#{msgs['btn.cancel']}" styleClass="clear-btn"
                                          action="index?faces-redirect=true"/>

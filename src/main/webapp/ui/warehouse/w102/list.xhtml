@@ -10,7 +10,7 @@
         <p:dataTable id="itemTable" var="item" value="#{w102Controller.lazyModel}" binding="#{bindingController.lazyDataTableModel}" reflow="true">
             <f:facet name="header">
                 <div class="ui-fluid">
-                    <p:panelGrid columns="3" layout="grid" columnClasses="ui-grid-col-4,ui-grid-col-4,ui-grid-col-4" styleClass="ui-panelgrid-blank">
+                    <p:panelGrid columns="4" layout="grid" columnClasses="ui-grid-col-3,ui-grid-col-3,ui-grid-col-3,ui-grid-col-3" styleClass="ui-panelgrid-blank">
                         <p:commandButton styleClass="search-btn" binding="#{bindingController.btnAdd}" value="#{msgs['btn.add']}" update="listForm" action="#{w102Controller.prepareCreate()}"/>
                         <h:panelGroup>
                             <p:autoComplete id="companyName" dropdown="true" value="#{w102Controller.sysCompany_find}" 
@@ -21,12 +21,12 @@
                                             scrollHeight="250" forceSelection="true" >
                                 <p:ajax event="query"  global="false"/>
                             </p:autoComplete>
-                            <p:watermark  for="companyName" value="กรอกข้อมูลเพื่อ ค้นหา" />
+                            <p:watermark  for="companyName" value="ค้นหาบริษัท" />
                         </h:panelGroup>
 
                         <p:inputText value="#{w102Controller.itemName}" placeholder="รายการสินค้า"/>
-                        <p:calendar placeholder="#{msgs['common.startDate']}" binding="#{bindingController.calendar}" value="#{w102Controller.startDate}"/>
-                        <p:calendar placeholder="#{msgs['common.toDate']}" binding="#{bindingController.calendar}" value="#{w102Controller.toDate}"/>
+                        <p:calendar placeholder="#{msgs['common.startDate']}" binding="#{bindingController.calendar}" value="#{w102Controller.startDate}" rendered="false"/>
+                        <p:calendar placeholder="#{msgs['common.toDate']}" binding="#{bindingController.calendar}" value="#{w102Controller.toDate}" rendered="false"/>
                         <p:commandButton binding="#{bindingController.btnSearch}" value="#{msgs['btn.search']}" 
                                          actionListener="${w102Controller.search()}" styleClass="search-btn" update="listForm">
                         </p:commandButton>
@@ -39,7 +39,7 @@
             </p:column>
 
             <p:column headerText="ชื่อบริษัท" sortBy="#{item.companyId.companyNameTh}">
-                <h:outputText value="#{item.itemCode}"/>
+                <h:outputText value="#{item.companyId.companyNameTh}"/>
             </p:column>
 
             <p:column headerText="รายการสินค้า(ไทย)" sortBy="#{item.itemId.itemTh}" >

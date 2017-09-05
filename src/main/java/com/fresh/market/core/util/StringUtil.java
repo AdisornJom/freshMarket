@@ -174,4 +174,9 @@ public class StringUtil {
             return false;
         }
     }
+     
+     public static String customFormat(String pattern, int value ) {
+      DecimalFormat myFormatter = new DecimalFormat(pattern);
+      return  myFormatter.format(value);
+   }
 }

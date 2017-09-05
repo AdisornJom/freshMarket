@@ -54,7 +54,7 @@ public class SysBillingDetail implements Serializable {
     @JoinColumn(name = "billing_id", referencedColumnName = "billing_id")
     @ManyToOne
     private SysBilling billingId;
-    @JoinColumn(name = "compayny_id", referencedColumnName = "company_id")
+    @JoinColumn(name = "compayny_id", referencedColumnName = "item_company_id")
     @ManyToOne
     private SysItemCompany compaynyId;
 

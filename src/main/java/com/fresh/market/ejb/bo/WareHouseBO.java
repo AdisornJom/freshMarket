@@ -20,6 +20,15 @@ public class WareHouseBO {
     private ItemDetailDAO itemDetailDAO;
     @EJB
     private ItemCompanyDetailDAO itemCompanyDetailDAO;
+    
+    
+    public List<SysItem> findSysItemList() throws Exception {
+        return itemDetailDAO.findSysItemList();
+    }
+    
+    public SysItem findSysItemById(SysItem sysItem) throws Exception {
+        return itemDetailDAO.findSysItemByById(sysItem);
+    }
 
     public List<SysItem> findSysItemByCriteria(String itemName, String status, int[] range) throws Exception {
         return itemDetailDAO.findSysItemByCriteria(itemName, status, range);
@@ -44,8 +53,24 @@ public class WareHouseBO {
     }
     
     ///SysItemCompany
+    public List<SysItemCompany> findSysItemCompanyList() throws Exception {
+        return itemCompanyDetailDAO.findSysItemCompanyList();
+    }
+    
+    public List<SysItemCompany> findSysItemCompanyListByCompanyId(Integer companyId) throws Exception {
+        return itemCompanyDetailDAO.findSysItemCompanyListByCompanyId(companyId);
+    }
+    
+    public SysItemCompany findSysItemCompanyByById(SysItemCompany sysItemCompany) throws Exception {
+        return itemCompanyDetailDAO.findSysItemCompanyByById(sysItemCompany);
+    }
+    
     public List<SysItemCompany> findSysItemCompanyByCriteria(SysCompany sysCompany,String itemName, String status, int[] range) throws Exception {
         return itemCompanyDetailDAO.findSysItemCompanyByCriteria(sysCompany,itemName, status, range);
+    }
+
+    public List<SysItemCompany> findSysItemCompanyByCriteria(SysCompany sysCompany,SysItem sysItem, String status) throws Exception {
+        return itemCompanyDetailDAO.findSysItemCompanyByCriteria(sysCompany,sysItem, status);
     }
 
     public int countSysItemCompanyByCriteria(SysCompany sysCompany,String itemName, String status) throws Exception {

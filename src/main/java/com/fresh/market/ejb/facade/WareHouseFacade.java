@@ -19,6 +19,14 @@ public class WareHouseFacade implements Serializable {
     @EJB
     private WareHouseBO wareHouseBO;
 
+    public List<SysItem> findSysItemList() throws Exception {
+        return wareHouseBO.findSysItemList();
+    }
+     
+    public SysItem findSysItemById(SysItem sysItem) throws Exception {
+        return wareHouseBO.findSysItemById(sysItem);
+    }
+     
     public List<SysItem> findSysItemByCriteria(String itemName, String status, int[] range) throws Exception {
         return wareHouseBO.findSysItemByCriteria(itemName, status, range);
     }
@@ -40,6 +48,22 @@ public class WareHouseFacade implements Serializable {
     }
     
     ///SysItemCompany
+    public List<SysItemCompany> findSysItemCompanyList() throws Exception {
+        return wareHouseBO.findSysItemCompanyList();
+    }
+    
+    public List<SysItemCompany> findSysItemCompanyListByCompanyId(Integer companyId) throws Exception {
+        return wareHouseBO.findSysItemCompanyListByCompanyId(companyId);
+    }
+    
+    public SysItemCompany findSysItemCompanyByById(SysItemCompany sysItemCompany) throws Exception {
+        return wareHouseBO.findSysItemCompanyByById(sysItemCompany);
+    }
+    
+    public List<SysItemCompany> findSysItemCompanyByCriteria(SysCompany sysCompany,SysItem sysItem, String status) throws Exception {
+        return wareHouseBO.findSysItemCompanyByCriteria(sysCompany,sysItem, status);
+    }
+
     public List<SysItemCompany> findSysItemCompanyByCriteria(SysCompany sysCompany,String itemName, String status, int[] range) throws Exception {
         return wareHouseBO.findSysItemCompanyByCriteria(sysCompany,itemName, status, range);
     }

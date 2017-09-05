@@ -36,12 +36,20 @@
                 <h:outputText value="#{item.companyNameEng}"/>
             </p:column>
 
-            <p:column headerText="ที่อยู่" sortBy="#{item.companyAddress}" >
-                <h:outputText value="#{item.companyAddress}"/>
+            <p:column headerText="ที่อยู่" sortBy="#{item.companyAddressTh}" >
+                <h:outputText value="#{item.companyAddressTh}"/>
             </p:column>
             
             <p:column headerText="เบอร์โทร" sortBy="#{item.companyTel}" >
                 <h:outputText value="#{item.companyTel}"/>
+            </p:column>
+            
+            <p:column headerText="Fax" sortBy="#{item.companyTel}" >
+                <h:outputText value="#{item.companyFax}"/>
+            </p:column>
+            
+            <p:column headerText="TaxID" sortBy="#{item.companyTel}" >
+                <h:outputText value="#{item.companyTaxid}"/>
             </p:column>
             
             <p:column >

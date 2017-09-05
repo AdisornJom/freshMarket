@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                template="/templates/default-template.xhtml">
+
+    <ui:define name="viewname">B101 - รายการสินค้าที่สั่ง / #{msgs['btn.edit']}</ui:define>
+
+    <ui:define name="content">
+        <h:form id="listForm">
+            <div class="ui-g">
+                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                    <p:messages id="edit_msg" autoUpdate="false" showIcon="false"/>
+                </div>
+                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                    <p:fieldset legend="#{msgs['a201.profile.general']}" style="border: 0px;">
+                        <p:panel style="max-width: 900px;margin-bottom: 10px;border-right: 0px;border-radius: 0px;">
+                            <div class="ui-fluid">
+                                <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-3,ui-grid-col-8" styleClass="ui-panelgrid-blank form-group">
+                                    <h:panelGroup>
+                                        <p:outputLabel value="ชื่อบริษัท :" />
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <h:outputText  value="#{b101Controller.selected.companyId.companyNameTh}" styleClass="lb_bold"/>
+                                    </h:panelGroup>
+                                    
+                                     <h:panelGroup>
+                                        <p:outputLabel value="วันที่ทำรายการ :" />
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <h:outputText  value="#{b101Controller.selected.orderDate}" styleClass="lb_bold">
+                                            <f:convertDateTime pattern="dd-MM-yyyy"/>
+                                        </h:outputText>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup>
+                                        <p:outputLabel value="บิลวันที่ ："/>
+                                        <font class="require">*</font>
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <p:calendar binding="#{bindingController.calendar}" value="#{b101Controller.selected.billingDate}" />
+                                    </h:panelGroup>
+
+                                    <h:panelGroup>
+                                        <p:outputLabel value="วันที่ส่ง ："/>
+                                        <font class="require">*</font>
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <p:calendar binding="#{bindingController.calendar}" value="#{b101Controller.selected.sendDate}" />
+                                    </h:panelGroup>
+
+
+                                    <h:panelGroup>
+                                        <p:outputLabel value="หมายเหตุ ："/>
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <p:inputTextarea value="#{b101Controller.selected.remark}"/>
+                                    </h:panelGroup>
+                                </p:panelGrid>
+                            </div>
+
+                        </p:panel>
+                    </p:fieldset>
+                     <p:fieldset id="fieldset" legend="รายละเอียด" style="border: 0px;">
+                        <p:panel style="max-width: 900px;margin-bottom: 10px;border-right: 0px;border-radius: 0px;">
+                            <div class="ui-fluid">
+                                <p:panelGrid columns="2" layout="grid" columnClasses="ui-grid-col-3,ui-grid-col-8" styleClass="ui-panelgrid-blank form-group">
+                                    <h:panelGroup>
+                                        <p:outputLabel  value="รายการ :" />
+                                        <font class="require" style="color: red">*</font>
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <p:autoComplete id="detail_items" dropdown="true" value="#{b101Controller.sysItemCompany}" 
+                                                        completeMethod="#{b101Controller.completeItemCompany}" 
+                                                        var="item" itemLabel="#{item.itemId.itemTh}" 
+                                                        itemValue="#{item}" 
+                                                        converter="#{itemCompanyConverter}"
+                                                        scrollHeight="250" >
+                                            <p:ajax event="query"  global="false"/>
+                                            <p:ajax event="itemSelect"  update="listForm:fieldset" global="false"/> 
+                                        </p:autoComplete>
+                                        <p:watermark  for="detail_items" value="กรอกข้อมูลเพื่อ ค้นหา" />
+                                    </h:panelGroup>
+                                    
+                                    <h:panelGroup>
+                                        <p:outputLabel  value="จำนวน :" />
+                                        <font class="require" style="color: red">*</font>
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <h:outputText  value="#{b101Controller.sysItemCompany.companyQty}" style="vertical-align:middle;">
+                                            <f:convertNumber  pattern="#,##0.00"/>
+                                        </h:outputText>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup>
+                                        <p:outputLabel  value="หน่วย :" />
+                                        <font class="require" style="color: red">*</font>
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <p:selectOneMenu id="unit" value="#{b101Controller.sysItemCompany.companyUnit}" rendered="false" >
+                                            <f:selectItem  itemLabel="-"  itemValue="" />
+                                            <f:selectItems value="#{comboController.equipments}" />
+                                        </p:selectOneMenu>
+                                         <h:outputText  value="#{b101Controller.sysItemCompany.companyUnit}" style="vertical-align:middle;"/>
+                                    </h:panelGroup>
+                                    
+                                    <h:panelGroup>
+                                        <p:outputLabel  value="ราคาต่อหน่วย(อิงบริษัท) :" />
+                                        <font class="require" style="color: red">*</font>
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <h:outputText id="unitpriceCompany" value="#{b101Controller.sysItemCompany.companyPrice}" style="vertical-align:middle;">
+                                            <f:convertNumber  pattern="#,##0.00"/>
+                                        </h:outputText>
+                                    </h:panelGroup>
+
+                                    <h:panelGroup>
+                                        <p:outputLabel  value="ราคาต่อหน่วย(มาตรฐาน) :" />
+                                        <font class="require" style="color: red">*</font>
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <h:outputText id="unitpriceStandard" value="#{b101Controller.sysItemCompany.itemId.itemPrice}" style="width: 50px;color:#f50505;font-weight:bold;" styleClass="lb_bold">
+                                            <f:convertNumber  pattern="#,##0.00"/>
+                                        </h:outputText> 
+                                         <p:outputLabel  value="  บาท" styleClass="lb_bold"/>
+                                    </h:panelGroup>
+                                </p:panelGrid>
+                                <br/>
+
+                                <h:panelGroup layout="block" style="text-align: center" >
+                                    <p:commandButton styleClass="search-btn" binding="#{bindingController.btnAdd}" value="#{msgs['btn.add']}" global="false" 
+                                                     update="listForm"
+                                                     actionListener="#{b101Controller.addItemDetail()}">
+                                    </p:commandButton> 
+                                </h:panelGroup>
+                            </div>
+                        </p:panel>
+                        <br/>
+                        <p:dataTable id="dt_itemDetail" binding="#{bindingController.dataTableModel}" value="#{b101Controller.selected.sysBillingDetailList}" var="detail">
+                            <p:column headerText="#" style="text-align: center;">
+                                <h:outputText value="#{(rowNumber+1)}" />
+                            </p:column>
+
+                            <p:column headerText="รายการ"  >
+                                <h:outputText value="#{detail.compaynyId.itemId.itemTh}"  />
+                            </p:column>
+
+                            <p:column headerText="จำนวน" >
+                                <h:outputText  value="#{detail.volume}"  style="float: right;">
+                                    <f:convertNumber  pattern="#,##0.00"/>
+                                </h:outputText>     
+                            </p:column>
+                            
+                            <p:column headerText="หน่วย" >
+                                <h:outputText value="#{detail.unit}"  />
+                            </p:column>
+
+                            <p:column headerText="ราคา" >
+                                <h:outputText  value="#{detail.price}"  style="float: right;">
+                                    <f:convertNumber  pattern="#,##0.00"/>
+                                </h:outputText>     
+                            </p:column>
+
+                            <p:column headerText="#{msgs['common.manage']}" style="text-align: center">
+                                <p:commandButton title="#{msgs['btn.delete']}" icon="fa fa-trash" action="#{b101Controller.deleteItemDetail()}" styleClass="delete-btn"
+                                                update="listForm:dt_itemDetail" global="false">
+                                    <f:setPropertyActionListener value="#{detail}" target="#{b101Controller.sysBillingDetail_selected}" />
+                                </p:commandButton>
+                            </p:column>
+                        </p:dataTable>
+                    </p:fieldset>
+                </div>
+
+                <div class="ui-g-12 ui-md-12 ui-lg-12">
+                    <h:panelGrid columns="2">
+                        <p:commandButton binding="#{bindingController.btnSave}" value="#{msgs['btn.save']}" update="edit_msg"
+                                         action="#{b101Controller.edit()}" styleClass="edit-btn"/>
+
+                        <p:commandButton binding="#{bindingController.btnCancel}" value="#{msgs['btn.cancel']}" styleClass="clear-btn"
+                                         action="#{b101Controller.cancel()}"/>
+                    </h:panelGrid> 
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

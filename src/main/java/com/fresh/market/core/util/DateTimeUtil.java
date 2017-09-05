@@ -53,8 +53,24 @@ public class DateTimeUtil {
         return h + m + s + dt.getMillisOfSecond() + "ms";
     }
 
+    public static String cvtDateForShow(Date sDateValue, String pattern, Locale locale) {
+        if (sDateValue == null) {
+            return "";
+        }
+        //Locale.setDefault(Locale.US);
+        SimpleDateFormat formatter = new SimpleDateFormat(pattern, locale);
+        String strDateLocal = formatter.format(sDateValue);
+        return strDateLocal;
+    }
+    
     public static Date getSystemDate() {
         Calendar c = new GregorianCalendar(Locale.US);
+        return c.getTime();
+    }
+    
+    public static Date currentDate() {
+        Calendar c = new GregorianCalendar(new Locale("th", "TH"));
+        c.setTimeInMillis(System.currentTimeMillis());
         return c.getTime();
     }
     

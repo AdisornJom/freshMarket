@@ -10,11 +10,15 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -74,9 +78,8 @@ public class SysBilling implements Serializable {
     @Column(name = "bill_date_last")
     @Temporal(TemporalType.TIMESTAMP)
     private Date billDateLast;
-    @Size(max = 10)
     @Column(name = "status")
-    private String status;
+    private Integer status;
     @Column(name = "created_dt")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDt;
@@ -89,8 +92,14 @@ public class SysBilling implements Serializable {
     @Size(max = 80)
     @Column(name = "modified_by")
     private String modifiedBy;
-    @OneToMany(mappedBy = "billingId")
+    
+  //  @OneToMany(mappedBy = "billingId")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "billingId", cascade = CascadeType.ALL,orphanRemoval=true)
     private List<SysBillingDetail> sysBillingDetailList;
+    
+    @JoinColumn(name = "company_id", referencedColumnName = "company_id")
+    @ManyToOne
+    private SysCompany companyId;
 
     public SysBilling() {
     }
@@ -203,13 +212,15 @@ public class SysBilling implements Serializable {
         this.billDateLast = billDateLast;
     }
 
-    public String getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Integer status) {
         this.status = status;
     }
+
+    
 
     public Date getCreatedDt() {
         return createdDt;
@@ -250,6 +261,14 @@ public class SysBilling implements Serializable {
 
     public void setSysBillingDetailList(List<SysBillingDetail> sysBillingDetailList) {
         this.sysBillingDetailList = sysBillingDetailList;
+    }
+
+    public SysCompany getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(SysCompany companyId) {
+        this.companyId = companyId;
     }
 
     @Override

@@ -35,7 +35,11 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "SysCompany.findAll", query = "SELECT s FROM SysCompany s")})
 public class SysCompany implements Serializable {
 
-    
+    @OneToMany(mappedBy = "companyId")
+    private List<SysBilling> sysBillingList;
+
+    @OneToMany(mappedBy = "companyId")
+    private List<SysItemCompany> sysItemCompanyList;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -55,15 +59,6 @@ public class SysCompany implements Serializable {
     @Size(max = 5)
     @Column(name = "status")
     private String status;
-    @Size(max = 255)
-    @Column(name = "company_address")
-    private String companyAddress;
-    @Size(max = 20)
-    @Column(name = "company_tel")
-    private String companyTel;
-    @Size(max = 255)
-    @Column(name = "remark")
-    private String remark;
     @Column(name = "created_dt")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDt;
@@ -76,8 +71,24 @@ public class SysCompany implements Serializable {
     @Size(max = 80)
     @Column(name = "modified_by")
     private String modifiedBy;
-    @OneToMany(mappedBy = "companyId")
-    private List<SysItemCompany> sysItemCompanyList;
+    @Size(max = 255)
+    @Column(name = "company_address_th")
+    private String companyAddressTh;
+    @Size(max = 20)
+    @Column(name = "company_tel")
+    private String companyTel;
+    @Size(max = 255)
+    @Column(name = "remark")
+    private String remark;
+    @Size(max = 20)
+    @Column(name = "company_fax")
+    private String companyFax;
+    @Size(max = 13)
+    @Column(name = "company_taxid")
+    private String companyTaxid;
+    @Size(max = 255)
+    @Column(name = "company_address_eng")
+    private String companyAddressEng;
 
     public SysCompany() {
     }
@@ -158,13 +169,52 @@ public class SysCompany implements Serializable {
         this.modifiedBy = modifiedBy;
     }
 
-    @XmlTransient
-    public List<SysItemCompany> getSysItemCompanyList() {
-        return sysItemCompanyList;
+    public String getCompanyAddressTh() {
+        return companyAddressTh;
     }
 
-    public void setSysItemCompanyList(List<SysItemCompany> sysItemCompanyList) {
-        this.sysItemCompanyList = sysItemCompanyList;
+    public void setCompanyAddressTh(String companyAddressTh) {
+        this.companyAddressTh = companyAddressTh;
+    }
+
+    public String getCompanyTel() {
+        return companyTel;
+    }
+
+    public void setCompanyTel(String companyTel) {
+        this.companyTel = companyTel;
+    }
+
+    public String getRemark() {
+        return remark;
+    }
+
+    public void setRemark(String remark) {
+        this.remark = remark;
+    }
+
+    public String getCompanyFax() {
+        return companyFax;
+    }
+
+    public void setCompanyFax(String companyFax) {
+        this.companyFax = companyFax;
+    }
+
+    public String getCompanyTaxid() {
+        return companyTaxid;
+    }
+
+    public void setCompanyTaxid(String companyTaxid) {
+        this.companyTaxid = companyTaxid;
+    }
+
+    public String getCompanyAddressEng() {
+        return companyAddressEng;
+    }
+
+    public void setCompanyAddressEng(String companyAddressEng) {
+        this.companyAddressEng = companyAddressEng;
     }
 
     @Override
@@ -192,28 +242,22 @@ public class SysCompany implements Serializable {
         return "com.fresh.market.core.ejb.entity.SysCompany[ companyId=" + companyId + " ]";
     }
 
-    public String getCompanyAddress() {
-        return companyAddress;
+    @XmlTransient
+    public List<SysItemCompany> getSysItemCompanyList() {
+        return sysItemCompanyList;
     }
 
-    public void setCompanyAddress(String companyAddress) {
-        this.companyAddress = companyAddress;
+    public void setSysItemCompanyList(List<SysItemCompany> sysItemCompanyList) {
+        this.sysItemCompanyList = sysItemCompanyList;
     }
 
-    public String getCompanyTel() {
-        return companyTel;
+    @XmlTransient
+    public List<SysBilling> getSysBillingList() {
+        return sysBillingList;
     }
 
-    public void setCompanyTel(String companyTel) {
-        this.companyTel = companyTel;
-    }
-
-    public String getRemark() {
-        return remark;
-    }
-
-    public void setRemark(String remark) {
-        this.remark = remark;
+    public void setSysBillingList(List<SysBilling> sysBillingList) {
+        this.sysBillingList = sysBillingList;
     }
     
 }

@@ -42,11 +42,19 @@
                                         <p:inputText  value="#{c101Controller.selected.companyNameEng}" />
                                     </h:panelGroup>
 
-                                    <h:panelGroup>
-                                        <p:outputLabel  value="ที่อยู่ :" />
+                                      <h:panelGroup>
+                                        <p:outputLabel  value="ที่อยู่(ไทย) :" />
+                                        <font class="require" style="color: red">*</font>
                                     </h:panelGroup>
                                     <h:panelGroup>
-                                        <p:inputText  value="#{c101Controller.selected.companyAddress}" />
+                                        <p:inputText  value="#{c101Controller.selected.companyAddressTh}" />
+                                    </h:panelGroup>
+                                    
+                                     <h:panelGroup>
+                                        <p:outputLabel  value="ที่อยู่(Eng) :" />
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <p:inputText  value="#{c101Controller.selected.companyAddressEng}" />
                                     </h:panelGroup>
 
                                     <h:panelGroup>
@@ -55,6 +63,21 @@
                                     <h:panelGroup>
                                         <p:inputText  value="#{c101Controller.selected.companyTel}" />
                                     </h:panelGroup>
+                                    
+                                     <h:panelGroup>
+                                        <p:outputLabel  value="Fax :" />
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <p:inputText  value="#{c101Controller.selected.companyFax}" />
+                                    </h:panelGroup>
+
+                                     <h:panelGroup>
+                                        <p:outputLabel  value="TaxID :" />
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <p:inputText  value="#{c101Controller.selected.companyTaxid}" maxlength="13"/>
+                                    </h:panelGroup>
+                                    
 
                                     <h:panelGroup>
                                         <p:outputLabel  value="หมายเหตุ :" />

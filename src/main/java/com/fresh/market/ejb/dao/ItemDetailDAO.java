@@ -28,6 +28,18 @@ public class ItemDetailDAO extends AbstractDAO<SysItem> {
         super(SysItem.class);
     }
 
+    public List<SysItem> findSysItemList() {
+        Query q = em.createQuery("select o from SysItem o where o.itemStatus ='Y' order by  o.itemTh asc");
+        return q.getResultList();
+    }
+    
+    public SysItem findSysItemByById(SysItem sysItem) {
+        Query q = em.createQuery("select o from SysItem o where o.itemId =:itemId order by  o.itemTh asc ");
+        q.setParameter("itemId", sysItem.getItemId());
+
+        return (SysItem) q.getSingleResult();
+    }
+    
     public List<SysItem> findSysItemByCriteria(String itemName, String status, int[] range) throws Exception {
         StringBuilder sb = new StringBuilder("SELECT u FROM SysItem u WHERE 1=1");
 

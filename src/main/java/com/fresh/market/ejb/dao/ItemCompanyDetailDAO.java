@@ -1,6 +1,7 @@
 package com.fresh.market.ejb.dao;
 
 import com.fresh.market.core.ejb.entity.SysCompany;
+import com.fresh.market.core.ejb.entity.SysItem;
 import com.fresh.market.core.ejb.entity.SysItemCompany;
 import com.fresh.market.core.util.Persistence;
 import java.util.List;
@@ -29,6 +30,54 @@ public class ItemCompanyDetailDAO extends AbstractDAO<SysItemCompany> {
         super(SysItemCompany.class);
     }
 
+    public List<SysItemCompany> findSysItemCompanyList() {
+        Query q = em.createQuery("select o from SysItemCompany o where o.companyStatus ='Y' order by  o.itemCompanyId asc");
+        return q.getResultList();
+    }
+    
+    public List<SysItemCompany> findSysItemCompanyListByCompanyId(Integer companyId) {
+        Query q = em.createQuery("select o from SysItemCompany o where o.companyStatus ='Y' and o.companyId.companyId=:companyId order by  o.itemCompanyId asc");
+        q.setParameter("companyId", companyId);
+        
+        return q.getResultList();
+    }
+    
+    public SysItemCompany findSysItemCompanyByById(SysItemCompany sysItemCompany) {
+        Query q = em.createQuery("select o from SysItemCompany o where o.itemCompanyId =:itemCompanyId order by  o.itemCompanyId asc ");
+        q.setParameter("itemCompanyId", sysItemCompany.getItemCompanyId());
+
+        return (SysItemCompany) q.getSingleResult();
+    }
+    
+    public List<SysItemCompany> findSysItemCompanyByCriteria(SysCompany sysCompany,SysItem sysItem, String status) throws Exception {
+        StringBuilder sb = new StringBuilder("SELECT u FROM SysItemCompany u WHERE 1=1");
+
+        if (null != sysCompany) {
+            sb.append("AND u.companyId.companyId = :companyId ");
+        }
+        if (null != sysItem) {
+            sb.append("AND u.itemId.itemId =:itemId ");
+        }
+        if (StringUtils.isNotBlank(status)) {
+            sb.append("AND u.companyStatus = :status ");
+        }
+
+        sb.append("ORDER BY u.createdDt DESC ");
+
+        Query q = em.createQuery(sb.toString());
+        if (null != sysCompany) {
+            q.setParameter("companyId", sysCompany.getCompanyId());
+        }
+        if (null != sysItem) {
+            q.setParameter("itemId", sysItem.getItemId());
+        }
+        if (StringUtils.isNotBlank(status)) {
+            q.setParameter("status", status);
+        }
+
+        return q.getResultList();
+    }
+    
     public List<SysItemCompany> findSysItemCompanyByCriteria(SysCompany sysCompany,String itemName, String status, int[] range) throws Exception {
         StringBuilder sb = new StringBuilder("SELECT u FROM SysItemCompany u WHERE 1=1");
 

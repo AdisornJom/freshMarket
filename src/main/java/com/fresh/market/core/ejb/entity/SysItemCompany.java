@@ -8,6 +8,7 @@ package com.fresh.market.core.ejb.entity;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,11 +19,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -35,13 +38,15 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "SysItemCompany.findAll", query = "SELECT s FROM SysItemCompany s")})
 public class SysItemCompany implements Serializable {
 
+    @OneToMany(mappedBy = "compaynyId")
+    private List<SysBillingDetail> sysBillingDetailList;
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Basic(optional = false)
     @Column(name = "item_company_id")
     private Integer itemCompanyId;
-   
     @Size(max = 20)
     @Column(name = "company_unit")
     private String companyUnit;
@@ -50,20 +55,12 @@ public class SysItemCompany implements Serializable {
     private BigDecimal companyQty;
     @Column(name = "company_price")
     private BigDecimal companyPrice;
-    
     @Size(max = 255)
     @Column(name = "company_remark")
     private String companyRemark;
     @Size(max = 5)
     @Column(name = "company_status")
     private String companyStatus;
-    @JoinColumn(name = "company_id", referencedColumnName = "company_id")
-    @ManyToOne
-    private SysCompany companyId;
-    @JoinColumn(name = "item_id", referencedColumnName = "item_id")
-    @ManyToOne
-    private SysItem itemId;
-    
     @Column(name = "created_dt")
     @Temporal(TemporalType.TIMESTAMP)
     private Date createdDt;
@@ -76,6 +73,12 @@ public class SysItemCompany implements Serializable {
     @Size(max = 32)
     @Column(name = "modified_by")
     private String modifiedBy;
+    @JoinColumn(name = "company_id", referencedColumnName = "company_id")
+    @ManyToOne
+    private SysCompany companyId;
+    @JoinColumn(name = "item_id", referencedColumnName = "item_id")
+    @ManyToOne
+    private SysItem itemId;
 
     public SysItemCompany() {
     }
@@ -116,7 +119,6 @@ public class SysItemCompany implements Serializable {
         this.companyPrice = companyPrice;
     }
 
-
     public String getCompanyRemark() {
         return companyRemark;
     }
@@ -131,22 +133,6 @@ public class SysItemCompany implements Serializable {
 
     public void setCompanyStatus(String companyStatus) {
         this.companyStatus = companyStatus;
-    }
-
-    public SysCompany getCompanyId() {
-        return companyId;
-    }
-
-    public void setCompanyId(SysCompany companyId) {
-        this.companyId = companyId;
-    }
-
-    public SysItem getItemId() {
-        return itemId;
-    }
-
-    public void setItemId(SysItem itemId) {
-        this.itemId = itemId;
     }
 
     public Date getCreatedDt() {
@@ -181,7 +167,22 @@ public class SysItemCompany implements Serializable {
         this.modifiedBy = modifiedBy;
     }
 
-    
+    public SysCompany getCompanyId() {
+        return companyId;
+    }
+
+    public void setCompanyId(SysCompany companyId) {
+        this.companyId = companyId;
+    }
+
+    public SysItem getItemId() {
+        return itemId;
+    }
+
+    public void setItemId(SysItem itemId) {
+        this.itemId = itemId;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -205,6 +206,15 @@ public class SysItemCompany implements Serializable {
     @Override
     public String toString() {
         return "com.fresh.market.core.ejb.entity.SysItemCompany[ itemCompanyId=" + itemCompanyId + " ]";
+    }
+
+    @XmlTransient
+    public List<SysBillingDetail> getSysBillingDetailList() {
+        return sysBillingDetailList;
+    }
+
+    public void setSysBillingDetailList(List<SysBillingDetail> sysBillingDetailList) {
+        this.sysBillingDetailList = sysBillingDetailList;
     }
     
 }

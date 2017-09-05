@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html">
+
+    <h:form id="listForm">
+        <p:dataTable id="billingTable" var="item" value="#{b101Controller.lazyModel}" binding="#{bindingController.lazyDataTableModel}" reflow="true">
+            <f:facet name="header">
+                <div class="ui-fluid">
+                    <p:panelGrid columns="4" layout="grid" columnClasses="ui-grid-col-3,ui-grid-col-3,ui-grid-col-3,ui-grid-col-3" styleClass="ui-panelgrid-blank">
+                        <p:commandButton styleClass="search-btn" binding="#{bindingController.btnAdd}" value="#{msgs['btn.add']}" update="listForm" action="#{b101Controller.prepareCreate()}"/>
+                        <h:panelGroup>
+                            <p:autoComplete id="companyName" dropdown="true" value="#{b101Controller.sysCompany_find}" 
+                                            completeMethod="#{b101Controller.completeCompany}" 
+                                            var="company" itemLabel="#{company.companyNameTh}" 
+                                            itemValue="#{company}" 
+                                            converter="#{companyConverter}"
+                                            scrollHeight="250" forceSelection="true" >
+                                <p:ajax event="query"  global="false"/>
+                            </p:autoComplete>
+                            <p:watermark  for="companyName" value="ค้นหาบริษัท" />
+                        </h:panelGroup>
+
+                        <p:inputText value="#{b101Controller.documentno}" placeholder="ใบงานเลขที่"/>
+                        <p:calendar placeholder="#{msgs['common.startDate']}" binding="#{bindingController.calendar}" value="#{b101Controller.startDate}" rendered="false"/>
+                        <p:calendar placeholder="#{msgs['common.toDate']}" binding="#{bindingController.calendar}" value="#{b101Controller.toDate}" rendered="false"/>
+                        <p:commandButton binding="#{bindingController.btnSearch}" value="#{msgs['btn.search']}" 
+                                         actionListener="${b101Controller.search()}" styleClass="search-btn" update="listForm">
+                        </p:commandButton>
+                    </p:panelGrid>
+                </div>
+            </f:facet>
+
+            <p:column headerText="#{msgs['common.seq']}" >
+                <h:outputText value="#{(rowNumber+1)}" />
+            </p:column>
+            
+             <p:column headerText="ใบงานเลขที่" >
+                 <h:outputText value="#{item.documentNo}"/>
+            </p:column>
+
+            <p:column headerText="ชื่อบริษัท" sortBy="#{item.companyId.companyNameTh}">
+                <h:outputText value="#{item.companyId.companyNameTh}"/>
+            </p:column>
+
+            <p:column  headerText="วันที่ทำรายการ" sortBy="#{item.orderDate}" >
+                <h:outputText value="#{item.orderDate}">
+                    <f:convertDateTime pattern="dd-MM-yyyy"/>
+                </h:outputText>
+            </p:column>
+            
+            <p:column  headerText="วันที่ส่งของ" sortBy="#{item.sendDate}" >
+                <h:outputText value="#{item.sendDate}">
+                    <f:convertDateTime pattern="dd-MM-yyyy"/>
+                </h:outputText>
+            </p:column>
+
+            <p:column >
+                <p:commandButton rendered="fasle" id="view" title="#{msgs['btn.view']}" icon="fa fa-fw fa-file-text-o">
+                    <f:setPropertyActionListener value="#{item}" target="#{b101Controller.selected}" />
+                </p:commandButton>
+
+                <p:commandButton id="edit" title="#{msgs['btn.edit']}" icon="fa fa-edit" action="#{b101Controller.prepareEdit()}">
+                    <f:setPropertyActionListener value="#{item}" target="#{b101Controller.selected}" />
+                </p:commandButton>
+
+                <p:commandButton id="del" title="#{msgs['btn.delete']}" icon="fa fa-trash" action="#{b101Controller.delete()}" update="listForm" 
+                                 rendered="#{p:ifAnyGranted('ROLE_PG,ROLE_ADMIN')}">
+                    <p:confirm header="#{msgs['dialog.confirm']}" message="#{msgs['dialog.message']}" />
+                    <f:setPropertyActionListener value="#{item}" target="#{b101Controller.selected}" />
+                </p:commandButton>
+
+            </p:column>
+
+            <f:facet name="footer">
+                <h:outputText value="#{msgs['messages.code.2022']} "/>
+                <h:outputText value="#{b101Controller.lazyModel.rowCount}">
+                    <f:convertNumber pattern="#,##0"/>
+                </h:outputText>
+                <h:outputText value=" #{msgs['messages.code.2023']}"/>
+            </f:facet>
+        </p:dataTable>
+    </h:form>
+</ui:composition>

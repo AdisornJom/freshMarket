@@ -158,14 +158,8 @@
                                 <h:outputText value="#{detail.unit}"  />
                             </p:column>
 
-                            <p:column headerText="ราคาต่อหน่วย(อิงบริษัท)" >
+                            <p:column headerText="ราคา" >
                                 <h:outputText  value="#{detail.price}"  style="float: right;">
-                                    <f:convertNumber  pattern="#,##0.00"/>
-                                </h:outputText>     
-                            </p:column>
-                            
-                             <p:column headerText="จำนวนเงิน" >
-                                <h:outputText  value="#{detail.totalPrice}"  style="float: right;">
                                     <f:convertNumber  pattern="#,##0.00"/>
                                 </h:outputText>     
                             </p:column>
@@ -176,24 +170,6 @@
                                     <f:setPropertyActionListener value="#{detail}" target="#{b101Controller.sysBillingDetail_selected}" />
                                 </p:commandButton>
                             </p:column>
-                            
-                            <p:columnGroup type="footer">
-                                <p:row>
-                                    <p:column>
-                                    </p:column>
-                                     <p:column colspan="4" footerText="จำนวนเงินรวม" style="font-weight: bold;text-align:right;">
-                                    </p:column>
-                                    <p:column style="font-weight: bold;text-align:right;color:blue;">
-                                            <f:facet name="footer">
-                                                <h:outputText id="totalvalue" value="#{b101Controller.total}">
-                                                    <f:convertNumber pattern="#,###.00" />
-                                                </h:outputText>
-                                            </f:facet>
-                                    </p:column>
-                                    <p:column>
-                                    </p:column>
-                                </p:row>
-                            </p:columnGroup>
                         </p:dataTable>
                     </p:fieldset>
                 </div>

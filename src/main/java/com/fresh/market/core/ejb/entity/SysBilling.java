@@ -52,6 +52,9 @@ public class SysBilling implements Serializable {
     @Size(max = 20)
     @Column(name = "document_no")
     private String documentNo;
+    @Size(max = 20)         
+    @Column(name = "billing_document_no")
+    private String billingDocumentNo;
     @Column(name = "order_date")
     @Temporal(TemporalType.TIMESTAMP)
     private Date orderDate;
@@ -277,6 +280,15 @@ public class SysBilling implements Serializable {
         hash += (billingId != null ? billingId.hashCode() : 0);
         return hash;
     }
+
+    public String getBillingDocumentNo() {
+        return billingDocumentNo;
+    }
+
+    public void setBillingDocumentNo(String billingDocumentNo) {
+        this.billingDocumentNo = billingDocumentNo;
+    }
+    
 
     @Override
     public boolean equals(Object object) {

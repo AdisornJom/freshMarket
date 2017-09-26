@@ -73,6 +73,9 @@ public class B101Controller implements Serializable {
     //detial 
    // private SysItemCompany sysBillingDetail_selected;
     private SysBillingDetail sysBillingDetail_selected;
+    
+    //variable
+    private BigDecimal total=BigDecimal.ZERO;
 
     @PostConstruct
     public void init() {
@@ -103,7 +106,26 @@ public class B101Controller implements Serializable {
     public String prepareEdit() {
         sysItemCompany = new SysItemCompany();
         sysBillingDetail_selected =new SysBillingDetail();
+        checkTotalPrice();
         return "edit?faces-redirect=true";
+    }
+    
+    public String openBilling() {
+        try{
+            //create Billing
+            //create document_billing_no;
+            //update status
+            
+            selected.setModifiedBy(userInfo.getAdminUser().getUsername());
+            selected.setModifiedDt(DateTimeUtil.getSystemDate());
+            billingFacade.editSysBilling(selected);
+            search();
+        } catch (Exception ex) {
+           // Messages.addFlashError("listForm:create_msg", ex.getMessage());
+           // RequestContext.getCurrentInstance().execute("window.scrollTo(0,0);");
+            LOG.error(ex.getMessage(), ex);
+        }
+        return "index?faces-redirect=true";
     }
     //..........................................................................................................................................................................................................................      
    public String create() {
@@ -290,6 +312,7 @@ public class B101Controller implements Serializable {
                 }
             }
 
+            checkTotalPrice();
             clearData_ItemDetail();
         } catch (Exception ex) {
             JsfUtil.addFacesErrorMessage(MessageBundleLoader.getMessage("messages.code.9001"));
@@ -300,6 +323,7 @@ public class B101Controller implements Serializable {
     public void deleteItemDetail(){
         try {
               selected.getSysBillingDetailList().remove(sysBillingDetail_selected);
+              checkTotalPrice();
         } catch (Exception ex) {
             JsfUtil.addFacesErrorMessage(MessageBundleLoader.getMessage("messages.code.9001"));
             LOG.error(ex.getMessage(), ex);
@@ -353,6 +377,25 @@ public class B101Controller implements Serializable {
     private void clearData() {
          selected=new SysBilling();
          //items_add=new ArrayList();
+    }
+    
+    public void checkTotalPrice(){
+        this.total=BigDecimal.ZERO;
+
+        BigDecimal total_ = BigDecimal.ZERO;
+        if (null != selected.getSysBillingDetailList()) {
+            for (SysBillingDetail sysdetail : selected.getSysBillingDetailList()) {
+                 if (null != sysdetail.getTotalPrice() || 0.0 <= sysdetail.getTotalPrice().compareTo(BigDecimal.ZERO)) {
+                     total_=total_.add(sysdetail.getTotalPrice());
+                 }
+            }
+             this.total = total_;
+        } else {
+           clearDatatTotal();
+        }
+    }
+    public void clearDatatTotal(){
+        this.total=BigDecimal.ZERO;
     }
 
     public String cancel() {
@@ -465,8 +508,14 @@ public class B101Controller implements Serializable {
         this.sysBillingDetail_selected = sysBillingDetail_selected;
     }
 
+    public BigDecimal getTotal() {
+        return total;
+    }
+
+    public void setTotal(BigDecimal total) {
+        this.total = total;
+    }
+
     
 
-   
-    
 }

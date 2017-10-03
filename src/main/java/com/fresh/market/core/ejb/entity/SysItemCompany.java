@@ -38,9 +38,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "SysItemCompany.findAll", query = "SELECT s FROM SysItemCompany s")})
 public class SysItemCompany implements Serializable {
 
-    @OneToMany(mappedBy = "compaynyId")
-    private List<SysBillingDetail> sysBillingDetailList;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -73,6 +70,8 @@ public class SysItemCompany implements Serializable {
     @Size(max = 32)
     @Column(name = "modified_by")
     private String modifiedBy;
+    @OneToMany(mappedBy = "itemCompanyId")
+    private List<SysBillingDetail> sysBillingDetailList;
     @JoinColumn(name = "company_id", referencedColumnName = "company_id")
     @ManyToOne
     private SysCompany companyId;
@@ -167,6 +166,15 @@ public class SysItemCompany implements Serializable {
         this.modifiedBy = modifiedBy;
     }
 
+    @XmlTransient
+    public List<SysBillingDetail> getSysBillingDetailList() {
+        return sysBillingDetailList;
+    }
+
+    public void setSysBillingDetailList(List<SysBillingDetail> sysBillingDetailList) {
+        this.sysBillingDetailList = sysBillingDetailList;
+    }
+
     public SysCompany getCompanyId() {
         return companyId;
     }
@@ -206,15 +214,6 @@ public class SysItemCompany implements Serializable {
     @Override
     public String toString() {
         return "com.fresh.market.core.ejb.entity.SysItemCompany[ itemCompanyId=" + itemCompanyId + " ]";
-    }
-
-    @XmlTransient
-    public List<SysBillingDetail> getSysBillingDetailList() {
-        return sysBillingDetailList;
-    }
-
-    public void setSysBillingDetailList(List<SysBillingDetail> sysBillingDetailList) {
-        this.sysBillingDetailList = sysBillingDetailList;
     }
     
 }

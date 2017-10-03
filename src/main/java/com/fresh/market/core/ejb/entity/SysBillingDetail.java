@@ -54,9 +54,9 @@ public class SysBillingDetail implements Serializable {
     @JoinColumn(name = "billing_id", referencedColumnName = "billing_id")
     @ManyToOne
     private SysBilling billingId;
-    @JoinColumn(name = "compayny_id", referencedColumnName = "item_company_id")
+    @JoinColumn(name = "item_company_id", referencedColumnName = "item_company_id")
     @ManyToOne
-    private SysItemCompany compaynyId;
+    private SysItemCompany itemCompanyId;
 
     public SysBillingDetail() {
     }
@@ -121,12 +121,12 @@ public class SysBillingDetail implements Serializable {
         this.billingId = billingId;
     }
 
-    public SysItemCompany getCompaynyId() {
-        return compaynyId;
+    public SysItemCompany getItemCompanyId() {
+        return itemCompanyId;
     }
 
-    public void setCompaynyId(SysItemCompany compaynyId) {
-        this.compaynyId = compaynyId;
+    public void setItemCompanyId(SysItemCompany itemCompanyId) {
+        this.itemCompanyId = itemCompanyId;
     }
 
     @Override

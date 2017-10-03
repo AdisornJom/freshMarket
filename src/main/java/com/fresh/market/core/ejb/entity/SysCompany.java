@@ -35,12 +35,6 @@ import javax.xml.bind.annotation.XmlTransient;
     @NamedQuery(name = "SysCompany.findAll", query = "SELECT s FROM SysCompany s")})
 public class SysCompany implements Serializable {
 
-    @OneToMany(mappedBy = "companyId")
-    private List<SysBilling> sysBillingList;
-
-    @OneToMany(mappedBy = "companyId")
-    private List<SysItemCompany> sysItemCompanyList;
-
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -89,6 +83,10 @@ public class SysCompany implements Serializable {
     @Size(max = 255)
     @Column(name = "company_address_eng")
     private String companyAddressEng;
+    @OneToMany(mappedBy = "companyId")
+    private List<SysBilling> sysBillingList;
+    @OneToMany(mappedBy = "companyId")
+    private List<SysItemCompany> sysItemCompanyList;
 
     public SysCompany() {
     }
@@ -217,6 +215,24 @@ public class SysCompany implements Serializable {
         this.companyAddressEng = companyAddressEng;
     }
 
+    @XmlTransient
+    public List<SysBilling> getSysBillingList() {
+        return sysBillingList;
+    }
+
+    public void setSysBillingList(List<SysBilling> sysBillingList) {
+        this.sysBillingList = sysBillingList;
+    }
+
+    @XmlTransient
+    public List<SysItemCompany> getSysItemCompanyList() {
+        return sysItemCompanyList;
+    }
+
+    public void setSysItemCompanyList(List<SysItemCompany> sysItemCompanyList) {
+        this.sysItemCompanyList = sysItemCompanyList;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
@@ -240,24 +256,6 @@ public class SysCompany implements Serializable {
     @Override
     public String toString() {
         return "com.fresh.market.core.ejb.entity.SysCompany[ companyId=" + companyId + " ]";
-    }
-
-    @XmlTransient
-    public List<SysItemCompany> getSysItemCompanyList() {
-        return sysItemCompanyList;
-    }
-
-    public void setSysItemCompanyList(List<SysItemCompany> sysItemCompanyList) {
-        this.sysItemCompanyList = sysItemCompanyList;
-    }
-
-    @XmlTransient
-    public List<SysBilling> getSysBillingList() {
-        return sysBillingList;
-    }
-
-    public void setSysBillingList(List<SysBilling> sysBillingList) {
-        this.sysBillingList = sysBillingList;
     }
     
 }

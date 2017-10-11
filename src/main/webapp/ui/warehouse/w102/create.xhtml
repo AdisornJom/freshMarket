@@ -79,23 +79,27 @@
                                                         converter="#{itemConverter}"
                                                         scrollHeight="250" >
                                             <p:ajax event="query"  global="false"/>
-                                            <p:ajax event="itemSelect"  update="listForm:unitpriceStandard" global="false"/> 
+                                            <p:ajax event="itemSelect"  update="listForm:unitpriceStandard listForm:volumnperunit listForm:unitold" global="false"/> 
                                         </p:autoComplete>
                                         <p:watermark  for="detail_items" value="กรอกข้อมูลเพื่อ ค้นหา" />
                                     </h:panelGroup>
                                     
                                     <h:panelGroup>
-                                        <p:outputLabel  value="จำนวน :" />
+                                        <p:outputLabel  value="จำนวนต่อหน่วย(อิงบริษัท) :" />
                                         <font class="require" style="color: red">*</font>
                                     </h:panelGroup>
                                     <h:panelGroup>
                                         <p:inputText  value="#{w102Controller.itemCompanyDetail_selected.companyQty}" style="vertical-align:middle;">
                                             <f:convertNumber  pattern="#,##0.00"/>
                                         </p:inputText>
+                                         <p:outputLabel  value="  (ราคากลาง) จำนวนต่อหน่วย :  " styleClass="lb_bold"/>
+                                         <h:outputText id="volumnperunit" value="#{w102Controller.sysItem.itemQty}" style="width: 50px;color:#f50505;font-weight:bold;" styleClass="lb_bold">
+                                            <f:convertNumber  pattern="#,##0.00"/>
+                                        </h:outputText>
                                     </h:panelGroup>
 
                                     <h:panelGroup>
-                                        <p:outputLabel  value="หน่วย :" />
+                                        <p:outputLabel  value="หน่วย(อิงบริษัท) :" />
                                         <font class="require" style="color: red">*</font>
                                     </h:panelGroup>
                                     <h:panelGroup>
@@ -103,17 +107,21 @@
                                             <f:selectItem  itemLabel="-"  itemValue="" />
                                             <f:selectItems value="#{comboController.equipments}" />
                                         </p:selectOneMenu>
+                                         <p:outputLabel  value="  (ราคากลาง) หน่วย :  " styleClass="lb_bold"/>
+                                         <h:outputText id="unitold" value="#{w102Controller.sysItem.itemUnit}" style="width: 50px;color:#f50505;font-weight:bold;" styleClass="lb_bold">
+                                            <f:convertNumber  pattern="#,##0.00"/>
+                                        </h:outputText>
                                     </h:panelGroup>
 
                                     <h:panelGroup>
-                                        <p:outputLabel  value="ราคาต่อหน่วย :" />
+                                        <p:outputLabel  value="ราคาต่อหน่วย(อิงบริษัท) :" />
                                         <font class="require" style="color: red">*</font>
                                     </h:panelGroup>
                                     <h:panelGroup>
                                         <p:inputText  value="#{w102Controller.itemCompanyDetail_selected.companyPrice}" style="vertical-align:middle;">
                                             <f:convertNumber  pattern="#,##0.00"/>
                                         </p:inputText>
-                                        <p:outputLabel  value="  ราคามาตรฐาน :  " styleClass="lb_bold"/>
+                                        <p:outputLabel  value="  ราคากลาง :  " styleClass="lb_bold"/>
                                         <h:outputText id="unitpriceStandard" value="#{w102Controller.sysItem.itemPrice}" style="width: 50px;color:#f50505;font-weight:bold;" styleClass="lb_bold">
                                             <f:convertNumber  pattern="#,##0.00"/>
                                         </h:outputText> 

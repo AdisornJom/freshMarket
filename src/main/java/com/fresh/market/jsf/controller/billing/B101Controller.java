@@ -3,28 +3,36 @@ package com.fresh.market.jsf.controller.billing;
 import com.fresh.market.core.ejb.entity.SysBilling;
 import com.fresh.market.core.ejb.entity.SysBillingDetail;
 import com.fresh.market.core.ejb.entity.SysCompany;
-import com.fresh.market.core.ejb.entity.SysItem;
 import com.fresh.market.core.ejb.entity.SysItemCompany;
+import com.fresh.market.core.ejb.entity.SysItemTO;
+import com.fresh.market.core.ejb.entity.SysOrganization;
 import com.fresh.market.core.util.Constants;
 import com.fresh.market.core.util.DateTimeUtil;
+import com.fresh.market.core.util.GenerateExcelReport;
 import com.fresh.market.core.util.JsfUtil;
 import com.fresh.market.core.util.MessageBundleLoader;
+import com.fresh.market.core.util.NumberUtil;
+import com.fresh.market.core.util.ReportUtil;
+import com.fresh.market.core.util.ThaiBaht;
 import com.fresh.market.ejb.facade.BillingFacade;
 import com.fresh.market.ejb.facade.CustomFacade;
+import com.fresh.market.ejb.facade.OrganizationFacade;
 import com.fresh.market.ejb.facade.WareHouseFacade;
 import com.fresh.market.jsf.common.SequenceController;
 import com.fresh.market.jsf.common.UserInfoController;
 import com.fresh.market.jsf.model.LazyBillingDataModel;
-import com.fresh.market.jsf.model.LazyItemCompanyDataModel;
+import java.io.OutputStream;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
 import javax.inject.Inject;
@@ -53,6 +61,8 @@ public class B101Controller implements Serializable {
     private WareHouseFacade wareHouseFacade;
     @Inject
     private SequenceController sequence;
+    @Inject
+    private OrganizationFacade organizationFacade;
 
     private List<SysBilling> items;
     private SysBilling selected;
@@ -76,6 +86,7 @@ public class B101Controller implements Serializable {
     
     //variable
     private BigDecimal total=BigDecimal.ZERO;
+    private BigDecimal volumn;
 
     @PostConstruct
     public void init() {
@@ -99,6 +110,7 @@ public class B101Controller implements Serializable {
         selected = new SysBilling();
         selected.setSysBillingDetailList(new ArrayList());
         sysBillingDetail_selected =new SysBillingDetail();
+        volumn=BigDecimal.ZERO;
         //items_add=new ArrayList();
         return "create?faces-redirect=true";
     }
@@ -107,6 +119,7 @@ public class B101Controller implements Serializable {
         sysItemCompany = new SysItemCompany();
         sysBillingDetail_selected =new SysBillingDetail();
         checkTotalPrice();
+        volumn=BigDecimal.ZERO;
         return "edit?faces-redirect=true";
     }
     
@@ -162,10 +175,13 @@ public class B101Controller implements Serializable {
             }
             
             //insert detail
+            BigDecimal billTotal=BigDecimal.ZERO;
             for(SysBillingDetail detail:selected.getSysBillingDetailList()){
                 detail.setId(null);//auto generate
                 detail.setBillingId(selected);
+                billTotal=billTotal.add(detail.getTotalPrice());
             }
+            selected.setBillTotal(billTotal);
             selected.setStatus(Constants.BILLING_ORDER);
             selected.setCreatedBy(userInfo.getAdminUser().getUsername());
             selected.setCreatedDt(DateTimeUtil.getSystemDate());
@@ -263,7 +279,7 @@ public class B101Controller implements Serializable {
                 return;
             }
 
-            if (sysItemCompany.getCompanyQty()== null || 0.0 >= sysItemCompany.getCompanyQty().compareTo(BigDecimal.ZERO)) {
+            if (volumn== null || 0.0 >= volumn.compareTo(BigDecimal.ZERO)) {
                 JsfUtil.addFacesErrorMessage(MessageBundleLoader.getMessageFormat("messages.code.2002", "จำนวน"));
                 RequestContext.getCurrentInstance().scrollTo("listForm:create_msg");
                 return;
@@ -292,19 +308,19 @@ public class B101Controller implements Serializable {
             Random rand = new Random();
             int n = rand.nextInt(500) + 1;
             sysBillingDetail_selected.setId(n);
-            sysBillingDetail_selected.setCompaynyId(sysItemCompany);
+            sysBillingDetail_selected.setItemCompanyId(sysItemCompany);
             sysBillingDetail_selected.setPrice(sysItemCompany.getCompanyPrice());
             sysBillingDetail_selected.setUnit(sysItemCompany.getCompanyUnit());
-            sysBillingDetail_selected.setVolume(sysItemCompany.getCompanyQty());
-            sysBillingDetail_selected.setTotalPrice(sysItemCompany.getCompanyPrice().multiply(sysItemCompany.getCompanyQty()));
+            sysBillingDetail_selected.setVolume(volumn);
+            sysBillingDetail_selected.setTotalPrice(sysItemCompany.getCompanyPrice().multiply(volumn));
 
             if(selected.getSysBillingDetailList().isEmpty()){
                selected.getSysBillingDetailList().add(sysBillingDetail_selected); 
             }else{
                 HashMap<Integer,String> ckContains=new HashMap();
                 for (SysBillingDetail SysBillingDetail : selected.getSysBillingDetailList()) {
-                    if (!ckContains.containsKey(SysBillingDetail.getCompaynyId().getItemId().getItemId())) {
-                        ckContains.put(SysBillingDetail.getCompaynyId().getItemId().getItemId(), SysBillingDetail.getCompaynyId().getItemId().getItemTh());
+                    if (!ckContains.containsKey(SysBillingDetail.getItemCompanyId().getItemId().getItemId())) {
+                        ckContains.put(SysBillingDetail.getItemCompanyId().getItemId().getItemId(), SysBillingDetail.getItemCompanyId().getItemId().getItemTh());
                     }
                 }
                 if(!ckContains.containsKey(sysItemCompany.getItemId().getItemId())) {
@@ -333,7 +349,115 @@ public class B101Controller implements Serializable {
     public void clearData_ItemDetail(){
          sysItemCompany = new SysItemCompany();
          sysBillingDetail_selected=new SysBillingDetail();
+         volumn=BigDecimal.ZERO;
     }
+    
+   
+    public void export(){
+        try {
+          GenerateExcelReport excel = new GenerateExcelReport();
+          String headcol[] = {"จำนวนที่สั่งแยกตามบริษัท"};
+          
+          List<SysBilling> sysBillingList=billingFacade.findSysBillingByCriteria((null!=sysCompany_find)?sysCompany_find:null,StringUtils.trimToEmpty(documentno),Constants.BILLING_ORDER,startDate,toDate);
+          String column[]=new String[sysBillingList.size()];
+          Integer billing_id[]=new Integer[sysBillingList.size()];
+          int sbValue=0;
+          for(SysBilling sb:sysBillingList){
+              column[sbValue]=sb.getCompanyId().getCompanyNameTh()+"\n"+sb.getDocumentNo();
+              billing_id[sbValue]=sb.getBillingId();
+              sbValue++;
+          }
+
+          List<SysItemTO> sysItemList=billingFacade.detailBillingByCriteria((null!=sysCompany_find)?sysCompany_find:null,StringUtils.trimToEmpty(documentno),Constants.BILLING_ORDER,startDate,toDate);
+          int row_=sysItemList.size();
+          
+ 	  String col[]=new String[column.length+1];
+          String row[][] = new String[row_][column.length+1];
+          int row_display=0;
+          for(SysItemTO sb:sysItemList){
+               int y=0,j=0;;
+               row[row_display][y++] = excel.excelFormatString(sb.getItemTh()); 
+               row[row_display][y++] = excel.excelFormatNumber(String.valueOf(billingFacade.volumnDetailBillingByCriteria(billing_id[j++],sb.getItemId() , 1, startDate, toDate)));
+               row[row_display][y++] = excel.excelFormatNumber(String.valueOf(billingFacade.volumnDetailBillingByCriteria(billing_id[j++],sb.getItemId() , 1, startDate, toDate)));
+               row[row_display][y++] = excel.excelFormatNumber(String.valueOf(billingFacade.volumnDetailBillingByCriteria(billing_id[j++],sb.getItemId() , 1, startDate, toDate)));
+               row_display++;
+          }
+
+         
+           //wirte textfile
+            String[] datetime={DateTimeUtil.cvtDateForShow(DateTimeUtil.getSystemDate(),"dd/MM/yyyy", Locale.US)};
+            HashMap<Integer,String> footer=new HashMap();
+            byte[] byteArray=excel.generateExcel("รายการสั่งซื้อ", col, row, headcol, column, datetime,footer,true);
+
+            FacesContext context = FacesContext.getCurrentInstance();
+            String filename = "Withdraw" + "-" + DateTimeUtil.dateToString(DateTimeUtil.getSystemDate(), "yyyyMMdd") + ".xls";
+            context = FacesContext.getCurrentInstance();
+            ExternalContext extContext = context.getExternalContext();
+            extContext.setResponseContentType("application/vnd.ms-excel");
+            extContext.setResponseHeader("Content-Disposition", "attachment; filename=" + filename);
+            OutputStream out=extContext.getResponseOutputStream();
+            out.write(byteArray);
+            out.flush();
+            context.getApplication().getStateManager().saveView(context);
+            context.responseComplete();
+        } catch (Exception ex) {
+            LOG.error(ex.getMessage(), ex);
+        }
+   }
+    
+    public void reportPDF() {
+        try {
+            ReportUtil report = new ReportUtil();
+            List reportList_ = new ArrayList<>();
+            List<BillingReportBean> reportList_main = new ArrayList<>();
+            List<BillingReportBean> reportList = new ArrayList<>();
+            SysBilling rpt_sysbilling=billingFacade.findByPK(selected.getBillingId());
+            
+            int intRunningNo=1;
+            List<SysBillingDetail> list = rpt_sysbilling.getSysBillingDetailList();
+            for (SysBillingDetail to : list) {
+                BillingReportBean bean = new BillingReportBean();
+                bean.setSeq(String.valueOf(intRunningNo++));
+                bean.setDetail(to.getItemCompanyId().getItemId().getItemTh());
+                bean.setVolumn(NumberUtil.numberFormat(to.getVolume(),"#,##0.00"));
+                bean.setUnit(to.getUnit());
+                bean.setPriceUnit(NumberUtil.numberFormat(to.getPrice(),"#,##0.00"));
+                bean.setPriceTotal(NumberUtil.numberFormat(to.getTotalPrice(),"#,##0.00"));
+                
+                reportList.add(bean);
+            }
+            
+            reportList_main.add(new BillingReportBean("", "", "", "", "", "", "", "","","","",""));
+            reportList_.add(reportList_main);
+            reportList_.add(reportList);
+            HashMap map = new HashMap();
+            SysOrganization org= organizationFacade.findSysOrganizationByStatus("Y");
+            map.put("org_name_th",org.getOrgNameTh());
+            map.put("org_name_eng",org.getOrgNameEng());
+            map.put("org_address_th",org.getOrgAddressTh());
+            map.put("org_tel",org.getOrgTel());
+            map.put("org_bank",org.getOrgBankB101());
+            map.put("org_bank_name",org.getOrgBankNameB101());
+            map.put("org_recall",org.getOrgRecallB101());
+            
+            map.put("documentno",null!=rpt_sysbilling.getDocumentNo()?rpt_sysbilling.getDocumentNo():"-");
+            map.put("cust_name",rpt_sysbilling.getCompanyId().getCompanyNameTh());
+            map.put("cust_address",rpt_sysbilling.getCompanyId().getCompanyAddressTh());
+            map.put("send_date",DateTimeUtil.cvtDateForShow(rpt_sysbilling.getSendDate(), "dd/MM/yyyy", new Locale("th", "TH")));
+            map.put("price",NumberUtil.numberFormat(rpt_sysbilling.getBillTotal(),"#,##0.00"));
+            map.put("price_vat",NumberUtil.numberFormat(rpt_sysbilling.getBillVat(),"#,##0.00"));
+            map.put("price_total",NumberUtil.numberFormat(rpt_sysbilling.getBillTotal(),"#,##0.00"));
+            map.put("price_char",(rpt_sysbilling.getBillTotal()==BigDecimal.ZERO?"":new ThaiBaht().getText(rpt_sysbilling.getBillTotal())));
+            map.put("bill_date",DateTimeUtil.cvtDateForShow(rpt_sysbilling.getBillDateLast(), "dd/MM/yyyy", new Locale("th", "TH")));
+            
+            map.put("reportCode", "B101");
+            report.exportSubReport("b101", new String[]{"B101Report","B101SubReport"}, "BILL", map, reportList_);
+        } catch (Exception ex) {
+            JsfUtil.addFacesErrorMessage(MessageBundleLoader.getMessage("messages.code.9001"));
+            LOG.error(ex.getMessage(), ex);
+        }
+    }
+
     
     //Auto Complete==========================================================================  
      //Auto complete company
@@ -514,6 +638,14 @@ public class B101Controller implements Serializable {
 
     public void setTotal(BigDecimal total) {
         this.total = total;
+    }
+
+    public BigDecimal getVolumn() {
+        return volumn;
+    }
+
+    public void setVolumn(BigDecimal volumn) {
+        this.volumn = volumn;
     }
 
     

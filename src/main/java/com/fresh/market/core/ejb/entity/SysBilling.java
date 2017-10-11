@@ -96,7 +96,7 @@ public class SysBilling implements Serializable {
     @Column(name = "billing_document_no")
     private String billingDocumentNo;
     
-   //  @OneToMany(mappedBy = "billingId")
+     //  @OneToMany(mappedBy = "billingId")
     @OneToMany(fetch = FetchType.EAGER, mappedBy = "billingId", cascade = CascadeType.ALL,orphanRemoval=true)
     private List<SysBillingDetail> sysBillingDetailList;
     

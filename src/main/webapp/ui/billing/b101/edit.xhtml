@@ -86,7 +86,7 @@
                                     </h:panelGroup>
                                     
                                     <h:panelGroup>
-                                        <p:outputLabel  value="จำนวน :" />
+                                        <p:outputLabel  value="จำนวนต่อหน่วย :" />
                                         <font class="require" style="color: red">*</font>
                                     </h:panelGroup>
                                     <h:panelGroup>
@@ -127,6 +127,16 @@
                                         </h:outputText> 
                                          <p:outputLabel  value="  บาท" styleClass="lb_bold"/>
                                     </h:panelGroup>
+                                     
+                                    <h:panelGroup>
+                                        <p:outputLabel  value="จำนวนที่สั่ง :" />
+                                        <font class="require" style="color: red">*</font>
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <p:inputText  value="#{b101Controller.volumn}" >
+                                            <f:convertNumber pattern="#,##0" maxIntegerDigits="2"/>
+                                        </p:inputText>
+                                    </h:panelGroup>
                                 </p:panelGrid>
                                 <br/>
 
@@ -145,7 +155,7 @@
                             </p:column>
 
                             <p:column headerText="รายการ"  >
-                                <h:outputText value="#{detail.compaynyId.itemId.itemTh}"  />
+                                <h:outputText value="#{detail.itemCompanyId.itemId.itemTh}"  />
                             </p:column>
 
                             <p:column headerText="จำนวน" >

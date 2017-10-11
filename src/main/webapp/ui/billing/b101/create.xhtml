@@ -118,7 +118,7 @@
                                     </h:panelGroup>
                                     
                                     <h:panelGroup>
-                                        <p:outputLabel  value="จำนวน :" />
+                                        <p:outputLabel  value="จำนวนต่อหน่วย :" />
                                         <font class="require" style="color: red">*</font>
                                     </h:panelGroup>
                                     <h:panelGroup>
@@ -144,9 +144,10 @@
                                         <font class="require" style="color: red">*</font>
                                     </h:panelGroup>
                                     <h:panelGroup>
-                                        <h:outputText id="unitpriceCompany" value="#{b101Controller.sysItemCompany.companyPrice}" style="vertical-align:middle;">
+                                        <h:outputText id="unitpriceCompany" value="#{b101Controller.sysItemCompany.companyPrice}" style="vertical-align:middle;width: 50px;color:#094be6;font-weight:bold;">
                                             <f:convertNumber  pattern="#,##0.00"/>
                                         </h:outputText>
+                                        <p:outputLabel  value="  บาท" styleClass="lb_bold"/>
                                     </h:panelGroup>
 
                                     <h:panelGroup>
@@ -154,10 +155,20 @@
                                         <font class="require" style="color: red">*</font>
                                     </h:panelGroup>
                                     <h:panelGroup>
-                                        <h:outputText id="unitpriceStandard" value="#{b101Controller.sysItemCompany.itemId.itemPrice}" style="width: 50px;color:#f50505;font-weight:bold;" styleClass="lb_bold">
+                                        <h:outputText id="unitpriceStandard" value="#{b101Controller.sysItemCompany.itemId.itemPrice}" style="width: 50px;color:#f50505;" styleClass="lb_bold">
                                             <f:convertNumber  pattern="#,##0.00"/>
                                         </h:outputText> 
                                          <p:outputLabel  value="  บาท" styleClass="lb_bold"/>
+                                    </h:panelGroup>
+                                    
+                                    <h:panelGroup>
+                                        <p:outputLabel  value="จำนวนที่สั่ง :" />
+                                        <font class="require" style="color: red">*</font>
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <p:inputText  value="#{b101Controller.volumn}" >
+                                            <f:convertNumber pattern="#,##0" maxIntegerDigits="2"/>
+                                        </p:inputText>
                                     </h:panelGroup>
                                 </p:panelGrid>
                                 <br/>

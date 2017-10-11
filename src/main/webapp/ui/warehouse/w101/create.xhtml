@@ -66,6 +66,16 @@
                                     <h:panelGroup>
                                         <p:inputText  value="#{w101Controller.selected.itemEng}" />
                                     </h:panelGroup>
+                                    
+                                    <h:panelGroup>
+                                        <p:outputLabel  value="จำนวนต่อหน่วย :" />
+                                        <font class="require" style="color: red">*</font>
+                                    </h:panelGroup>
+                                    <h:panelGroup>
+                                        <p:inputText  value="#{w101Controller.selected.itemQty}" style="vertical-align:middle;">
+                                            <f:convertNumber  pattern="#,##0.00"/>
+                                        </p:inputText>
+                                    </h:panelGroup>
 
                                     <h:panelGroup>
                                         <p:outputLabel  value="หน่วย :" />

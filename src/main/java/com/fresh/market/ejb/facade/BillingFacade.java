@@ -1,10 +1,9 @@
 package com.fresh.market.ejb.facade;
 
 import com.fresh.market.core.ejb.entity.SysCompany;
-import com.fresh.market.core.ejb.entity.SysItem;
 import com.fresh.market.core.ejb.entity.SysBilling;
+import com.fresh.market.core.ejb.entity.SysItemTO;
 import com.fresh.market.ejb.bo.BillingBO;
-import com.fresh.market.ejb.bo.WareHouseBO;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -20,6 +19,22 @@ public class BillingFacade implements Serializable {
 
     @EJB
     private BillingBO billingBO;
+    
+    public SysBilling  findByPK(Integer id){
+       return  billingBO.findByPK(id);
+    }
+     
+    public List<SysBilling> findSysBillingByCriteria(SysCompany sysCompany,String documentno, Integer status, Date startDate, Date toDate) throws Exception {
+        return billingBO.findSysBillingByCriteria(sysCompany,documentno, status,startDate,toDate);
+    }
+    
+    public List<SysItemTO> detailBillingByCriteria(SysCompany sysCompany,String documentno, Integer status, Date startDate, Date toDate) throws Exception {
+        return billingBO.detailBillingByCriteria(sysCompany,documentno, status,startDate,toDate);
+    }
+    
+    public int volumnDetailBillingByCriteria(Integer billing_id,Integer item_id, Integer status, Date startDate, Date toDate) throws Exception {
+        return billingBO.volumnDetailBillingByCriteria(billing_id,item_id, status,startDate,toDate);
+    }
     
     public List<SysBilling> findSysBillingByCriteria(SysCompany sysCompany,String documentno, Integer status, Date startDate, Date toDate, int[] range) throws Exception {
         return billingBO.findSysBillingByCriteria(sysCompany,documentno, status,startDate,toDate,range);

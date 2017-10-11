@@ -10,7 +10,9 @@
         <p:dataTable id="billingTable" var="item" value="#{b101Controller.lazyModel}" binding="#{bindingController.lazyDataTableModel}" reflow="true">
             <f:facet name="header">
                 <div class="ui-fluid">
-                    <p:panelGrid columns="4" layout="grid" columnClasses="ui-grid-col-3,ui-grid-col-3,ui-grid-col-3,ui-grid-col-3" styleClass="ui-panelgrid-blank">
+                    <p:panelGrid columns="7" layout="grid" columnClasses="ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-2,ui-grid-col-1" styleClass="ui-panelgrid-blank">
+                          <p:commandButton value="#{msgs['btn.export']}" styleClass="search-btn" 
+                                             binding="#{bindingController.btnExportExcel}" actionListener="#{b101Controller.export()}" ajax="false"/>
                         <p:commandButton styleClass="search-btn" binding="#{bindingController.btnAdd}" value="#{msgs['btn.add']}" update="listForm" action="#{b101Controller.prepareCreate()}"/>
                         <h:panelGroup>
                             <p:autoComplete id="companyName" dropdown="true" value="#{b101Controller.sysCompany_find}" 
@@ -25,8 +27,8 @@
                         </h:panelGroup>
 
                         <p:inputText value="#{b101Controller.documentno}" placeholder="ใบงานเลขที่"/>
-                        <p:calendar placeholder="#{msgs['common.startDate']}" binding="#{bindingController.calendar}" value="#{b101Controller.startDate}" rendered="false"/>
-                        <p:calendar placeholder="#{msgs['common.toDate']}" binding="#{bindingController.calendar}" value="#{b101Controller.toDate}" rendered="false"/>
+                        <p:calendar placeholder="#{msgs['common.startDate']}" binding="#{bindingController.calendar}" value="#{b101Controller.startDate}" />
+                        <p:calendar placeholder="#{msgs['common.toDate']}" binding="#{bindingController.calendar}" value="#{b101Controller.toDate}" />
                         <p:commandButton binding="#{bindingController.btnSearch}" value="#{msgs['btn.search']}" 
                                          actionListener="${b101Controller.search()}" styleClass="search-btn" update="listForm">
                         </p:commandButton>
@@ -59,6 +61,11 @@
             </p:column>
 
             <p:column >
+                 <p:commandButton id="report" icon="fa fa-print"  action="#{b101Controller.reportPDF()}"
+                                 update=":content" styleClass="print-btn" ajax="fasle">
+                    <f:setPropertyActionListener value="#{item}" target="#{b101Controller.selected}" />
+                </p:commandButton>
+                
                 <p:commandButton id="view" title="ออกบิล" icon="fa fa-fw fa-file-text-o" action="#{b101Controller.openBilling()}">
                     <f:setPropertyActionListener value="#{item}" target="#{b101Controller.selected}" />
                 </p:commandButton>

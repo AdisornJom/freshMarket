@@ -35,6 +35,10 @@
             <p:column headerText="ชื่อสินค้า(Eng)" sortBy="#{item.item}" >
                 <h:outputText value="#{item.itemEng}"/>
             </p:column>
+            
+            <p:column headerText="จำนวนต่อหน่วย" sortBy="#{item.itemQty}" >
+                <h:outputText value="#{item.itemQty}"/>
+            </p:column>
 
             <p:column headerText="หน่วย" sortBy="#{item.itemUnit}" >
                 <h:outputText value="#{item.itemUnit}"/>

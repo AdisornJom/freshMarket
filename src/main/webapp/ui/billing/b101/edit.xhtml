@@ -142,7 +142,7 @@
 
                                 <h:panelGroup layout="block" style="text-align: center" >
                                     <p:commandButton styleClass="search-btn" binding="#{bindingController.btnAdd}" value="#{msgs['btn.add']}" global="false" 
-                                                     update="listForm"
+                                                     update="listForm listForm:dt_itemDetail"
                                                      actionListener="#{b101Controller.addItemDetail()}">
                                     </p:commandButton> 
                                 </h:panelGroup>

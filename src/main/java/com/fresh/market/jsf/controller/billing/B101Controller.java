@@ -123,6 +123,11 @@ public class B101Controller implements Serializable {
         return "edit?faces-redirect=true";
     }
     
+    public String prepareView() {
+        checkTotalPrice();
+        return "view?faces-redirect=true";
+    }
+    
     public String openBilling() {
         try{
             //create Billing
@@ -268,32 +273,32 @@ public class B101Controller implements Serializable {
     public void addItemDetail(){
         try {
             if (null == selected.getCompanyId()) {
-                Messages.addError("listForm:create_msg", MessageBundleLoader.getMessageFormat("messages.code.2002", "ชื่อบริษัท"));
+                JsfUtil.addFacesErrorMessage(MessageBundleLoader.getMessageFormat("messages.code.2002", "ชื่อบริษัท"));
                 RequestContext.getCurrentInstance().execute("window.scrollTo(0,0);");
                 return;
             }
            //validate field iteam 
             if (sysItemCompany == null) {
                 JsfUtil.addFacesErrorMessage(MessageBundleLoader.getMessageFormat("messages.code.2002", "รายการ"));
-                RequestContext.getCurrentInstance().scrollTo("listForm:create_msg");
+                RequestContext.getCurrentInstance().execute("window.scrollTo(0,0);");
                 return;
             }
 
             if (volumn== null || 0.0 >= volumn.compareTo(BigDecimal.ZERO)) {
                 JsfUtil.addFacesErrorMessage(MessageBundleLoader.getMessageFormat("messages.code.2002", "จำนวน"));
-                RequestContext.getCurrentInstance().scrollTo("listForm:create_msg");
+                RequestContext.getCurrentInstance().execute("window.scrollTo(0,0);");
                 return;
             }
 
             if(StringUtils.isEmpty(sysItemCompany.getCompanyUnit())){
                 JsfUtil.addFacesErrorMessage(MessageBundleLoader.getMessageFormat("messages.code.2002", "หน่วย"));
-                RequestContext.getCurrentInstance().scrollTo("listForm:create_msg");
+                RequestContext.getCurrentInstance().execute("window.scrollTo(0,0);");
                 return;
             }
 
             if (sysItemCompany.getCompanyPrice()== null || 0.0 >= sysItemCompany.getCompanyPrice().compareTo(BigDecimal.ZERO)) {
                 JsfUtil.addFacesErrorMessage(MessageBundleLoader.getMessageFormat("messages.code.2002", "ราคาต่อหน่วย"));
-                RequestContext.getCurrentInstance().scrollTo("listForm:create_msg");
+                RequestContext.getCurrentInstance().execute("window.scrollTo(0,0);");
                 return;
             }
 

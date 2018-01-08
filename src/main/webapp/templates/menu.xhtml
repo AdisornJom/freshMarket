@@ -26,7 +26,7 @@
                             <p:menuitem id="menuB101" value="B101 - รายงการที่สั่ง" action ="#{naviController.gotoMenu('/ui/billing/b101/index?faces-redirect=true', 'B101Controller', 'B101 - รายงการที่สั่ง')}"/>
                         </p:submenu>
                         
-                        <p:submenu id ="menuR" label="#{msgs['menu.report']}" icon="fa fa-bar-chart" rendered="#{p:ifAnyGranted('ROLE_PG,ROLE_ADMIN,ROLE_SUPER,ROLE_STAFF')}">
+                        <p:submenu id ="menuR" label="#{msgs['menu.report']}" icon="fa fa-bar-chart" rendered="false">
                             <p:menuitem id ="menuR101" value="#{msgs['menu.report.r101']}" action ="#{naviController.gotoMenu('/ui/report/r101/index?faces-redirect=true', 'R101Controller', 'menu.report.r101')}"/>
                             <p:menuitem id ="menuR102" value="#{msgs['menu.report.r102']}" action ="#{naviController.gotoMenu('/ui/report/r102/index?faces-redirect=true', 'R102Controller', 'menu.report.r102')}"/>
                             <p:menuitem id ="menuR103" value="#{msgs['menu.report.r103']}" action ="#{naviController.gotoMenu('/ui/report/r103/index?faces-redirect=true', 'R103Controller', 'menu.report.r103')}"/>

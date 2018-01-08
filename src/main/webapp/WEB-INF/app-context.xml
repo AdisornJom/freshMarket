@@ -98,6 +98,10 @@ http://www.springframework.org/schema/security/spring-security-3.2.xsd">
         <intercept-url pattern="/profile" access="isAuthenticated()"/>
         <intercept-url pattern="/user-logs" access="isAuthenticated()"/>
         
+        <intercept-url pattern="/bill" access="isAuthenticated()"/>
+        <intercept-url pattern="/bill-edit" access="isAuthenticated()"/>
+        <intercept-url pattern="/bill-view" access="isAuthenticated()"/>
+        
         <logout invalidate-session="true" logout-success-url="/Default" />
         <custom-filter ref="authenticationFilter" position="FORM_LOGIN_FILTER" />
         <custom-filter ref="concurrencyFilter" position="CONCURRENT_SESSION_FILTER" />

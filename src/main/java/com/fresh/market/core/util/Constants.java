@@ -6,6 +6,13 @@ package com.fresh.market.core.util;
 public interface Constants {
 
     Integer INTERVAL_POLL = 8;   // second
+    
+    /*
+    USER ADMIN
+     */
+    Integer USER_STATUS_DELETE = 0;
+    Integer USER_STATUS_NORMAL = 1;
+    Integer USER_STATUS_INACTIVE = 2;
 
    //Billing status
     Integer BILLING_ORDER=1;

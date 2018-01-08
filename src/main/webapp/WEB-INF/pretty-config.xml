@@ -421,4 +421,19 @@
         <view-id value="/ui/user-info/user-logs.xhtml"/>
     </url-mapping>
     
+    <url-mapping id="b101">
+        <pattern value="/bill"/>
+        <view-id value="/ui/billing/b101/index.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="b101-edit">
+        <pattern value="/bill-edit"/>
+        <view-id value="/ui/billing/b101/edit.xhtml"/>
+    </url-mapping>
+    
+    <url-mapping id="b101-view">
+        <pattern value="/bill-view"/>
+        <view-id value="/ui/billing/b101/view.xhtml"/>
+    </url-mapping>
+    
 </pretty-config>
